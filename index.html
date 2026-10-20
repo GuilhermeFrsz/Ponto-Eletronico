@@ -107,6 +107,9 @@
     </div>
 
 
+    <!-- ========================================== -->
+    <!-- PÁGINA 2: PAINEL DE AJUSTES GERENCIAIS      -->
+    <!-- ========================================== -->
     <div id="page-ajustes" class="view-page">
       <div class="card" style="border-left: 5px solid var(--primary);">
         <h2 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 8px;">Painel de Lançamento / Correção de Pendência</h2>
@@ -122,12 +125,20 @@
               <option value="Ajuste autorizado de registro de intervalo intrajornada">Ajuste de Registro de Intervalo</option>
             </select>
           </div>
-          <div class="form-group" style="grid-column: span 2;"><label>Responsável:</label><input type="text" id="input-responsavel" value="Gabi (Gerente/Preposta)" required></div>
+          <div class="form-group" style="grid-column: span 2;"><label>Responsável:</label><input type="text" id="input-responsavel" value="Paulo Henrique Ribeiro (Gerente)" readonly style="background-color: var(--gray-100);"></div>
           <div style="grid-column: span 2; display: flex; justify-content: flex-end; gap: 10px;">
             <button type="button" class="btn btn-secondary" onclick="switchPage('page-espelho')">Cancelar</button>
             <button type="submit" class="btn btn-warning">⚡ Validar & Aprovar Ajuste</button>
           </div>
         </form>
+      </div>
+
+      <!-- NOVO: Histórico de Ajustes do Gerente -->
+      <div class="card">
+        <h3 style="font-size: 1rem; margin-bottom: 10px; color: var(--gray-800);">Log de Alterações - Sessão Gerencial</h3>
+        <div id="live-session-logs" style="font-size: 0.85rem; color: var(--gray-600); max-height: 200px; overflow-y: auto;">
+          Nenhum ajuste registrado nesta sessão.
+        </div>
       </div>
     </div>
 
@@ -157,22 +168,29 @@
     </div>
   </div>
 
+  <!-- MODAL DE CONFIRMAÇÃO (Atualizado com Senha) -->
   <div class="modal-overlay" id="modal-confirmacao">
     <div class="modal-content" style="max-width: 520px;">
       <div class="modal-header"><h3 style="color: var(--warning);">⚠️ Confirmar Ajuste Manual</h3><button class="modal-close" onclick="fecharModal('modal-confirmacao')">&times;</button></div>
       <div>
-        <div style="background-color: var(--gray-50); padding: 12px; border-radius: 6px; font-size: 0.88rem;">
+        <div style="background-color: var(--gray-50); padding: 12px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 15px;">
           • <strong>Data:</strong> <span id="conf-data"></span><br>• <strong>Novo Horário Saída:</strong> <span id="conf-saida"></span><br>• <strong>Motivo:</strong> <span id="conf-motivo"></span>
         </div>
+        
+        <!-- NOVO: Campo de Senha -->
+        <div class="form-group">
+          <label style="color: var(--danger);">Senha de Autorização Gerencial:</label>
+          <input type="password" id="input-senha-gerente" placeholder="Digite a senha (9999)" required style="border-color: var(--danger);">
+          <span id="senha-erro" style="color: var(--danger); font-size: 0.8rem; display: none; margin-top: 5px;">Senha incorreta! Operação bloqueada.</span>
+        </div>
       </div>
+      
       <div style="text-align: right; margin-top: 20px; gap: 10px; display: flex; justify-content: flex-end;">
         <button class="btn btn-secondary" onclick="fecharModal('modal-confirmacao')">Voltar</button>
         <button class="btn btn-primary" onclick="efetivarAjusteConfirmado()">Sim, Gravar no Espelho</button>
       </div>
     </div>
   </div>
-
-
   <script src="script.js"></script>
 </body>
 </html>

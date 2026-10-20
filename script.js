@@ -9,10 +9,10 @@ const TURNO_FECHAMENTO = { entBase: "13:30", intIni: "17:30", intFim: "18:30", s
 // 2. Quadro de Funcionários Atualizado com os Novos Papéis
 const FUNCIONARIOS = [
   { id: "0142", nome: "Marina Lopes Barbosa de Oliveira", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
-  { id: "0102", nome: "Paulo Henrique Ribeiro", cargo: "Gerente de Loja", turno: TURNO_FECHAMENTO }, // Testemunha 1
-  { id: "0088", nome: "Mykaelle Santos da Silva", cargo: "Supervisora do Caixa", turno: TURNO_FECHAMENTO }, // Testemunha 2
+  { id: "0102", nome: "Paulo Ricardo Lima de Melo", cargo: "Gerente de Loja", turno: TURNO_FECHAMENTO }, // Testemunha 1
+  { id: "0088", nome: "Mykaelle Albino Costa", cargo: "Supervisora do Caixa", turno: TURNO_FECHAMENTO }, // Testemunha 2
   { id: "0045", nome: "Gabi (Gabriela Martins)", cargo: "Sócia-Proprietária / Preposta", turno: TURNO_ADM }, // Reclamada
-  { id: "0115", nome: "Daniele Cristina Souza", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
+  { id: "0115", nome: "Paulo Henrique Ribeiro", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
   { id: "0091", nome: "Thiago Rocha Mendonça", cargo: "Apoio e Reposição", turno: TURNO_CAIXA },
   { id: "0012", nome: "Carlos Eduardo Farias", cargo: "Açougueiro Líder", turno: TURNO_CEDO },
   { id: "0019", nome: "Juliana Mendes Nogueira", cargo: "Fiscal de Loja", turno: TURNO_CAIXA },
@@ -280,6 +280,14 @@ function abrirLancadorParaData(isoData) {
   switchPage('page-ajustes'); 
 }
 
+// ... (mantenha todo o código anterior do script.js até a função abrirLancadorParaData) ...
+
+function abrirLancadorParaData(isoData) { 
+  const inData = document.getElementById('input-data-ajuste');
+  if(inData) inData.value = isoData; 
+  switchPage('page-ajustes'); 
+}
+
 function prepararConfirmacaoAjuste(e) {
   e.preventDefault();
   const dataIso = document.getElementById('input-data-ajuste').value;
@@ -287,22 +295,72 @@ function prepararConfirmacaoAjuste(e) {
     dataIso, 
     entrada: document.getElementById('input-hora-entrada').value, 
     saida: document.getElementById('input-hora-saida').value, 
-    motivo: document.getElementById('select-motivo').value 
+    motivo: document.getElementById('select-motivo').value,
+    gerente: document.getElementById('input-responsavel').value
   };
   document.getElementById('conf-data').textContent = dataIso.split('-').reverse().join('/');
   document.getElementById('conf-saida').textContent = tempAjustePendente.saida;
   document.getElementById('conf-motivo').textContent = tempAjustePendente.motivo;
+  
+  // Limpa o campo de senha e as mensagens de erro
+  document.getElementById('input-senha-gerente').value = '';
+  document.getElementById('senha-erro').style.display = 'none';
+  
   document.getElementById('modal-confirmacao').classList.add('open');
 }
 
 function efetivarAjusteConfirmado() {
   if(!tempAjustePendente) return;
+  
+  const senhaDigitada = document.getElementById('input-senha-gerente').value;
+  
+  // Validação da Senha
+  if(senhaDigitada !== "9999") {
+    document.getElementById('senha-erro').style.display = 'block';
+    return; // Interrompe a execução se a senha estiver errada
+  }
+
   ajustesAoVivo[tempAjustePendente.dataIso] = tempAjustePendente;
-  localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo)); // Salva permanentemente no navegador
+  localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo)); 
+  
+  atualizarLogAuditoriaVisual(tempAjustePendente);
+
   fecharModal('modal-confirmacao');
   renderizarTabela();
   setTimeout(() => switchPage('page-espelho'), 300);
 }
+
+// NOVO: Função para atualizar a lista visível de ajustes gerenciais na Página 2
+function atualizarLogAuditoriaVisual(ajuste) {
+  const logContainer = document.getElementById('live-session-logs');
+  if (!logContainer) return;
+
+  const [ano, mes, dia] = ajuste.dataIso.split('-');
+  const entradaLog = document.createElement('div');
+  entradaLog.style.padding = "8px 0";
+  entradaLog.style.borderBottom = "1px solid #e2e8f0";
+  entradaLog.innerHTML = `
+    <span style="color:var(--success); font-weight:bold;">[HOMOLOGADO]</span> 
+    Dia <strong>${dia}/${mes}/${ano}</strong> retificado para saída <strong>${ajuste.saida}</strong>. 
+    Justificativa: <em>${ajuste.motivo}</em> (Assinado eletronicamente por: ${ajuste.gerente}).
+  `;
+  
+  if (logContainer.innerText.includes('Nenhum ajuste')) {
+    logContainer.innerHTML = '';
+  }
+  logContainer.prepend(entradaLog);
+}
+
+// Carrega os logs antigos ao iniciar a página
+window.addEventListener('DOMContentLoaded', () => {
+  if(Object.keys(ajustesAoVivo).length > 0) {
+    const logContainer = document.getElementById('live-session-logs');
+    if(logContainer) logContainer.innerHTML = '';
+    Object.values(ajustesAoVivo).forEach(ajuste => {
+      atualizarLogAuditoriaVisual(ajuste);
+    });
+  }
+});
 
 function fecharModal(id) { 
   const modal = document.getElementById(id);
