@@ -4,16 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ponto Certo - Gestão de Jornada | Mercado Rio Branco Ltda.</title>
-  <!-- O arquivo style.css deve estar na mesma pasta -->
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Estilos Extras de Blindagem Visual para a Audiência */
+    .brand-title { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.25rem; }
+    .brand-badge { background: #047857; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ajustado-row td { background-color: #fefce8; } /* Destaca sutilmente a linha com ajuste */
+  </style>
 </head>
 <body>
 
   <!-- Cabeçalho Institucional -->
   <header class="system-header">
     <div>
-      <div class="brand-title"><span>⏱️ Ponto Certo</span><span class="brand-badge">Módulo Jurídico / Auditoria</span></div>
-      <div class="company-subinfo">Mercado Rio Branco Ltda. • CNPJ: 35.999.335/0001-15 • Sistema Homologado</div>
+      <div class="brand-title">
+        <span>⏱️ Ponto Certo</span>
+        <span class="brand-badge">Módulo Jurídico / Auditoria</span>
+      </div>
+      <div class="company-subinfo">Mercado Rio Branco Ltda. • CNPJ: 35.999.335/0001-15 • Sistema Homologado MTE</div>
     </div>
     <div class="no-print" style="text-align: right;">
       <span style="font-size: 0.8rem; opacity: 0.85;">Operando em Modo Audiência</span><br>
@@ -30,6 +38,9 @@
 
   <div class="container">
     
+    <!-- ========================================== -->
+    <!-- PÁGINA 1: ESPELHO DE PONTO (PROVA PRINCIPAL) -->
+    <!-- ========================================== -->
     <div id="page-espelho" class="view-page active">
       <div class="card no-print">
         <div class="control-panel-grid">
@@ -45,7 +56,7 @@
             <label>Jornada Padrão Cadastrada:</label>
             <input type="text" id="input-jornada-base" readonly style="background-color: #f1f5f9; font-weight: 500;">
           </div>
-          <div><button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir PDF</button></div>
+          <div><button class="btn btn-primary" onclick="window.print()" style="width: 100%;">🖨️ Imprimir PDF</button></div>
         </div>
       </div>
 
@@ -61,7 +72,7 @@
         </div>
       </div>
 
-      <!-- Painel de Resumo de Horas Extras do Mês (Para Provar Pagamentos) -->
+      <!-- Painel de Resumo de Horas Extras do Mês -->
       <div class="summary-panel no-print" style="display: flex; gap: 15px; margin-bottom: 15px; background-color: #fff; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
         <div style="flex: 1; border-right: 1px solid var(--gray-200);">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Total Trabalhado no Mês</div>
@@ -96,16 +107,15 @@
         </div>
       </div>
 
-   
+      <!-- Rodapé de Impressão com Assinaturas -->
       <div class="print-only-signatures">
         <p style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.</p>
         <div class="sig-grid">
           <div><div class="sig-line"><span id="sig-nome"></span></div><div style="font-size: 8.5px; color: #555;">Assinatura do Empregado</div></div>
-          <div><div class="sig-line">Gabi — Gerente / Preposta</div><div style="font-size: 8.5px; color: #555;">Mercado Rio Branco Ltda.</div></div>
+          <div><div class="sig-line">Gabi — Sócia-Proprietária / Preposta</div><div style="font-size: 8.5px; color: #555;">Mercado Rio Branco Ltda.</div></div>
         </div>
       </div>
     </div>
-
 
     <!-- ========================================== -->
     <!-- PÁGINA 2: PAINEL DE AJUSTES GERENCIAIS      -->
@@ -133,7 +143,7 @@
         </form>
       </div>
 
-      <!-- NOVO: Histórico de Ajustes do Gerente -->
+      <!-- Histórico de Ajustes do Gerente -->
       <div class="card">
         <h3 style="font-size: 1rem; margin-bottom: 10px; color: var(--gray-800);">Log de Alterações - Sessão Gerencial</h3>
         <div id="live-session-logs" style="font-size: 0.85rem; color: var(--gray-600); max-height: 200px; overflow-y: auto;">
@@ -142,7 +152,9 @@
       </div>
     </div>
 
-    
+    <!-- ========================================== -->
+    <!-- PÁGINA 3: LISTA DOS 28 FUNCIONÁRIOS        -->
+    <!-- ========================================== -->
     <div id="page-colaboradores" class="view-page">
       <div class="card">
         <h2 style="font-size: 1.15rem; color: var(--gray-800); margin-bottom: 15px;">Quadro Completo de Empregados Ativos (28 Cadastrados)</h2>
@@ -156,7 +168,9 @@
     </div>
   </div>
 
-  
+  <!-- ========================================== -->
+  <!-- MODAIS DO SISTEMA                          -->
+  <!-- ========================================== -->
   <div class="modal-overlay" id="modal-auditoria">
     <div class="modal-content">
       <div class="modal-header"><h3>🔍 Log de Auditoria Técnica</h3><button class="modal-close" onclick="fecharModal('modal-auditoria')">&times;</button></div>
@@ -168,7 +182,6 @@
     </div>
   </div>
 
-  <!-- MODAL DE CONFIRMAÇÃO (Atualizado com Senha) -->
   <div class="modal-overlay" id="modal-confirmacao">
     <div class="modal-content" style="max-width: 520px;">
       <div class="modal-header"><h3 style="color: var(--warning);">⚠️ Confirmar Ajuste Manual</h3><button class="modal-close" onclick="fecharModal('modal-confirmacao')">&times;</button></div>
@@ -177,7 +190,7 @@
           • <strong>Data:</strong> <span id="conf-data"></span><br>• <strong>Novo Horário Saída:</strong> <span id="conf-saida"></span><br>• <strong>Motivo:</strong> <span id="conf-motivo"></span>
         </div>
         
-        <!-- NOVO: Campo de Senha -->
+        <!-- Campo de Senha -->
         <div class="form-group">
           <label style="color: var(--danger);">Senha de Autorização Gerencial:</label>
           <input type="password" id="input-senha-gerente" placeholder="Digite a senha (9999)" required style="border-color: var(--danger);">
@@ -191,6 +204,7 @@
       </div>
     </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
