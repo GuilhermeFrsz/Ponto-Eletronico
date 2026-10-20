@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ponto Certo - Gestão de Jornada | Mercado Rio Branco Ltda.</title>
+  <!-- O arquivo style.css deve estar na mesma pasta -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Cabeçalho Institucional -->
+  <header class="system-header">
+    <div>
+      <div class="brand-title"><span>⏱️ Ponto Certo</span><span class="brand-badge">Módulo Jurídico / Auditoria</span></div>
+      <div class="company-subinfo">Mercado Rio Branco Ltda. • CNPJ: 35.999.335/0001-15 • Sistema Homologado</div>
+    </div>
+    <div class="no-print" style="text-align: right;">
+      <span style="font-size: 0.8rem; opacity: 0.85;">Operando em Modo Audiência</span><br>
+      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Base Local Autenticada</span>
+    </div>
+  </header>
+
+  <!-- Navegação das 3 Telas -->
+  <nav class="nav-bar no-print">
+    <button class="nav-btn active" onclick="switchPage('page-espelho')">📄 1. Espelho de Ponto Individual</button>
+    <button class="nav-btn" onclick="switchPage('page-ajustes')">⚙️ 2. Lançamento & Auditoria Gerencial</button>
+    <button class="nav-btn" onclick="switchPage('page-colaboradores')">👥 3. Quadro Geral de Funcionários</button>
+  </nav>
+
+  <div class="container">
+    
+    <div id="page-espelho" class="view-page active">
+      <div class="card no-print">
+        <div class="control-panel-grid">
+          <div class="form-group">
+            <label>Funcionário Cadastrado (28 no Total):</label>
+            <select id="select-colaborador" onchange="alterarFuncionario()"></select>
+          </div>
+          <div class="form-group">
+            <label>Competência / Mês:</label>
+            <select id="select-competencia" onchange="renderizarTabela()"></select>
+          </div>
+          <div class="form-group">
+            <label>Jornada Padrão Cadastrada:</label>
+            <input type="text" id="input-jornada-base" readonly style="background-color: #f1f5f9; font-weight: 500;">
+          </div>
+          <div><button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir PDF</button></div>
+        </div>
+      </div>
+
+      <!-- Faixa de Identificação do Empregado -->
+      <div class="employee-strip">
+        <div>
+          <div><strong>Empregador:</strong> Mercado Rio Branco Ltda. | CNPJ: 35.999.335/0001-15</div>
+          <div><strong>Colaborador(a):</strong> <span id="strip-nome"></span></div>
+        </div>
+        <div>
+          <div><strong>Cargo:</strong> <span id="strip-cargo"></span> | <strong>Matrícula:</strong> <span id="strip-matricula"></span></div>
+          <div><strong>Jornada Contratual:</strong> <span id="strip-jornada"></span> | DSR: Domingo</div>
+        </div>
+      </div>
+
+      <!-- Painel de Resumo de Horas Extras do Mês (Para Provar Pagamentos) -->
+      <div class="summary-panel no-print" style="display: flex; gap: 15px; margin-bottom: 15px; background-color: #fff; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <div style="flex: 1; border-right: 1px solid var(--gray-200);">
+          <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Total Trabalhado no Mês</div>
+          <div id="resumo-total-trab" style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">000h 00m</div>
+        </div>
+        <div style="flex: 1; border-right: 1px solid var(--gray-200); padding-left: 15px;">
+          <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Horas Extras (Saldo Positivo)</div>
+          <div id="resumo-total-extra" style="font-size: 1.5rem; font-weight: bold; color: var(--danger);">00h 00m</div>
+          <div style="font-size: 0.75rem; color: var(--gray-600);">*Encaminhado para Folha de Pagamento</div>
+        </div>
+        <div style="flex: 1; padding-left: 15px;">
+          <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Atrasos/Faltas (Saldo Negativo)</div>
+          <div id="resumo-total-atraso" style="font-size: 1.5rem; font-weight: bold; color: var(--warning);">00h 00m</div>
+        </div>
+      </div>
+
+      <!-- Tabela do Espelho -->
+      <div class="card" style="padding: 10px;">
+        <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;" class="no-print">
+          <span style="font-weight: 600; color: var(--gray-600); font-size: 0.85rem;">Registros Eletrônicos Consolidados — Batidas via App/Tablet</span>
+          <span style="font-size: 0.8rem; color: var(--warning); font-weight: 600;">⚠️ Clique nas tags laranjas para ver o Log de Auditoria</span>
+        </div>
+        <div class="table-responsive">
+          <table class="ponto-table">
+            <thead>
+              <tr>
+                <th>Data</th><th>Dia</th><th>Entrada</th><th>Início Int.</th><th>Fim Int.</th><th>Saída</th><th>Total Trab.</th><th>Saldo (Extra)</th><th>Ocorrência / Status</th><th class="no-print">Ações Rápidas</th>
+              </tr>
+            </thead>
+            <tbody id="ponto-corpo"></tbody>
+          </table>
+        </div>
+      </div>
+
+   
+      <div class="print-only-signatures">
+        <p style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.</p>
+        <div class="sig-grid">
+          <div><div class="sig-line"><span id="sig-nome"></span></div><div style="font-size: 8.5px; color: #555;">Assinatura do Empregado</div></div>
+          <div><div class="sig-line">Gabi — Gerente / Preposta</div><div style="font-size: 8.5px; color: #555;">Mercado Rio Branco Ltda.</div></div>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="page-ajustes" class="view-page">
+      <div class="card" style="border-left: 5px solid var(--primary);">
+        <h2 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 8px;">Painel de Lançamento / Correção de Pendência</h2>
+        <form id="form-ajuste-gerencia" onsubmit="prepararConfirmacaoAjuste(event)" style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+          <div class="form-group"><label>Colaborador Alvo:</label><input type="text" id="ajuste-target-nome" readonly style="background-color: var(--gray-100); font-weight: 600;"></div>
+          <div class="form-group"><label>Data do Ponto Pendente:</label><input type="date" id="input-data-ajuste" required min="2025-03-01" max="2026-08-31"></div>
+          <div class="form-group"><label>Horário Real de Entrada:</label><input type="time" id="input-hora-entrada" required></div>
+          <div class="form-group"><label>Horário de Término (Saída):</label><input type="time" id="input-hora-saida" required></div>
+          <div class="form-group" style="grid-column: span 2;"><label>Motivo do Ajuste Técnico:</label>
+            <select id="select-motivo" required>
+              <option value="Instabilidade/Falha de Conexão Wi-Fi no Tablet do Caixa 01 no encerramento do expediente">Queda de Conexão no Tablet / Wi-Fi</option>
+              <option value="Sincronização Desconectada pelo Servidor Central no fechamento">Sincronização Desconectada pelo Servidor</option>
+              <option value="Ajuste autorizado de registro de intervalo intrajornada">Ajuste de Registro de Intervalo</option>
+            </select>
+          </div>
+          <div class="form-group" style="grid-column: span 2;"><label>Responsável:</label><input type="text" id="input-responsavel" value="Gabi (Gerente/Preposta)" required></div>
+          <div style="grid-column: span 2; display: flex; justify-content: flex-end; gap: 10px;">
+            <button type="button" class="btn btn-secondary" onclick="switchPage('page-espelho')">Cancelar</button>
+            <button type="submit" class="btn btn-warning">⚡ Validar & Aprovar Ajuste</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    
+    <div id="page-colaboradores" class="view-page">
+      <div class="card">
+        <h2 style="font-size: 1.15rem; color: var(--gray-800); margin-bottom: 15px;">Quadro Completo de Empregados Ativos (28 Cadastrados)</h2>
+        <div class="table-responsive">
+          <table class="ponto-table" style="text-align: left;">
+            <thead><tr><th>Matrícula</th><th>Nome</th><th>Cargo</th><th>Turno</th><th>Ação</th></tr></thead>
+            <tbody id="tabela-todos-colaboradores"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal-overlay" id="modal-auditoria">
+    <div class="modal-content">
+      <div class="modal-header"><h3>🔍 Log de Auditoria Técnica</h3><button class="modal-close" onclick="fecharModal('modal-auditoria')">&times;</button></div>
+      <div>
+        <p><strong>Registro:</strong> <span id="audit-reg-id"></span></p>
+        <p><strong>Data:</strong> <span id="audit-data-jornada"></span> | <strong>Horário Gravado:</strong> <span id="audit-hora"></span></p>
+        <div class="audit-log-box" id="audit-descricao"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-confirmacao">
+    <div class="modal-content" style="max-width: 520px;">
+      <div class="modal-header"><h3 style="color: var(--warning);">⚠️ Confirmar Ajuste Manual</h3><button class="modal-close" onclick="fecharModal('modal-confirmacao')">&times;</button></div>
+      <div>
+        <div style="background-color: var(--gray-50); padding: 12px; border-radius: 6px; font-size: 0.88rem;">
+          • <strong>Data:</strong> <span id="conf-data"></span><br>• <strong>Novo Horário Saída:</strong> <span id="conf-saida"></span><br>• <strong>Motivo:</strong> <span id="conf-motivo"></span>
+        </div>
+      </div>
+      <div style="text-align: right; margin-top: 20px; gap: 10px; display: flex; justify-content: flex-end;">
+        <button class="btn btn-secondary" onclick="fecharModal('modal-confirmacao')">Voltar</button>
+        <button class="btn btn-primary" onclick="efetivarAjusteConfirmado()">Sim, Gravar no Espelho</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
