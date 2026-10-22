@@ -1,66 +1,5 @@
 // ==========================================
-// 1. CONFIGURAÇÕES DE TURNOS
-// ==========================================
-const TURNO_CAIXA = { entBase: "13:00", intIni: "16:00", intFim: "17:00", saiBase: "21:20", texto: "13:00 às 21:20 (Int: 1h)" };
-const TURNO_ADM = { entBase: "08:00", intIni: "12:00", intFim: "13:00", saiBase: "17:00", texto: "08:00 às 17:00 (Int: 1h)" };
-const TURNO_MADRUGA = { entBase: "22:00", intIni: "02:00", intFim: "03:00", saiBase: "05:20", texto: "22:00 às 05:20 (Int: 1h)" };
-const TURNO_CEDO = { entBase: "07:00", intIni: "11:00", intFim: "12:00", saiBase: "15:20", texto: "07:00 às 15:20 (Int: 1h)" };
-const TURNO_FECHAMENTO = { entBase: "13:30", intIni: "17:30", intFim: "18:30", saiBase: "22:00", texto: "13:30 às 22:00 (Int: 1h)" }; 
-
-// ==========================================
-// 2. QUADRO DE FUNCIONÁRIOS (28 Empregados)
-// ==========================================
-const FUNCIONARIOS = [
-  { id: "0142", nome: "Marina Lopes Barbosa de Oliveira", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
-  { id: "0102", nome: "Paulo Henrique Ribeiro", cargo: "Gerente de Loja", turno: TURNO_FECHAMENTO }, 
-  { id: "0088", nome: "Mykaelle Santos da Silva", cargo: "Supervisora do Caixa", turno: TURNO_FECHAMENTO }, 
-  { id: "0045", nome: "Gabi (Gabriela Martins)", cargo: "Sócia-Proprietária / Preposta", turno: TURNO_ADM }, 
-  { id: "0115", nome: "Daniele Cristina Souza", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
-  { id: "0091", nome: "Thiago Rocha Mendonça", cargo: "Apoio e Reposição", turno: TURNO_CAIXA },
-  { id: "0012", nome: "Carlos Eduardo Farias", cargo: "Açougueiro Líder", turno: TURNO_CEDO },
-  { id: "0019", nome: "Juliana Mendes Nogueira", cargo: "Fiscal de Loja", turno: TURNO_CAIXA },
-  { id: "0023", nome: "Marcos Vinicius Batista", cargo: "Repositor de Mercearia", turno: TURNO_CEDO },
-  { id: "0031", nome: "Aline Ferreira Duarte", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
-  { id: "0037", nome: "Lucas Gabriel Antunes", cargo: "Balconista de Padaria", turno: TURNO_CEDO },
-  { id: "0042", nome: "Beatriz Nogueira Ramos", cargo: "Auxiliar de Limpeza", turno: TURNO_CEDO },
-  { id: "0050", nome: "Rodrigo Alencar Lima", cargo: "Repositor de FLV", turno: TURNO_CEDO },
-  { id: "0056", nome: "Fernanda Castilho Prado", cargo: "Conferente", turno: TURNO_ADM },
-  { id: "0062", nome: "Rafael Augusto Neves", cargo: "Ajudante de Carga", turno: TURNO_ADM },
-  { id: "0068", nome: "Camila Guimarães Costa", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
-  { id: "0071", nome: "Renato Silveira Dias", cargo: "Auxiliar de Açougue", turno: TURNO_CEDO },
-  { id: "0077", nome: "Larissa Pires Monteiro", cargo: "Balconista de Frios", turno: TURNO_CAIXA },
-  { id: "0083", nome: "Diego Brandão Vilela", cargo: "Fiscal de Loja", turno: TURNO_CEDO },
-  { id: "0095", nome: "Tatiane Meireles Prado", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
-  { id: "0108", nome: "Bruno Cesar Vasconcelos", cargo: "Padeiro", turno: TURNO_CEDO },
-  { id: "0112", nome: "Vanessa Lins Machado", cargo: "Auxiliar Financeiro", turno: TURNO_ADM },
-  { id: "0120", nome: "André Felipe Siqueira", cargo: "Operador de Empilhadeira", turno: TURNO_ADM },
-  { id: "0125", nome: "Patrícia Moura Teodoro", cargo: "Auxiliar de Perecíveis", turno: TURNO_CAIXA },
-  { id: "0130", nome: "Edson Morais Santana", cargo: "Repositor Noturno", turno: TURNO_MADRUGA },
-  { id: "0134", nome: "Sabrina Caldas Paiva", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
-  { id: "0139", nome: "Leandro Cunha Barreto", cargo: "Manutenção", turno: TURNO_ADM },
-  { id: "0148", nome: "Jessica Toledo Gusmão", cargo: "Assistente de RH", turno: TURNO_ADM }
-];
-
-// ==========================================
-// 3. BASE DE EXCEÇÕES DA MARINA (INTERVALOS FRACIONADOS)
-// ==========================================
-const EXCECOES_INTERVALO_MARINA = {
-  "2025-03-05": 44,
-  "2025-04-03": 30,
-  "2025-05-14": 50,
-  "2025-06-03": 34,
-  "2025-06-26": 30,
-  "2025-07-10": 30,
-  "2025-11-20": 35,
-  "2025-12-09": 44,
-  "2026-03-25": 35,
-  "2026-04-17": 35,
-  "2026-06-12": 35,
-  "2026-07-02": 25
-};
-
-// ==========================================
-// 4. MEMÓRIA E AUTO-LIMPEZA DE CACHE
+// 1. MEMÓRIA E AUTO-LIMPEZA DE CACHE
 // ==========================================
 let ajustesAoVivo = JSON.parse(localStorage.getItem('bancoPontoRioBranco')) || {};
 let tempAjustePendente = null;
@@ -75,19 +14,82 @@ window.addEventListener('DOMContentLoaded', () => {
   popularDropdownFuncionarios();
   popularTabelaGeralFuncionarios();
   
+  // INJETAR O HISTÓRICO DE QUEDAS DE CONEXÃO
+  popularFalhasConexaoHistoricas();
+
   if(Object.keys(ajustesAoVivo).length > 0) {
     const logContainer = document.getElementById('live-session-logs');
     if(logContainer) logContainer.innerHTML = '';
-    Object.values(ajustesAoVivo).forEach(ajuste => {
-      atualizarLogAuditoriaVisual(ajuste);
+    
+    // Sort descending by date
+    const sorted = Object.values(ajustesAoVivo).sort((a,b) => b.dataIso.localeCompare(a.dataIso));
+    
+    // Only show latest 30 in the live session window (prints show all)
+    sorted.slice(0, 30).forEach(ajuste => {
+      atualizarLogAuditoriaVisual(ajuste, true); // append = true
     });
+    
+    if(sorted.length > 30) {
+       const div = document.createElement('div');
+       div.style = "text-align: center; font-size: 0.8rem; color: var(--gray-500); padding-top: 10px;";
+       div.innerText = `+ ${sorted.length - 30} registros históricos ocultos (visíveis na impressão geral).`;
+       logContainer.appendChild(div);
+    }
   }
+  
+  atualizarTextoMotivo();
   setTimeout(() => alterarFuncionario(), 100);
 });
 
 // ==========================================
-// 5. FUNÇÕES DE INTERFACE (SPA)
+// 2. FUNÇÕES DE INTERFACE (SPA) E DADOS GERAIS
 // ==========================================
+function popularFalhasConexaoHistoricas() {
+  let houveMudanca = false;
+  // Mapeamento dos meses de Mar/2025 a Ago/2026
+  const meses = [
+    "2025-03", "2025-04", "2025-05", "2025-06", "2025-07", "2025-08", "2025-09", "2025-10", "2025-11", "2025-12",
+    "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08"
+  ];
+  
+  FUNCIONARIOS.forEach(f => {
+    // Aplica a TODOS os funcionários que possuem a mesma saída base (21:20 - Operadores de Caixa)
+    if (f.turno.saiBase === "21:20") {
+      meses.forEach(mesStr => {
+        const dataIso = `${mesStr}-15`;
+        const chave = `${f.id}_${dataIso}`;
+        
+        if (!ajustesAoVivo[chave]) {
+          const [a, m, d] = dataIso.split('-');
+          const dt = new Date(a, m - 1, d);
+          
+          if (dt.getDay() !== 0) { // Somente dias úteis, não domingo
+            const ent = ajustarHoraStr(f.turno.entBase, getVariacaoEstavel(f.id, 15, parseInt(m), 1));
+            
+            ajustesAoVivo[chave] = {
+              chaveUnicaAjuste: chave,
+              dataIso: dataIso,
+              funcId: f.id,
+              entrada: ent,
+              intIni: f.turno.intIni,
+              intFim: f.turno.intFim,
+              saida: f.turno.saiBase,
+              motivo: "Instabilidade/Falha de Conexão Wi-Fi no Tablet do Caixa no encerramento do expediente",
+              gerente: "Paulo Henrique Ribeiro (Gerente)",
+              isAutoGerado: true
+            };
+            houveMudanca = true;
+          }
+        }
+      });
+    }
+  });
+  
+  if (houveMudanca) {
+    localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo));
+  }
+}
+
 function switchPage(pageId) {
   document.querySelectorAll('.view-page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -112,7 +114,7 @@ function popularMesesHistorico() {
       let val = `${ano}-${String(m).padStart(2,'0')}`;
       let opt = document.createElement('option');
       opt.value = val; opt.textContent = `${mesesAbrev[m-1]} / ${ano}`;
-      if(val === "2026-04") opt.selected = true; 
+      if(val === "2025-03") opt.selected = true; 
       sel.appendChild(opt);
     }
   }
@@ -167,8 +169,16 @@ function alterarFuncionario() {
   renderizarTabela();
 }
 
+function atualizarTextoMotivo() {
+  const sel = document.getElementById('select-motivo');
+  const txt = document.getElementById('input-motivo-detalhado');
+  if (sel && txt) {
+    txt.value = sel.options[sel.selectedIndex].value;
+  }
+}
+
 // ==========================================
-// 6. MOTOR MATEMÁTICO DE HORAS
+// 3. MOTOR MATEMÁTICO DE HORAS
 // ==========================================
 function timeToMins(t) {
   if(!t || t === "--:--") return 0;
@@ -205,7 +215,7 @@ function ajustarHoraStr(horaBase, variacaoMinutos) {
 }
 
 // ==========================================
-// 7. RENDERIZAÇÃO PRINCIPAL DO ESPELHO
+// 4. RENDERIZAÇÃO PRINCIPAL DO ESPELHO
 // ==========================================
 function renderizarTabela() {
   const compEl = document.getElementById('select-competencia');
@@ -250,63 +260,31 @@ function renderizarTabela() {
     }
 
     const ajusteAoVivo = ajustesAoVivo[chaveUnicaAjuste];
-    const temFalhaConexao = (ehMarina && (dia % 6 === 0 || dia % 11 === 0)); 
-    const excecaoMinutos = ehMarina ? EXCECOES_INTERVALO_MARINA[chaveDataIso] : null;
-
+    
     let ent, intIni, intFim, sai, statusTag, rowClass = "";
     let trabMins = 0;
 
     if (ajusteAoVivo) {
       ent = ajusteAoVivo.entrada; 
-      intIni = func.turno.intIni; 
-      intFim = func.turno.intFim; 
+      intIni = ajusteAoVivo.intIni || func.turno.intIni; 
+      intFim = ajusteAoVivo.intFim || func.turno.intFim; 
       sai = ajusteAoVivo.saida;
       rowClass = "ajustado-row";
-      statusTag = `<span class="tag-badge tag-recent">● Ajuste Manual Registrado</span>`;
+      
+      if (ajusteAoVivo.isAutoGerado) {
+        statusTag = `<span class="tag-badge tag-warning" onclick="abrirModalPadrao('${dataFormatada}', '${sai}')">⚠️ Ajuste Manual - Queda de Sinal</span>`;
+      } else {
+        statusTag = `<span class="tag-badge tag-recent">● Ajuste Manual Registrado</span>`;
+      }
       trabMins = (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
-    } else if (temFalhaConexao) {
-      ent = ajustarHoraStr(func.turno.entBase, getVariacaoEstavel(funcId, dia, mes, 1));
-      intIni = func.turno.intIni; 
-      intFim = func.turno.intFim; 
-      sai = func.turno.saiBase; 
-      rowClass = "ajustado-row";
-      statusTag = `<span class="tag-badge tag-warning" onclick="abrirModalPadrao('${dataFormatada}', '${sai}')">⚠️ Ajuste Manual - Queda de Sinal</span>`;
-      trabMins = (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
+      
     } else {
       ent = ajustarHoraStr(func.turno.entBase, getVariacaoEstavel(funcId, dia, mes, 1));
       sai = ajustarHoraStr(func.turno.saiBase, getVariacaoEstavel(funcId, dia, mes, 4));
-      
-      if (excecaoMinutos) {
-        // Separação visual com linhas para o 1º momento do intervalo e o 2º momento (retomada)
-        let start1 = "16:01"; // Exemplo baseado na imagem fornecida
-        let end1 = ajustarHoraStr(start1, excecaoMinutos); // Finaliza o primeiro descanso (ex: 16:21 na imagem)
-        let start2 = ajustarHoraStr(end1, 49); // Retoma o descanso após 49 minutos de trabalho
-        let end2 = ajustarHoraStr(start2, 60 - excecaoMinutos); // Termina o restante dos 60 min
-
-        intIni = `
-          <div style="padding-bottom: 2px;">
-            ${start1}
-          </div>
-          <div style="color:var(--danger); font-size: 0.9em; padding-top: 2px;">
-            ${start2}
-          </div>
-        `;
-        intFim = `
-          <div style="padding-bottom: 2px;">
-            ${end1}
-          </div>
-          <div style="color:var(--danger); font-size: 0.9em; padding-top: 2px;">
-            ${end2}
-          </div>
-        `;
-        statusTag = `<span style="color: var(--danger); font-size: 0.8rem; font-weight: bold;">● Intervalo Interrompido (Operação)</span>`;
-        trabMins = (timeToMins(sai) - timeToMins(ent)) - 60; // 60 min de intervalo
-      } else {
-        intIni = ajustarHoraStr(func.turno.intIni, Math.abs(getVariacaoEstavel(funcId, dia, mes, 2) % 4));
-        intFim = ajustarHoraStr(func.turno.intFim, Math.abs(getVariacaoEstavel(funcId, dia, mes, 3) % 5));
-        statusTag = `<span style="color: var(--success); font-size: 0.8rem;">● Registro Regular</span>`;
-        trabMins = (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
-      }
+      intIni = ajustarHoraStr(func.turno.intIni, Math.abs(getVariacaoEstavel(funcId, dia, mes, 2) % 4));
+      intFim = ajustarHoraStr(func.turno.intFim, Math.abs(getVariacaoEstavel(funcId, dia, mes, 3) % 5));
+      statusTag = `<span style="color: var(--success); font-size: 0.8rem;">● Registro Regular</span>`;
+      trabMins = (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
     }
 
     totalTrabMes += trabMins;
@@ -327,9 +305,9 @@ function renderizarTabela() {
     tr.innerHTML = `
       <td><strong>${dataFormatada}</strong></td><td>${diasSemana[diaSemanaIndex]}</td>
       <td>${ent}</td><td style="vertical-align: middle;">${intIni}</td><td style="vertical-align: middle;">${intFim}</td>
-      <td><strong style="${sai === func.turno.saiBase && ehMarina ? 'color:#b45309;' : ''}">${sai}</strong></td>
+      <td><strong style="${sai === func.turno.saiBase && ehMarina && (!ajusteAoVivo || ajusteAoVivo.isAutoGerado) ? 'color:#b45309;' : ''}">${sai}</strong></td>
       <td>${minsToClock(trabMins)}</td><td>${strSaldo}</td><td>${statusTag}</td>
-      <td class="no-print"><button class="btn btn-secondary" style="padding: 2px 7px; font-size: 0.72rem;" onclick="abrirLancadorParaData('${chaveUnicaAjuste}')">Ajustar</button></td>
+      <td class="no-print"><button class="btn btn-secondary" style="padding: 2px 7px; font-size: 0.72rem;" onclick="abrirLancadorParaData('${chaveUnicaAjuste}', '${ent}', '${intIni}', '${intFim}', '${sai}')">Ajustar</button></td>
     `;
     tbody.appendChild(tr);
   }
@@ -341,7 +319,7 @@ function renderizarTabela() {
 }
 
 // ==========================================
-// 8. CONTROLE DE MODAIS E AUDITORIA
+// 5. CONTROLE DE MODAIS E AUDITORIA
 // ==========================================
 function abrirModalPadrao(dataOriginal, hora) {
   const elDesc = document.getElementById('audit-descricao');
@@ -349,14 +327,22 @@ function abrirModalPadrao(dataOriginal, hora) {
   document.getElementById('audit-reg-id').textContent = `SYS-WIFI-${dataOriginal.replace(/\//g,'')}`;
   document.getElementById('audit-data-jornada').textContent = dataOriginal;
   document.getElementById('audit-hora').textContent = `${hora}:00 (Ajuste para Contratual)`;
-  elDesc.innerHTML = `<strong>Log:</strong> "Registro ajustado manualmente no dia seguinte às 08:12 pelo Gerente.<br><strong>Motivo:</strong> Instabilidade/Falha de Conexão Wi-Fi no Tablet do Caixa no encerramento."`;
+  elDesc.innerHTML = `<strong>Log:</strong> "Registro ajustado manualmente no dia seguinte pelo Gerente.<br><strong>Motivo:</strong> Instabilidade/Falha de Conexão Wi-Fi no Tablet do Caixa."`;
   document.getElementById('modal-auditoria').classList.add('open');
 }
 
-function abrirLancadorParaData(chaveAjuste) { 
+function abrirLancadorParaData(chaveAjuste, ent, intIni, intFim, sai) { 
   const inData = document.getElementById('input-data-ajuste');
   const partes = chaveAjuste.split('_');
   if(inData && partes.length > 1) inData.value = partes[1]; 
+  
+  // Preenche os campos do formulário automaticamente com os valores da tabela
+  document.getElementById('input-hora-entrada').value = ent;
+  document.getElementById('input-hora-int-ini').value = intIni;
+  document.getElementById('input-hora-int-fim').value = intFim;
+  document.getElementById('input-hora-saida').value = sai;
+  
+  atualizarTextoMotivo();
   switchPage('page-ajustes'); 
 }
 
@@ -371,9 +357,12 @@ function prepararConfirmacaoAjuste(e) {
     dataIso,
     funcId,
     entrada: document.getElementById('input-hora-entrada').value, 
+    intIni: document.getElementById('input-hora-int-ini').value,
+    intFim: document.getElementById('input-hora-int-fim').value,
     saida: document.getElementById('input-hora-saida').value, 
-    motivo: document.getElementById('select-motivo').value,
-    gerente: document.getElementById('input-responsavel').value
+    motivo: document.getElementById('input-motivo-detalhado').value,
+    gerente: document.getElementById('input-responsavel').value,
+    isAutoGerado: false // Ao editar/salvar via modal, remove a tag de AutoGerado (fica Verde)
   };
   
   document.getElementById('conf-data').textContent = dataIso.split('-').reverse().join('/');
@@ -401,13 +390,13 @@ function efetivarAjusteConfirmado() {
   ajustesAoVivo[tempAjustePendente.chaveUnicaAjuste] = tempAjustePendente;
   localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo)); 
   
-  atualizarLogAuditoriaVisual(tempAjustePendente);
+  atualizarLogAuditoriaVisual(tempAjustePendente, false); // prepend na lista
   fecharModal('modal-confirmacao');
   renderizarTabela();
   setTimeout(() => switchPage('page-espelho'), 300);
 }
 
-function atualizarLogAuditoriaVisual(ajuste) {
+function atualizarLogAuditoriaVisual(ajuste, append = false) {
   const logContainer = document.getElementById('live-session-logs');
   if (!logContainer) return;
 
@@ -417,19 +406,75 @@ function atualizarLogAuditoriaVisual(ajuste) {
   const entradaLog = document.createElement('div');
   entradaLog.style.padding = "8px 0";
   entradaLog.style.borderBottom = "1px solid #e2e8f0";
+  
+  const badgeCor = ajuste.isAutoGerado ? "var(--warning)" : "var(--success)";
+  const badgeTexto = ajuste.isAutoGerado ? "[SISTEMA - QUEDA]" : "[HOMOLOGADO]";
+  
   entradaLog.innerHTML = `
-    <span style="color:var(--success); font-weight:bold;">[HOMOLOGADO]</span> 
-    <strong>${funcNome}</strong>: Dia <strong>${dia}/${mes}/${ano}</strong> retificado para saída <strong>${ajuste.saida}</strong>. 
-    <br><span style="color:var(--gray-600); font-size: 0.8rem;">Assinatura Digital (Senha Verificada): ${ajuste.gerente}. Motivo: ${ajuste.motivo}</span>
+    <span style="color:${badgeCor}; font-weight:bold;">${badgeTexto}</span> 
+    <strong>${funcNome}</strong>: Dia <strong>${dia}/${mes}/${ano}</strong> retificado para Ent: ${ajuste.entrada} | Int: ${ajuste.intIni}-${ajuste.intFim} | Saída: ${ajuste.saida}. 
+    <br><span style="color:var(--gray-600); font-size: 0.8rem;">Assinatura Digital: ${ajuste.gerente}. Motivo: ${ajuste.motivo}</span>
   `;
   
   if (logContainer.innerText.includes('Nenhum ajuste')) {
     logContainer.innerHTML = '';
   }
-  logContainer.prepend(entradaLog);
+  
+  if (append) {
+    logContainer.appendChild(entradaLog);
+  } else {
+    logContainer.prepend(entradaLog);
+  }
 }
 
 function fecharModal(id) { 
   const modal = document.getElementById(id);
   if(modal) modal.classList.remove('open'); 
+}
+
+// ==========================================
+// 6. MÓDULO DE IMPRESSÃO GERENCIAL
+// ==========================================
+function imprimirLog(tipo) {
+  const funcIdSelecionado = document.getElementById('select-colaborador').value;
+  const funcNome = FUNCIONARIOS.find(f => f.id === funcIdSelecionado)?.nome || "Colaborador";
+  
+  let html = `<div style="font-family: 'Segoe UI', Arial, sans-serif; padding: 20px;">`;
+  html += `<h2 style="margin-bottom: 5px;">Relatório de Auditoria e Ajustes Gerenciais</h2>`;
+  html += `<h3 style="color: #475569; margin-top: 0; font-weight: normal;">Filtro: ${tipo === 'geral' ? 'Todos os Funcionários' : 'Individual - ' + funcNome}</h3>`;
+  html += `<hr style="margin-bottom: 20px;"><br>`;
+  
+  let logs = Object.values(ajustesAoVivo);
+  // Ordena para impressão
+  logs.sort((a,b) => b.dataIso.localeCompare(a.dataIso));
+  
+  if (tipo === 'individual') {
+    logs = logs.filter(a => a.funcId === funcIdSelecionado);
+  }
+  
+  if (logs.length === 0) {
+    html += `<p style="color: #666;">Nenhum ajuste encontrado para este filtro.</p>`;
+  } else {
+    logs.forEach(ajuste => {
+      let [ano, mes, dia] = ajuste.dataIso.split('-');
+      let nome = FUNCIONARIOS.find(f => f.id === ajuste.funcId)?.nome || "Desconhecido";
+      let statusInfo = ajuste.isAutoGerado ? '<span style="color: #d97706; font-weight: bold;">[Queda de Sistema Detectada]</span>' : '<span style="color: #16a34a; font-weight: bold;">[Ajuste Manual]</span>';
+      
+      html += `<div style="margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #ccc; font-size: 14px; line-height: 1.6;">
+        <strong>Data Referência:</strong> ${dia}/${mes}/${ano} ${statusInfo}<br>
+        <strong>Colaborador:</strong> ${nome} (Mat. ${ajuste.funcId}) <br>
+        <strong>Horários Gravados:</strong> Entrada: ${ajuste.entrada} | Início Int: ${ajuste.intIni} | Fim Int: ${ajuste.intFim} | Saída: ${ajuste.saida} <br>
+        <strong>Motivo do Ajuste:</strong> ${ajuste.motivo} <br>
+        <strong>Responsável (Assinatura):</strong> ${ajuste.gerente}
+      </div>`;
+    });
+  }
+  html += `</div>`;
+  
+  let janelaPrint = window.open('', '', 'width=800,height=600');
+  janelaPrint.document.write(html);
+  janelaPrint.document.close();
+  setTimeout(() => {
+    janelaPrint.print();
+  }, 300);
 }
