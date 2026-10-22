@@ -1,0 +1,93 @@
+/* Novo módulo, isolado do estilo e dos cálculos do espelho de ponto original. */
+.nav-bar { flex-wrap: wrap; }
+#page-relatorios-marina { max-width: 100%; }
+.relatorio-cabecalho { border-top: 4px solid var(--secondary); }
+.relatorio-topo { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+.relatorio-sobretitulo { text-transform:uppercase; font-weight:700; color:var(--secondary); font-size:11px; letter-spacing:.065em; margin-bottom:5px; }
+#marina-titulo { color:var(--primary-dark); font-size:1.5rem; line-height:1.25; margin-bottom:7px; }
+.relatorio-intro { color:var(--gray-600); max-width:760px; }
+.relatorio-simulacao { flex-shrink:0; padding:6px 12px; border-radius:20px; color:#075985; background:#e0f2fe; border:1px solid #bae6fd; font-weight:700; font-size:11px; }
+.relatorio-resumo { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin:18px 0; }
+.relatorio-resumo > div { background:#f8fafc; border:1px solid #e2e8f0; border-radius:9px; padding:11px 14px; display:flex; flex-direction:column; }
+.relatorio-resumo strong { font-size:1.65rem; line-height:1.1; color:#1e3a8a; }
+.relatorio-resumo span { font-size:12px; color:var(--gray-600); margin-top:3px; }
+.relatorio-origem { line-height:1.6; font-size:12px; color:#334155; }
+.relatorio-integridade { padding:9px 12px; border-radius:7px; margin:13px 0; background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:12px; font-weight:600; }
+.relatorio-integridade-erro { background:#fef2f2; color:#991b1b; border-color:#fecaca; }
+.marina-nota-impressao { display: none; }
+.marina-voltar-espelho { margin-left:auto; }
+.relatorio-alerta p { font-size:12.5px; margin-top:4px; line-height:1.6; }
+.relatorio-acoes { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+.relatorio-instrucao { margin-top:8px; font-size:12px; color:#64748b; }
+.relatorio-bloco-header { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:14px; }
+.relatorio-bloco-header h2 { font-size:1.15rem; color:var(--primary-dark); }
+.relatorio-bloco-header p { color:var(--gray-600); font-size:12px; margin-top:4px; }
+.relatorio-contador { font-size:12px; color:#334155; background:#f1f5f9; border:1px solid #cbd5e1; border-radius:20px; white-space:nowrap; padding:5px 11px; }
+.relatorio-filtros { display:flex; flex-direction:column; align-items:stretch; gap:6px; margin:5px 0 15px; }
+.relatorio-filtros input { width:100%; max-width:530px; }
+.relatorio-tabela { min-width:960px; text-align:left!important; font-size:12px!important; }
+.relatorio-tabela th { position:relative; font-size:11px; text-align:left; white-space:normal; }
+.relatorio-tabela td { vertical-align:top; overflow-wrap:anywhere; }
+.relatorio-tabela tbody tr:hover { background:#f8fafc; }
+.relatorio-tabela tbody tr.relatorio-linha-alerta, .relatorio-tabela tbody tr.relatorio-linha-alerta:hover { background:#fff7ed; }
+.relatorio-tabela tbody tr.relatorio-filtrada { display:none; }
+.relatorio-classificacao, .relatorio-nota-resumo { display:block; font-size:11.5px; line-height:1.45; }
+.relatorio-etiqueta-alerta { display:block; width:max-content; max-width:180px; padding:2px 5px; border:1px solid #fdba74; background:#ffedd5; color:#9a3412; font-size:10px; font-weight:700; border-radius:4px; margin-top:5px; }
+.relatorio-detalhes { margin-top:5px; }
+.relatorio-detalhes summary { font-size:11px; color:#1d4ed8; font-weight:600; cursor:pointer; white-space:normal; }
+.relatorio-detalhes-corpo { border-left:2px solid #cbd5e1; padding:6px 0 3px 9px; margin-top:6px; font-size:11px; line-height:1.5; color:#334155; }
+.relatorio-detalhes-corpo p + p { margin-top:5px; }
+.relatorio-vazio { color:var(--gray-600); padding:10px 0; }
+.relatorio-rodape { text-align:center; font-size:11px; color:#64748b; margin:0 0 18px; }
+@media(max-width:700px) {
+  #marina-titulo { font-size:1.2rem; }
+  .relatorio-topo, .relatorio-bloco-header { flex-direction:column; }
+  .relatorio-resumo { gap:7px; }
+  .relatorio-resumo > div { padding:9px; }
+  .relatorio-resumo strong { font-size:1.3rem; }
+  .relatorio-resumo span { font-size:10px; }
+  .marina-aviso-controles .btn { width:100%; justify-content:center; }
+  .marina-voltar-espelho { margin-left:0; }
+  .relatorio-acoes .btn { width:100%; justify-content:center; }
+  nav.nav-bar { padding:0 12px; gap:2px; }
+  nav .nav-btn { padding:10px 7px; font-size:12px; }
+}
+/* Página nomeada permite A4 paisagem em navegadores que suportam CSS paged media. */
+@page marina-revisada { size:A4 landscape; margin:9mm; }
+@media print {
+  body.print-revisado { font-size:9px; }
+  body.print-revisado #page-espelho,
+  body.print-revisado #page-ajustes,
+  body.print-revisado #page-colaboradores { display:none!important; }
+  body.print-revisado #page-relatorios-marina { display:block!important; page:marina-revisada; }
+  body.print-revisado .container { max-width:none; margin:0; padding:0; }
+  body.print-revisado #page-relatorios-marina .card { padding:0!important; margin-bottom:12px; border:0!important; box-shadow:none!important; }
+  body.print-revisado #page-relatorios-marina .relatorio-cabecalho { border:0!important; }
+  body.print-revisado #page-relatorios-marina .relatorio-resumo { display:none; }
+  body.print-revisado #page-relatorios-marina .relatorio-origem { font-size:9px; margin-bottom:5px; }
+  body.print-revisado #page-relatorios-marina .relatorio-simulacao { padding:3px 7px; font-size:9px; }
+  body.print-revisado #page-relatorios-marina #marina-titulo { font-size:15px; }
+  body.print-revisado #page-relatorios-marina .relatorio-integridade { font-size:9px; padding:5px; margin:5px 0; }
+  body.print-revisado #page-relatorios-marina .marina-nota-impressao { display:block; font-size:9px; line-height:1.4; padding:5px 8px; margin:6px 0 10px; border-left:3px solid #64748b; background:#f8fafc; color:#334155; }
+  body.print-revisado #page-relatorios-marina .relatorio-bloco-header { margin:0 0 7px; }
+  body.print-revisado #page-relatorios-marina .relatorio-bloco-header h2 { font-size:13px; }
+  body.print-revisado #page-relatorios-marina .relatorio-bloco-header p { font-size:9px; }
+  body.print-revisado #page-relatorios-marina .relatorio-tabela-wrap { overflow:visible!important; border:0!important; }
+  body.print-revisado #page-relatorios-marina .relatorio-tabela { width:100%; min-width:0!important; font-size:8px!important; table-layout:fixed; }
+  body.print-revisado #page-relatorios-marina .relatorio-tabela th,
+  body.print-revisado #page-relatorios-marina .relatorio-tabela td { padding:3px 3px!important; border:1px solid #cbd5e1!important; word-break:normal; overflow-wrap:anywhere; }
+  body.print-revisado #page-relatorios-marina .relatorio-tabela th { font-size:8px; }
+  body.print-revisado #page-relatorios-marina .relatorio-tabela thead { display:table-header-group; }
+  body.print-revisado #page-relatorios-marina .relatorio-tabela tr { break-inside:avoid; page-break-inside:avoid; }
+  body.print-revisado #page-relatorios-marina .relatorio-filtrada { display:table-row!important; }
+  body.print-revisado #page-relatorios-marina .relatorio-detalhes summary { display:none; }
+  body.print-revisado #page-relatorios-marina .relatorio-detalhes-corpo { display:block!important; padding:3px 0 0; margin:2px 0 0; font-size:7px; border:0; line-height:1.25; }
+  body.print-revisado #page-relatorios-marina .relatorio-classificacao,
+  body.print-revisado #page-relatorios-marina .relatorio-nota-resumo { font-size:8px; }
+  body.print-revisado #page-relatorios-marina .relatorio-etiqueta-alerta { font-size:7px; padding:1px; margin:2px 0; }
+  body.print-revisado #page-relatorios-marina .relatorio-contador { display:none!important; }
+  body.print-revisado[data-print-marina="ambos"] #marina-bloco-falhas { break-before:page; }
+  body.print-revisado[data-print-marina="jornada"] #marina-bloco-falhas,
+  body.print-revisado[data-print-marina="falhas"] #marina-bloco-jornada { display:none!important; }
+  body.print-revisado #page-relatorios-marina .relatorio-rodape { font-size:8px; }
+}

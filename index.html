@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ponto Certo - Gestão de Jornada | Mercado Rio Branco Ltda.</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="relatorios-marina.css">
   <style>
     .brand-title { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.25rem; }
     .brand-badge { background: #047857; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -32,6 +33,7 @@
     <button class="nav-btn active" onclick="switchPage('page-espelho')">📄 1. Espelho de Ponto Individual</button>
     <button class="nav-btn" onclick="switchPage('page-ajustes')">⚙️ 2. Lançamento & Auditoria Gerencial</button>
     <button class="nav-btn" onclick="switchPage('page-colaboradores')">👥 3. Quadro Geral de Funcionários</button>
+    <button class="nav-btn" onclick="switchPage('page-relatorios-marina')">📋 4. Relatórios Revisados • Marina</button>
   </nav>
 
   <div class="container">
@@ -169,6 +171,76 @@
         </div>
       </div>
     </div>
+    <!-- PÁGINA 4: RELATÓRIOS REVISADOS; BASE INDEPENDENTE DO ESPELHO AUTOMÁTICO -->
+    <section id="page-relatorios-marina" class="view-page" aria-labelledby="marina-titulo">
+      <div class="card relatorio-cabecalho">
+        <div class="relatorio-topo">
+          <div>
+            <p class="relatorio-sobretitulo">Base revisada • independente do espelho de ponto</p>
+            <h1 id="marina-titulo">Relatórios de jornada e falhas — Marina</h1>
+            <p class="relatorio-intro">Transcrição das duas abas da planilha revisada, com conferência automática das datas e dos dias da semana.</p>
+          </div>
+          <span class="relatorio-simulacao">SIMULAÇÃO ACADÊMICA</span>
+        </div>
+        <div class="relatorio-resumo" aria-label="Resumo dos dados">
+          <div><strong id="resumo-jornadas">44</strong><span>Jornadas / saídas</span></div>
+          <div><strong id="resumo-falhas">55</strong><span>Falhas de ponto</span></div>
+        </div>
+        <p class="relatorio-origem"><strong>Fonte exclusiva:</strong> <span id="relatorio-fonte">SIMULACAO_JORNADA_MARINA_REVISADA_CONFERIDA.xlsx</span>. Não são incorporados os lançamentos automáticos, correções ou horários gerados no espelho anterior. Os registros são ilustrativos e não constituem comprovação de ponto real.</p>
+        <p id="marina-integridade" class="relatorio-integridade" role="status" aria-live="polite">Conferindo datas e dias da semana...</p>
+        <!-- A divergência é indicada nas duas linhas de 15/08/2026 e em nota de impressão.
+             Sem banner persistente, tela de confirmação, botão de ciência ou bloqueio de navegação. -->
+        <p id="marina-nota-impressao" class="marina-nota-impressao">
+          <strong>Nota sobre 15/08/2026:</strong> horários diferentes nas fontes revisadas:
+          saída 16h56 em “Horas extras e saídas” e horário informado 21h20 em “Falhas de ponto”.
+          Dados preservados; conferência documental ainda necessária.
+        </p>
+        <div class="relatorio-acoes no-print">
+          <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('jornada')">🖨️ PDF • Jornadas</button>
+          <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('falhas')">🖨️ PDF • Falhas</button>
+          <button type="button" class="btn btn-secondary" onclick="imprimirRelatorioMarina('ambos')">📑 PDF conjunto</button>
+          <button type="button" class="btn btn-secondary marina-voltar-espelho" onclick="voltarAoEspelhoMarina()">← Voltar ao espelho de ponto</button>
+        </div>
+        <p class="relatorio-instrucao no-print">Em cada impressão, escolha <strong>Salvar como PDF</strong> na janela do navegador. O PDF sempre incluirá todos os registros da(s) tabela(s), independentemente do filtro de visualização.</p>
+      </div>
+
+      <section id="marina-bloco-jornada" class="card relatorio-bloco" aria-labelledby="titulo-jornada">
+        <div class="relatorio-bloco-header">
+          <div><h2 id="titulo-jornada">1. Horas extras e saídas</h2><p>Conferências, horários simulados, referências de jornada e observações originais.</p></div>
+          <span id="contador-jornadas" class="relatorio-contador">44 registros</span>
+        </div>
+        <div class="relatorio-filtros no-print">
+          <label for="filtro-jornadas">Localizar por data, classificação ou observação</label>
+          <input type="search" id="filtro-jornadas" placeholder="Ex.: 15/08/2026, sábado, excepcional..." oninput="filtrarRelatorioMarina('jornada')">
+        </div>
+        <div class="table-responsive relatorio-tabela-wrap">
+          <table class="ponto-table relatorio-tabela" aria-label="Horas extras e saídas - dados revisados">
+            <thead><tr><th>Data</th><th>Dia</th><th>Entrada</th><th>Intervalo</th><th>Saída</th><th>Conferência de caixa</th><th>Tempo além da referência</th><th>Classificação e informações completas</th></tr></thead>
+            <tbody id="marina-tbody-jornada"></tbody>
+          </table>
+        </div>
+        <p id="vazio-jornada" class="relatorio-vazio no-print" hidden>Nenhum registro corresponde à busca.</p>
+      </section>
+
+      <section id="marina-bloco-falhas" class="card relatorio-bloco" aria-labelledby="titulo-falhas">
+        <div class="relatorio-bloco-header">
+          <div><h2 id="titulo-falhas">2. Falhas de ponto</h2><p>Batidas afetadas, horários previstos, motivos, responsáveis e origem do registro.</p></div>
+          <span id="contador-falhas" class="relatorio-contador">55 registros</span>
+        </div>
+        <div class="relatorio-filtros no-print">
+          <label for="filtro-falhas">Localizar por data, motivo ou origem</label>
+          <input type="search" id="filtro-falhas" placeholder="Ex.: 15/08/2026, Wi-Fi, saída..." oninput="filtrarRelatorioMarina('falhas')">
+        </div>
+        <div class="table-responsive relatorio-tabela-wrap">
+          <table class="ponto-table relatorio-tabela" aria-label="Falhas de ponto - dados revisados">
+            <thead><tr><th>Data</th><th>Dia</th><th>Batida afetada</th><th>Horário previsto</th><th>Motivo da falha</th><th>Origem</th><th>Consistência e informações completas</th></tr></thead>
+            <tbody id="marina-tbody-falhas"></tbody>
+          </table>
+        </div>
+        <p id="vazio-falhas" class="relatorio-vazio no-print" hidden>Nenhum registro corresponde à busca.</p>
+      </section>
+      <p class="relatorio-rodape">Fonte: SIMULACAO_JORNADA_MARINA_REVISADA_CONFERIDA.xlsx (abas “Horas extras e saídas” e “Falhas de ponto”). Material simulado para estudo; divergências dependem de documentação original para validação.</p>
+    </section>
   </div>
 
   <!-- MODAIS -->
@@ -207,5 +279,7 @@
 
   <script src="registros.js"></script>
   <script src="script.js"></script>
+  <script src="dados-marina-revisados.js"></script>
+  <script src="relatorios-marina.js"></script>
 </body>
 </html>

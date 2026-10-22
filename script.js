@@ -99,6 +99,7 @@ function switchPage(pageId) {
   if(pageId==='page-espelho' && btns[0]) btns[0].classList.add('active');
   if(pageId==='page-ajustes' && btns[1]) btns[1].classList.add('active');
   if(pageId==='page-colaboradores' && btns[2]) btns[2].classList.add('active');
+  if(pageId==='page-relatorios-marina' && btns[3]) btns[3].classList.add('active');
   window.scrollTo(0,0);
 }
 

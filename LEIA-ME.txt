@@ -1,0 +1,69 @@
+PONTO CERTO — SITE ATUALIZADO COM RELATÓRIOS REVISADOS DA MARINA
+================================================================
+
+COMO ABRIR
+1. Extraia todos os arquivos deste ZIP para uma mesma pasta.
+2. Abra index.html no navegador (Chrome, Edge ou outro navegador moderno).
+3. Clique em "4. Relatórios Revisados • Marina" no menu superior.
+
+RELATÓRIOS
+- "1. Horas extras e saídas": 44 registros extraídos da aba de mesmo nome.
+- "2. Falhas de ponto": 55 registros extraídos da aba de mesmo nome.
+- Campos complementares estão em "Ver informações completas" em cada linha.
+- Os campos de pesquisa alteram somente a visualização. Não alteram dados.
+
+IMPRIMIR / GERAR PDF
+- Clique em "PDF • Jornadas", "PDF • Falhas" ou "PDF conjunto".
+- Na janela de impressão, selecione "Salvar como PDF".
+- A impressão inclui TODOS os registros da(s) tabela(s) selecionada(s),
+  mesmo quando há filtro de busca aplicado na tela.
+- O PDF inclui os detalhes de cada registro; o layout é A4 paisagem nos
+  navegadores com suporte à configuração de página do CSS.
+- Não depende de servidor, biblioteca externa ou ferramenta paga.
+
+FONTE E CONSISTÊNCIA
+- Fonte: fontes/SIMULACAO_JORNADA_MARINA_REVISADA_CONFERIDA.xlsx.
+- Exportação estática fiel a essa planilha: dados-marina-revisados.js.
+- A planilha incluída serve como referência e não é lida automaticamente
+  pelo navegador. Para substituir a fonte no futuro, os dados do arquivo
+  JS deverão ser gerados novamente.
+- Verificação das 99 datas e dos dias da semana: nenhuma inconsistência.
+- Divergência expressamente preservada em 15/08/2026 (sábado):
+    aba "Horas extras e saídas": saída 16:56, conferência 16:42–16:54;
+    aba "Falhas de ponto": registro individual de saída 21:20.
+  A divergência NÃO foi resolvida nem ajustada automaticamente.
+
+ISOLAMENTO E PRESERVAÇÃO
+- Os três módulos anteriores permanecem no site.
+- registros.js e os mecanismos preexistentes continuam como estavam.
+- O módulo de relatórios revisados NÃO consulta ajustesAoVivo, localStorage,
+  não mescla dados com o espelho e não reprocessa registros automáticos.
+- Arquivos novos: dados-marina-revisados.js, relatorios-marina.js,
+  relatorios-marina.css, este LEIA-ME e cópia da fonte Excel.
+- index.html recebeu a nova navegação, seção e referências aos arquivos.
+- script.js recebeu apenas a indicação do botão ativo do novo menu.
+
+IMPORTANTE
+MATERIAL DE SIMULAÇÃO ACADÊMICA. A validação de dias e datas demonstra
+consistência calendárica, mas não comprova autenticidade de ponto, direito a
+horas extras, conformidade legal ou a verdade de qualquer horário lançado.
+
+CORREÇÃO DEFINITIVA DA INTERFACE (V3)
+- Removido o painel amarelo repetitivo sobre 15/08/2026.
+- Removidos os botões "Li o aviso", "Estou ciente" e a faixa resumida,
+  pois confirmação de ciência não deve ser confundida com validação gerencial.
+- O texto verde informa SOMENTE o resultado da verificação do calendário.
+- A divergência entre as fontes continua anotada diretamente nos registros
+  de 15/08/2026 e numa nota curta nos PDFs, sem bloquear nenhuma tela.
+- A senha gerencial do módulo de auditoria aprova SOMENTE ajustes do espelho de
+  ponto antigo. NÃO altera e não homologa os dados revisados da planilha.
+- O botão "Voltar ao espelho de ponto" e o menu funcionam normalmente.
+- Para evitar cache de versões anteriores, extraia em PASTA NOVA e abra o
+  index.html dessa pasta. Feche qualquer aba com uma versão antiga aberta.
+
+ATUALIZAÇÃO V4 — RESUMO DA PÁGINA
+- Removido o cartão "1 Divergência sinalizada" do resumo na tela.
+- Permanecem apenas os totais de 44 jornadas e 55 falhas.
+- A inconsistência de horários da fonte continua indicada exclusivamente
+  nas linhas envolvidas e nos PDFs, sem bloquear a navegação.
+- Não foram modificados horários, registros, planilha-fonte ou dados.
