@@ -75,3 +75,28 @@ table.ponto-table tr.ajustado-row { background-color: #fffbeb; }
   table.ponto-table th, table.ponto-table td { padding: 4px 2px !important; border: 1px solid #cbd5e1 !important; }
   .tag-warning, .tag-recent { border: 1px solid #000 !important; color: #000 !important; background: none !important; font-weight: bold; }
 }
+/* Resumo mensal e escala especial de Marina (V5). */
+.summary-panel { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:0; margin-bottom:12px; background:#fff; border-radius:8px; border:1px solid var(--gray-200); box-shadow:0 1px 3px #0000000d; padding:15px; }
+.summary-panel > div { padding: 3px 14px; border-right:1px solid var(--gray-200); min-width:0; }
+.summary-panel > div:first-child { padding-left:2px; }
+.summary-panel > div:last-child { border-right:0; }
+.summary-panel .resumo-rotulo { font-size:.8rem; text-transform:uppercase; font-weight:650; color:var(--gray-600); }
+.summary-panel .resumo-valor { font-size:1.5rem; font-weight:750; color:var(--secondary); }
+.resumo-ajuda { font-size:.74rem; color:var(--gray-600); line-height:1.4; }
+.summary-panel [hidden], .resumo-detalhes-marina[hidden] { display:none !important; }
+.resumo-detalhes-marina { margin:-3px 0 18px; padding:10px 14px; background:#f8fafc; border-radius:6px; border:1px solid var(--gray-200); font-size:.83rem; }
+.resumo-detalhes-marina summary { cursor:pointer; font-weight:650; color:var(--primary); }
+.resumo-detalhes-conteudo { padding:8px 4px; }
+.resumo-detalhes-conteudo p { margin:5px 0; }
+.resumo-detalhes-conteudo ul { margin:8px 0 8px 24px; }
+.resumo-detalhes-conteudo li { margin-bottom:5px; }
+.marina-criterio { color:var(--gray-600); font-style:italic; }
+.tag-neutral { background:#eef2ff; color:#334155; border:1px solid #cbd5e1; cursor:default; }
+table.ponto-table tr.marina-fonte-row { background:#f0fdfa; }
+table.ponto-table tr.marina-escala-row { background:#f8fafc; }
+.marina-pendente { color:#b45309; font-size:.72rem; font-weight:650; }
+@media (max-width:920px) { .summary-panel { grid-template-columns: repeat(2,minmax(0,1fr)); row-gap:14px; } .summary-panel > div:nth-child(2) { border-right:0; } }
+@media (max-width:520px) { .summary-panel { grid-template-columns:1fr; } .summary-panel > div { border-right:0; border-bottom:1px solid var(--gray-200); padding:10px 3px; } .summary-panel > div:last-child { border-bottom:0; } }
+@media print { .summary-panel { display:grid !important; grid-template-columns:repeat(4,minmax(0,1fr)); padding:8px !important; margin:8px 0 12px; break-inside:avoid; } .summary-panel > div { padding:4px 8px; } .summary-panel .resumo-valor, .summary-panel [id^="resumo-total"] { font-size:13px !important; } .resumo-detalhes-marina:not([open]) { display:none !important; } .resumo-detalhes-marina[open] { break-inside:avoid; } }
+
+.summary-panel.sem-devido { grid-template-columns:repeat(3,minmax(0,1fr)); }

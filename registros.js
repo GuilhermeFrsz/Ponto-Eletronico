@@ -2,6 +2,12 @@
 // 1. CONFIGURAÇÕES DE TURNOS
 // ==========================================
 const TURNO_CAIXA = { entBase: "13:00", intIni: "16:00", intFim: "17:00", saiBase: "21:20", texto: "13:00 às 21:20 (Int: 1h)" };
+// Escala específica de Marina: de segunda a sexta, 7h20 líquidos; aos sábados, 4h sem intervalo.
+const TURNO_MARINA = {
+  entBase: "13:00", intIni: "16:00", intFim: "17:00", saiBase: "21:20",
+  sabEntBase: "13:00", sabSaiBase: "17:00",
+  texto: "Seg–Sex: 13:00–21:20 (1h int.) | Sáb: 13:00–17:00 (sem int.)"
+};
 const TURNO_ADM = { entBase: "08:00", intIni: "12:00", intFim: "13:00", saiBase: "17:00", texto: "08:00 às 17:00 (Int: 1h)" };
 const TURNO_MADRUGA = { entBase: "22:00", intIni: "02:00", intFim: "03:00", saiBase: "05:20", texto: "22:00 às 05:20 (Int: 1h)" };
 const TURNO_CEDO = { entBase: "07:00", intIni: "11:00", intFim: "12:00", saiBase: "15:20", texto: "07:00 às 15:20 (Int: 1h)" };
@@ -11,7 +17,7 @@ const TURNO_FECHAMENTO = { entBase: "13:30", intIni: "17:30", intFim: "18:30", s
 // 2. QUADRO DE FUNCIONÁRIOS (28 Empregados)
 // ==========================================
 const FUNCIONARIOS = [
-  { id: "0142", nome: "Marina Lopes Barbosa de Oliveira", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
+  { id: "0142", nome: "Marina Lopes Barbosa de Oliveira", cargo: "Operadora de Caixa", turno: TURNO_MARINA },
   { id: "0102", nome: "Paulo Henrique Ribeiro", cargo: "Gerente de Loja", turno: TURNO_FECHAMENTO }, 
   { id: "0088", nome: "Mykaelle Santos da Silva", cargo: "Supervisora do Caixa", turno: TURNO_FECHAMENTO }, 
   { id: "0045", nome: "Gabi (Gabriela Martins)", cargo: "Sócia-Proprietária / Preposta", turno: TURNO_ADM }, 

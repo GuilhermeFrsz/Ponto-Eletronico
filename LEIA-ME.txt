@@ -67,3 +67,22 @@ ATUALIZAÇÃO V4 — RESUMO DA PÁGINA
 - A inconsistência de horários da fonte continua indicada exclusivamente
   nas linhas envolvidas e nos PDFs, sem bloquear a navegação.
 - Não foram modificados horários, registros, planilha-fonte ou dados.
+
+ATUALIZAÇÃO V5 — ESCALA DE MARINA E HORAS EXTRAS DEVIDAS
+- Segunda a sexta: 13:00–21:20, intervalo de 1h (7h20 de trabalho).
+- Sábados comuns: 13:00–17:00, SEM intervalo (4h de trabalho).
+- São respeitados os horários revisados nas 44 datas da aba 'Horas extras e saídas'.
+- Sábados excepcionais revisados: 15/03/2025, 06/09/2025, 09/05/2026 e 29/08/2026; inclui intervalos conforme a fonte.
+- Nos demais dias, espelho mostra ESCALA SIMULADA, não registro real nem batida inventada.
+- Ajustes automáticos antigos de Marina não são mais incorporados nem regenerados; ajustes gerenciais explícitos continuam disponíveis no módulo de ajuste, mas não criam por si só direito a horas extras.
+- Novo resumo por mês: Horas extras devidas. Cálculo DOCUMENTAL: soma dos excedentes explicitamente apontados no campo "Tempo além da jornada normal" da aba revisada, agrupados por competência. A planilha informa excesso sobre saída normal, não necessariamente excesso de trabalho líquido, e o valor não é direito líquido comprovado.
+- Datas que não aparecem nessa planilha NÃO geram horas extras devidas automaticamente.
+- Clique em 'Como foram calculadas...' para conferir as datas e o valor mensal.
+- O cálculo é simulado e depende de validação documental, contratual e legal; NÃO comprova efetivamente horas devidas ou folha paga.
+- Os relatórios revisados seguem isolados e com a divergência de 15/08/2026 preservada; ela não altera o espelho.
+
+NOTAS DE EXIBIÇÃO/IMPRESSÃO
+- O resumo mensal agora aparece também ao imprimir o espelho e inclui o campo novo para Marina.
+- O detalhamento por datas está acessível abaixo do resumo; se expandido, aparece na impressão.
+- A versão nova identifica expressamente a natureza simulada de registros sem origem documental e da declaração de assinatura na impressão da Marina.
+- O cache local de ajustes automáticos antigos da Marina é depurado ao abrir a versão V5, mantendo ajustes manuais e registros dos demais trabalhadores.

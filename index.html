@@ -69,7 +69,7 @@
         </div>
       </div>
 
-      <div class="summary-panel no-print" style="display: flex; gap: 15px; margin-bottom: 15px; background-color: #fff; padding: 15px; border-radius: 8px; border: 1px solid var(--gray-200); box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+      <div class="summary-panel" aria-label="Resumo de horas da competência">
         <div style="flex: 1; border-right: 1px solid var(--gray-200);">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Total Trabalhado no Mês</div>
           <div id="resumo-total-trab" style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">000h 00m</div>
@@ -77,18 +77,27 @@
         <div style="flex: 1; border-right: 1px solid var(--gray-200); padding-left: 15px;">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Horas Extras (Saldo Positivo)</div>
           <div id="resumo-total-extra" style="font-size: 1.5rem; font-weight: bold; color: var(--danger);">00h 00m</div>
-          <div style="font-size: 0.75rem; color: var(--gray-600);">*Encaminhado para Folha de Pagamento</div>
+          <div id="resumo-nota-folha" class="resumo-ajuda">*Encaminhado para Folha de Pagamento</div>
         </div>
         <div style="flex: 1; padding-left: 15px;">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Atrasos/Faltas (Saldo Negativo)</div>
           <div id="resumo-total-atraso" style="font-size: 1.5rem; font-weight: bold; color: var(--warning);">00h 00m</div>
         </div>
+        <div id="resumo-item-devido" class="resumo-devido">
+          <div class="resumo-rotulo">Horas extras devidas</div>
+          <div id="resumo-total-devido" class="resumo-valor">00h 00m</div>
+          <div class="resumo-ajuda">Soma do “Tempo além” informado • apuração provisória</div>
+        </div>
       </div>
+      <details id="resumo-detalhes-painel" class="resumo-detalhes-marina">
+        <summary>Como foram calculadas as horas extras devidas deste mês?</summary>
+        <div id="resumo-detalhes-devido" class="resumo-detalhes-conteudo"></div>
+      </details>
 
       <div class="card" style="padding: 10px;">
         <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;" class="no-print">
-          <span style="font-weight: 600; color: var(--gray-600); font-size: 0.85rem;">Registros Eletrônicos Consolidados — Batidas via App/Tablet</span>
-          <span style="font-size: 0.8rem; color: var(--warning); font-weight: 600;">⚠️ Clique nas tags laranjas para ver o Log de Auditoria</span>
+          <span id="ponto-origem-descricao" style="font-weight: 600; color: var(--gray-600); font-size: 0.85rem;">Registros Eletrônicos Consolidados — Batidas via App/Tablet</span>
+          <span style="font-size: 0.8rem; color: var(--gray-600); font-weight: 600;">Marina: escala simulada nos dias sem registro na planilha</span>
         </div>
         <div class="table-responsive">
           <table class="ponto-table">
@@ -103,7 +112,7 @@
       </div>
 
       <div class="print-only-signatures">
-        <p style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.</p>
+        <p id="ponto-declaracao-impressao" style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.</p>
         <div class="sig-grid">
           <div><div class="sig-line"><span id="sig-nome"></span></div><div style="font-size: 8.5px; color: #555;">Assinatura do Empregado</div></div>
           <div><div class="sig-line">Gabi — Sócia-Proprietária / Preposta</div><div style="font-size: 8.5px; color: #555;">Mercado Rio Branco Ltda.</div></div>
@@ -180,7 +189,7 @@
             <h1 id="marina-titulo">Relatórios de jornada e falhas — Marina</h1>
             <p class="relatorio-intro">Transcrição das duas abas da planilha revisada, com conferência automática das datas e dos dias da semana.</p>
           </div>
-          
+          <span class="relatorio-simulacao">SIMULAÇÃO ACADÊMICA</span>
         </div>
         <div class="relatorio-resumo" aria-label="Resumo dos dados">
           <div><strong id="resumo-jornadas">44</strong><span>Jornadas / saídas</span></div>
