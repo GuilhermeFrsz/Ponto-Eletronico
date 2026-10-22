@@ -391,7 +391,7 @@ function renderizarTabela() {
       const minutosElegiveis = Math.min(Math.max(0, saldoMins), minutosFonte);
       saldoMins = saldoMins < 0 ? saldoMins : minutosElegiveis;
       if (ajusteAoVivo && !registroRevisado && trabMins > baseDiaMins) {
-        statusTag += ' <span class="marina-pendente">Excedente não previsto na planilha</span>';
+        statusTag += ' <span class="marina-pendente"> </span>';
       }
     }
     let strSaldo;
