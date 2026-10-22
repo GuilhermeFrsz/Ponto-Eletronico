@@ -14,7 +14,6 @@
 .relatorio-origem { line-height:1.6; font-size:12px; color:#334155; }
 .relatorio-integridade { padding:9px 12px; border-radius:7px; margin:13px 0; background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:12px; font-weight:600; }
 .relatorio-integridade-erro { background:#fef2f2; color:#991b1b; border-color:#fecaca; }
-.marina-nota-impressao { display: none; }
 .marina-voltar-espelho { margin-left:auto; }
 .relatorio-alerta p { font-size:12.5px; margin-top:4px; line-height:1.6; }
 .relatorio-acoes { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
@@ -68,7 +67,6 @@
   body.print-revisado #page-relatorios-marina .relatorio-simulacao { padding:3px 7px; font-size:9px; }
   body.print-revisado #page-relatorios-marina #marina-titulo { font-size:15px; }
   body.print-revisado #page-relatorios-marina .relatorio-integridade { font-size:9px; padding:5px; margin:5px 0; }
-  body.print-revisado #page-relatorios-marina .marina-nota-impressao { display:block; font-size:9px; line-height:1.4; padding:5px 8px; margin:6px 0 10px; border-left:3px solid #64748b; background:#f8fafc; color:#334155; }
   body.print-revisado #page-relatorios-marina .relatorio-bloco-header { margin:0 0 7px; }
   body.print-revisado #page-relatorios-marina .relatorio-bloco-header h2 { font-size:13px; }
   body.print-revisado #page-relatorios-marina .relatorio-bloco-header p { font-size:9px; }

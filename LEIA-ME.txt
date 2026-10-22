@@ -1,88 +1,71 @@
-PONTO CERTO — SITE ATUALIZADO COM RELATÓRIOS REVISADOS DA MARINA
-================================================================
+PONTO CERTO V9 — RETIFICAÇÃO DE 15/08/2026
 
-COMO ABRIR
-1. Extraia todos os arquivos deste ZIP para uma mesma pasta.
-2. Abra index.html no navegador (Chrome, Edge ou outro navegador moderno).
-3. Clique em "4. Relatórios Revisados • Marina" no menu superior.
+A ocorrência antiga de Falhas de ponto que dizia saída 21h20 foi retirada dos relatórios ATIVOS.
+A saída permanece 16h56, concordante com a aba Horas extras e saídas e Conferência de caixa.
+Histórico da retificação: planilha de jornadas, aba Histórico das alterações, e planilha de escalas, aba Retificações e conformidade.
+As versões V7 na pasta originais_v7 são ARQUIVOS HISTÓRICOS NÃO ATUALIZADOS, para rastreabilidade.
+Os demais dados da V8 e os cálculos de jornada não foram alterados.
+Esta correção documental decorre de autorização do usuário, sem validação por comprovante original de ponto.
 
-RELATÓRIOS
-- "1. Horas extras e saídas": 44 registros extraídos da aba de mesmo nome.
-- "2. Falhas de ponto": 55 registros extraídos da aba de mesmo nome.
-- Campos complementares estão em "Ver informações completas" em cada linha.
-- Os campos de pesquisa alteram somente a visualização. Não alteram dados.
+PONTO CERTO — V8 — ESPELHO COMPLETO (SIMULAÇÃO)
 
-IMPRIMIR / GERAR PDF
-- Clique em "PDF • Jornadas", "PDF • Falhas" ou "PDF conjunto".
-- Na janela de impressão, selecione "Salvar como PDF".
-- A impressão inclui TODOS os registros da(s) tabela(s) selecionada(s),
-  mesmo quando há filtro de busca aplicado na tela.
-- O PDF inclui os detalhes de cada registro; o layout é A4 paisagem nos
-  navegadores com suporte à configuração de página do CSS.
-- Não depende de servidor, biblioteca externa ou ferramenta paga.
+469 dias trabalhados no período de março/2025 a agosto/2026.
+- 44 jornadas individualizadas da planilha revisada preservadas integralmente.
+- 425 dias com saída extraída da CONFERÊNCIA DE CAIXA e entrada/intervalo
+  COMPLETADOS DE FORMA ILUSTRATIVA para este exercício. Não são batidas reais.
+- 03/06/2025: saída 21:22 da conferência, e horários de entrada/intervalo
+  ilustrativos identificados na própria linha.
+- 12/06/2025: mantém 13:00 / 16:00 / 17:00 / 22:00 (+00:40).
+- 12/06/2026: sem lançamento equivocado das 22h00.
+- Domingos e datas anteriores à admissão permanecem não trabalhados.
 
-FONTE E CONSISTÊNCIA
-- Fonte: fontes/SIMULACAO_JORNADA_MARINA_REVISADA_CONFERIDA.xlsx.
-- Exportação estática fiel a essa planilha: dados-marina-revisados.js.
-- A planilha incluída serve como referência e não é lida automaticamente
-  pelo navegador. Para substituir a fonte no futuro, os dados do arquivo
-  JS deverão ser gerados novamente.
-- Verificação das 99 datas e dos dias da semana: nenhuma inconsistência.
-- Divergência expressamente preservada em 15/08/2026 (sábado):
-    aba "Horas extras e saídas": saída 16:56, conferência 16:42–16:54;
-    aba "Falhas de ponto": registro individual de saída 21:20.
-  A divergência NÃO foi resolvida nem ajustada automaticamente.
+Todas as linhas de trabalho calculam Total Trab. e Saldo (Extra).
+Os positivos entram na soma do mês; negativos aparecem em atraso/falta,
+sem serem compensados de modo silencioso.
 
-ISOLAMENTO E PRESERVAÇÃO
-- Os três módulos anteriores permanecem no site.
-- registros.js e os mecanismos preexistentes continuam como estavam.
-- O módulo de relatórios revisados NÃO consulta ajustesAoVivo, localStorage,
-  não mescla dados com o espelho e não reprocessa registros automáticos.
-- Arquivos novos: dados-marina-revisados.js, relatorios-marina.js,
-  relatorios-marina.css, este LEIA-ME e cópia da fonte Excel.
-- index.html recebeu a nova navegação, seção e referências aos arquivos.
-- script.js recebeu apenas a indicação do botão ativo do novo menu.
+IMPORTANTE: Estes dados são SIMULADOS E NÃO COMPROVAM BATIDAS REAIS. Para
+uso jurídico ou trabalhista, obter registros originais de ponto. A Súmula
+338, III, do TST não autoriza gerar variações artificiais para dar
+aparência de autenticidade a controles de jornada.
 
-IMPORTANTE
-MATERIAL DE SIMULAÇÃO ACADÊMICA. A validação de dias e datas demonstra
-consistência calendárica, mas não comprova autenticidade de ponto, direito a
-horas extras, conformidade legal ou a verdade de qualquer horário lançado.
+A aba nova "Espelho completo (simulado)" nas planilhas mostra a origem
+por dia; os registros originais não devem ser sobrescritos.
 
-CORREÇÃO DEFINITIVA DA INTERFACE (V3)
-- Removido o painel amarelo repetitivo sobre 15/08/2026.
-- Removidos os botões "Li o aviso", "Estou ciente" e a faixa resumida,
-  pois confirmação de ciência não deve ser confundida com validação gerencial.
-- O texto verde informa SOMENTE o resultado da verificação do calendário.
-- A divergência entre as fontes continua anotada diretamente nos registros
-  de 15/08/2026 e numa nota curta nos PDFs, sem bloquear nenhuma tela.
-- A senha gerencial do módulo de auditoria aprova SOMENTE ajustes do espelho de
-  ponto antigo. NÃO altera e não homologa os dados revisados da planilha.
-- O botão "Voltar ao espelho de ponto" e o menu funcionam normalmente.
-- Para evitar cache de versões anteriores, extraia em PASTA NOVA e abra o
-  index.html dessa pasta. Feche qualquer aba com uma versão antiga aberta.
+PONTO CERTO — V7 — CORREÇÃO DE 12/06/2025 E MELHORIA DE STATUS
 
-ATUALIZAÇÃO V4 — RESUMO DA PÁGINA
-- Removido o cartão "1 Divergência sinalizada" do resumo na tela.
-- Permanecem apenas os totais de 44 jornadas e 55 falhas.
-- A inconsistência de horários da fonte continua indicada exclusivamente
-  nas linhas envolvidas e nos PDFs, sem bloquear a navegação.
-- Não foram modificados horários, registros, planilha-fonte ou dados.
+Abra index.html após extrair TODOS os arquivos na mesma pasta.
 
-ATUALIZAÇÃO V5 — ESCALA DE MARINA E HORAS EXTRAS DEVIDAS
-- Segunda a sexta: 13:00–21:20, intervalo de 1h (7h20 de trabalho).
-- Sábados comuns: 13:00–17:00, SEM intervalo (4h de trabalho).
-- São respeitados os horários revisados nas 44 datas da aba 'Horas extras e saídas'.
-- Sábados excepcionais revisados: 15/03/2025, 06/09/2025, 09/05/2026 e 29/08/2026; inclui intervalos conforme a fonte.
-- Nos demais dias, espelho mostra ESCALA SIMULADA, não registro real nem batida inventada.
-- Ajustes automáticos antigos de Marina não são mais incorporados nem regenerados; ajustes gerenciais explícitos continuam disponíveis no módulo de ajuste, mas não criam por si só direito a horas extras.
-- Novo resumo por mês: Horas extras devidas. Cálculo DOCUMENTAL: soma dos excedentes explicitamente apontados no campo "Tempo além da jornada normal" da aba revisada, agrupados por competência. A planilha informa excesso sobre saída normal, não necessariamente excesso de trabalho líquido, e o valor não é direito líquido comprovado.
-- Datas que não aparecem nessa planilha NÃO geram horas extras devidas automaticamente.
-- Clique em 'Como foram calculadas...' para conferir as datas e o valor mensal.
-- O cálculo é simulado e depende de validação documental, contratual e legal; NÃO comprova efetivamente horas devidas ou folha paga.
-- Os relatórios revisados seguem isolados e com a divergência de 15/08/2026 preservada; ela não altera o espelho.
-
-NOTAS DE EXIBIÇÃO/IMPRESSÃO
-- O resumo mensal agora aparece também ao imprimir o espelho e inclui o campo novo para Marina.
-- O detalhamento por datas está acessível abaixo do resumo; se expandido, aparece na impressão.
-- A versão nova identifica expressamente a natureza simulada de registros sem origem documental e da declaração de assinatura na impressão da Marina.
-- O cache local de ajustes automáticos antigos da Marina é depurado ao abrir a versão V5, mantendo ajustes manuais e registros dos demais trabalhadores.
+1. O registro das 22h00 foi corrigido para 12/06/2025 (quinta-feira).
+   Entrada 13h00, intervalo 16h00–17h00, saída 22h00:
+   08h00 trabalhadas − 07h20 de referência = +00h40.
+   A informação foi fornecida pelo usuário; comprovante original não anexado.
+2. 12/06/2026 retorna ao estado da V5: sem jornada adicional de 22h00,
+   com a antiga ocorrência ilustrativa de falha de saída 21h22.
+   Se um ajuste de V6 idêntico ao erro das 22h00 estiver no navegador,
+   será arquivado em localStorage.pontoHistoricoMigracaoV7 e removido do espelho.
+3. Status: "Ponto registrado" = informação presente na fonte; "Ponto Ajustado"
+   = lançamento retificado no navegador, em laranja, acompanhado do motivo.
+   "Escala prevista • sem batida" = ausência de marcação verificável.
+4. As jornadas apenas previstas NÃO entram em Total Trabalhado, Saldo (Extra),
+   ou Horas Extras. Não são inventadas batidas com variações aleatórias.
+   O saldo de cada data informada continua automático.
+5. Os demais empregados preservam o cadastro, mas dias sem batida confirmada
+   deixam de ser tratados como registro real: nenhum ponto gerado artificialmente.
+   Ajustes anteriormente armazenados permanecem, com rastreio de origem.
+6. Dois arquivos XLSX na pasta fontes:
+   JORNADA_MARINA_CORRIGIDA_V7.xlsx (abas jornadas, falhas, histórico, orientação)
+   ESCALA_CONFERENCIA_MARINA_REVISADA_V7.xlsx (registros-base originais e
+   aba de retificações informadas sem reescrever a linha histórica).
+7. A Súmula 338, III, TST trata da fragilidade probatória de horários
+   uniformes. NÃO foram criadas variações artificiais para aparentar validade.
+   Horários originais somente devem ser alterados com respaldo e auditoria.
+8. A frase em destaque "SIMULAÇÃO ACADÊMICA" foi removida da interface,
+   mas a natureza demonstrativa dos dados permanece declarada nas fontes.
+   Não existe certificação pelo MTE nem autenticação criptográfica neste site.
+9. A planilha Excel não é sincronizada com ajustes futuros do navegador.
+   Guardar comprovantes reais e exportar os ajustes antes de mudar de navegador.
+PLANILHAS ATUAIS:
+  fontes/JORNADA_MARINA_COMPLETA_V9.xlsx
+  fontes/ESCALA_CONFERENCIA_MARINA_COMPLETA_V9.xlsx
+As duas têm as abas "Espelho completo (simulado)" e "Resumo mensal (simulado)".
+O diretório fontes/originais_v7 contém cópias das versões anteriores para auditoria.

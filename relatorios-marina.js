@@ -1,4 +1,4 @@
-/* Relatórios acadêmicos revisados: sem leitura/escrita de localStorage e sem referência a ajustesAoVivo. */
+/* Relatórios revisados de fontes demonstrativas: sem leitura/escrita de localStorage e sem referência a ajustesAoVivo. */
 (() => {
   'use strict';
   const dias = ['domingo', 'segunda-feira', 'terça-feira', 'quarta-feira', 'quinta-feira', 'sexta-feira', 'sábado'];
@@ -54,8 +54,8 @@
     }
     const fonte15J = MARINA_REVISADA.jornadas.find(x => x.data === '2026-08-15');
     const fonte15F = MARINA_REVISADA.falhas.find(x => x.data === '2026-08-15');
-    if (!fonte15J || !fonte15F || fonte15J.saida !== '16:56' || fonte15F.horarioPrevisto !== '21:20') {
-      inconsistencias.push('A divergência conhecida de 15/08/2026 precisa ser revisada contra a planilha de origem.');
+    if (!fonte15J || fonte15J.saida !== '16:56' || fonte15F) {
+      inconsistencias.push('Conferir retificação registrada de 15/08/2026: saída de referência 16h56 e sem ocorrência conflitante ativa.');
     }
     return inconsistencias;
   }

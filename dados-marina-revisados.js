@@ -1,6 +1,6 @@
-// Dados extraídos exclusivamente da planilha revisada, sem dependência dos registros automáticos do espelho.
+// Transcrição de informações originais e revisões, com histórico documental.
 const MARINA_REVISADA = {
-  "fonte": "SIMULACAO_JORNADA_MARINA_REVISADA_CONFERIDA.xlsx",
+  "fonte": "JORNADA_MARINA_CORRIGIDA_V7.xlsx",
   "natureza": "SIMULAÇÃO ACADÊMICA — DADOS ILUSTRATIVOS, NÃO COMPROVAM REGISTROS REAIS",
   "jornadas": [
     {
@@ -160,16 +160,16 @@ const MARINA_REVISADA = {
     {
       "data": "2025-06-12",
       "dia": "quinta-feira",
-      "entrada": "13:01",
-      "intervaloInicio": "16:25",
-      "intervaloFim": "17:28",
-      "saida": "21:20",
-      "jornadaReferencia": "Segunda a sexta: entrada por volta de 13h; intervalo de cerca de 1 hora; saída habitual por volta de 21h20",
+      "entrada": "13:00",
+      "intervaloInicio": "16:00",
+      "intervaloFim": "17:00",
+      "saida": "22:00",
+      "jornadaReferencia": "Jornada diária de referência: 7h20 de trabalho líquido. Exceção em 12/06/2025 informada pelo usuário.",
       "conferenciaInicio": "21:04",
       "conferenciaFim": "21:16",
-      "tempoAlem": "00h00",
-      "classificacao": "Conferência alinhada à planilha-base",
-      "observacoes": "Data e horários de conferência/saída conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:04–21:16; saída 21:20. Horários de entrada e intervalo permanecem como dados ilustrativos desta simulação."
+      "tempoAlem": "00h40",
+      "classificacao": "Prorrogação de jornada — saída às 22h00 informada para 12/06/2025",
+      "observacoes": "Retificação solicitada em 22/10/2026 para a data correta 12/06/2025: 13h00, intervalo 16h00–17h00, saída 22h00, 8h00 líquidas, +00h40. Registro anterior da planilha: 13h01, intervalo 16h25–17h28, saída 21h20; conferência original 21h04–21h16. Dados anteriores preservados na aba Histórico das alterações. Confirmação depende do comprovante original de batida."
     },
     {
       "data": "2025-06-13",
@@ -732,17 +732,6 @@ const MARINA_REVISADA = {
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
     {
-      "data": "2025-06-12",
-      "dia": "quinta-feira",
-      "batidaAfetada": "Saída",
-      "horarioPrevisto": "21:42",
-      "motivo": "Ausência/intermitência de sinal no local de registro",
-      "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
-      "origem": "FICTÍCIO/SIMULADO",
-      "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
-    },
-    {
       "data": "2025-06-24",
       "dia": "terça-feira",
       "batidaAfetada": "Entrada e saída",
@@ -1136,7 +1125,7 @@ const MARINA_REVISADA = {
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
       "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
-      "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
+      "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real. Restaurada da fonte V5 após correção do ano do lançamento de horas extras; não é evidência de saída real."
     },
     {
       "data": "2026-06-24",
@@ -1205,17 +1194,6 @@ const MARINA_REVISADA = {
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
     {
-      "data": "2026-08-15",
-      "dia": "sábado",
-      "batidaAfetada": "Saída",
-      "horarioPrevisto": "21:20",
-      "motivo": "Falha de conexão Wi-Fi no tablet do caixa",
-      "providencia": "DIVERGÊNCIA A VALIDAR — comparar o espelho/relatório do sistema e os registros originais antes de qualquer ajuste manual; não substituir automaticamente o horário informado.",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
-      "origem": "EXTRAÍDO DO TEXTO FORNECIDO",
-      "nota": "O exemplo individual transcrito informa saída às 21:20, mas a aba “Horas extras e saídas” e a planilha-base “CONFERÊNCIA DE CAIXA” indicam saída às 16:56 em 15/08/2026 (conferência 16:42–16:54). A divergência foi mantida visível para validação, sem escolher arbitrariamente um horário."
-    },
-    {
       "data": "2026-08-24",
       "dia": "segunda-feira",
       "batidaAfetada": "Saída",
@@ -1227,13 +1205,12 @@ const MARINA_REVISADA = {
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     }
   ],
-  "divergencias": [
-    {
-      "data": "2026-08-15",
-      "tipo": "Saída incompatível entre abas",
-      "jornada": "16:56",
-      "falha": "21:20",
-      "mensagem": "A aba “Horas extras e saídas” registra saída às 16:56 (conferência 16:42–16:54); a aba “Falhas de ponto”, proveniente de exemplo individual, informa 21:20. Ambos os registros são mantidos sem substituição e dependem de conferência documental."
-    }
-  ]
+  "divergencias": [],
+  "ultimaRevisao": "22/10/2026 — 15/08/2026: referência de 21h20 na aba Falhas de ponto retirada da lista ativa; saída 16h56 mantida conforme jornadas e conferência de caixa; referência anterior arquivada no Histórico das alterações das planilhas. Demais revisões mantidas.",
+  "historicoRetificacao15Agosto2026": {
+    "data": "2026-08-15",
+    "referenciaAnterior": "21:20 na ocorrência isolada de Falhas de ponto",
+    "valorMantido": "16:56 em Horas extras e saídas e CONFERÊNCIA DE CAIXA",
+    "justificativa": "Correção autorizada pelo usuário para harmonizar esta simulação; ocorrência conflitante retirada da tabela de falhas, sem alegar confirmação por registro externo."
+  }
 };

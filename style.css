@@ -100,3 +100,19 @@ table.ponto-table tr.marina-escala-row { background:#f8fafc; }
 @media print { .summary-panel { display:grid !important; grid-template-columns:repeat(4,minmax(0,1fr)); padding:8px !important; margin:8px 0 12px; break-inside:avoid; } .summary-panel > div { padding:4px 8px; } .summary-panel .resumo-valor, .summary-panel [id^="resumo-total"] { font-size:13px !important; } .resumo-detalhes-marina:not([open]) { display:none !important; } .resumo-detalhes-marina[open] { break-inside:avoid; } }
 
 .summary-panel.sem-devido { grid-template-columns:repeat(3,minmax(0,1fr)); }
+
+/* V6: horas extras positivas visíveis sem bloqueio pela origem do lançamento. */
+.marina-extra-ok { display:inline-block; color:#166534; font-weight:700; font-size:.74rem; background:#dcfce7; padding:2px 6px; border-radius:4px; margin-top:2px; }
+@media print { .marina-extra-ok { color:#14532d !important; background:transparent !important; border:1px solid #86efac; } }
+
+/* V7: diferença entre ponto informado, retificado e simples escala prevista. */
+.tag-warning { background:#fff0d3; color:#a04b05; border-color:#f7c66e; cursor:default; }
+.tag-recent { cursor:default; }
+.motivo-ajuste { color:#92400e; font-size:.73rem; line-height:1.4; margin-top:4px; max-width:300px; overflow-wrap:anywhere; }
+.marina-escala-row td { color:#64748b; }
+@media print { .motivo-ajuste { color:#92400e !important; } }
+
+/* V8: identificação inequívoca dos horários acrescentados só para exercício */
+.marina-fonte-nota{font-size:11px;line-height:1.35;margin-top:4px;color:#45556a;max-width:360px;}
+.marina-complementado-row td{background-color:#f5f8fd;}
+@media print{.marina-fonte-nota{font-size:8px!important;color:#303b48!important;}}

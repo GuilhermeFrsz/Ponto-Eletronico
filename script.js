@@ -22,13 +22,26 @@ if (removidosSinteticosMarina) {
   localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo));
 }
 
+// V7: se o erro de data de V6 tiver sido salvo no navegador, arquivar a
+// marcação incorreta conhecida de 12/06/2026 e não deixá-la sobrepor a fonte corrigida.
+const chaveEquivocadaV6 = '0142_2026-06-12';
+const enganoV6 = ajustesAoVivo[chaveEquivocadaV6];
+if (enganoV6 && enganoV6.entrada === '13:00' && enganoV6.intIni === '16:00' &&
+    enganoV6.intFim === '17:00' && enganoV6.saida === '22:00') {
+  const historico = JSON.parse(localStorage.getItem('pontoHistoricoMigracaoV7') || '[]');
+  historico.push({...enganoV6, motivoMigracao: 'Data retificada pelo usuário de 12/06/2026 para 12/06/2025'});
+  localStorage.setItem('pontoHistoricoMigracaoV7', JSON.stringify(historico));
+  delete ajustesAoVivo[chaveEquivocadaV6];
+  localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo));
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   popularMesesHistorico();
   popularDropdownFuncionarios();
   popularTabelaGeralFuncionarios();
   
   // INJETAR O HISTÓRICO DE QUEDAS DE CONEXÃO
-  popularFalhasConexaoHistoricas();
+  // Não produzir marcações sintéticas de queda de conexão. Registros antigos permanecem na auditoria, sem se misturarem à fonte Marina.
 
   if(Object.keys(ajustesAoVivo).length > 0) {
     const logContainer = document.getElementById('live-session-logs');
@@ -172,17 +185,18 @@ function alterarFuncionario() {
     const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
     const setValSafely = (elId, val) => { const el = document.getElementById(elId); if(el) el.value = val; };
     
+    setTxtSafely('ponto-origem-situacao', ehFuncionarioMarina(id) ? 'Marina: jornadas preenchidas; ver origem e complementações no status' : 'Dados demonstrativos; nem toda linha tem registro de batida');
     setTxtSafely('strip-nome', func.nome);
     setTxtSafely('sig-nome', func.nome);
     setTxtSafely('strip-cargo', func.cargo);
     setTxtSafely('strip-matricula', func.id);
     setTxtSafely('strip-jornada', func.turno.texto);
     setTxtSafely('ponto-origem-descricao', ehFuncionarioMarina(id)
-      ? 'Espelho simulado — planilha revisada nas datas registradas; escala prevista nos demais dias'
-      : 'Registros Eletrônicos Consolidados — Batidas via App/Tablet');
+      ? 'Jornada completa para simulação: saídas provenientes da fonte e entradas/intervalos ilustrativos identificados'
+      : 'Dados demonstrativos; horários não são comprovantes de batida');
     setTxtSafely('ponto-declaracao-impressao', ehFuncionarioMarina(id)
-      ? 'DOCUMENTO DE SIMULAÇÃO ACADÊMICA. Horários provenientes da planilha revisada e, nas demais datas, de escala fictícia. Não constitui espelho de ponto real, prova de jornada nem homologação de horas extras; assinaturas abaixo são espaços ilustrativos.'
-      : 'Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.');
+      ? 'ESPELHO ILUSTRATIVO: as 44 jornadas da planilha revisada foram preservadas. Nos outros 425 dias a saída foi mantida da conferência de caixa; entradas e intervalos foram complementados para simulação. Não é comprovante original ou controle oficial de ponto.'
+      : 'Registros de exemplo, sem comprovação de ponto original; assinaturas meramente ilustrativas.');
     setValSafely('input-jornada-base', func.turno.texto);
     setValSafely('ajuste-target-nome', `${func.nome} (Mat. ${func.id})`);
   }
@@ -200,6 +214,10 @@ function atualizarTextoMotivo() {
 // ==========================================
 // 3. MOTOR MATEMÁTICO DE HORAS
 // ==========================================
+function escaparHTML(t) {
+  return String(t ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
+}
+
 function timeToMins(t) {
   if(!t || t === "--:--") return 0;
   let [h, m] = t.split(':').map(Number);
@@ -240,6 +258,10 @@ function ajustarHoraStr(horaBase, variacaoMinutos) {
 // ==========================================
 function ehFuncionarioMarina(id) { return id === '0142'; }
 
+function buscarPontoCompletoMarina(dataIso) {
+  return typeof MARINA_PONTOS_COMPLETOS === 'undefined' ? null : MARINA_PONTOS_COMPLETOS.registros[dataIso] || null;
+}
+
 function buscarJornadaRevisadaMarina(dataIso) {
   if (typeof MARINA_REVISADA === 'undefined') return null;
   return MARINA_REVISADA.jornadas.find(r => r.data === dataIso) || null;
@@ -251,14 +273,6 @@ function calcularTrabalhoMarina(entrada, inicioIntervalo, fimIntervalo, saida) {
     !fimIntervalo || fimIntervalo === '--:--' || fimIntervalo === '—';
   const intervalo = semIntervalo ? 0 : timeToMins(fimIntervalo) - timeToMins(inicioIntervalo);
   return Math.max(0, totalBruto - Math.max(0, intervalo));
-}
-
-function minutosExcedentesFonteMarina(registro) {
-  // O campo "Tempo além" da fonte mede o excesso em relação à hora de saída,
-  // não necessariamente o tempo LÍQUIDO: intervalos excepcionais são abatidos
-  // na comparação trabalho efetivo x jornada de referência, feita no espelho.
-  const match = /^(\d+)h(\d{2})$/.exec(registro?.tempoAlem || '');
-  return match ? (+match[1] * 60 + +match[2]) : 0;
 }
 
 // ==========================================
@@ -283,6 +297,7 @@ function renderizarTabela() {
   let totalTrabMes = 0, totalExtraMes = 0, totalAtrasoMes = 0;
   let totalDevidoMarina = 0;
   const itensDevidos = [];
+  const paresRegistrados = new Map();
 
   for (let dia = 1; dia <= totalDias; dia++) {
     const dataObj = new Date(ano, mes - 1, dia);
@@ -313,22 +328,29 @@ function renderizarTabela() {
     const ajusteGravado = ajustesAoVivo[chaveUnicaAjuste];
     const ajusteAoVivo = ehMarina && ajusteGravado?.isAutoGerado ? null : ajusteGravado;
     const registroRevisado = ehMarina ? buscarJornadaRevisadaMarina(chaveDataIso) : null;
+    const pontoCompleto = ehMarina ? buscarPontoCompletoMarina(chaveDataIso) : null;
     const baseDiaMins = ehMarina && diaSemanaIndex === 6 ? 240 : baseMins;
     
     let ent, intIni, intFim, sai, statusTag, rowClass = "";
     let trabMins = 0;
+    let possuiMarcacao = false;
 
     if (ajusteAoVivo) {
+      possuiMarcacao = !ajusteAoVivo.isAutoGerado;
       ent = ajusteAoVivo.entrada; 
       intIni = ajusteAoVivo.intIni || func.turno.intIni; 
       intFim = ajusteAoVivo.intFim || func.turno.intFim; 
       sai = ajusteAoVivo.saida;
       rowClass = "ajustado-row";
       
+      // Um ajuste deve indicar claramente quem retificou e por qual motivo.
+      // Nenhuma linha é rotulada como "registro original" após alteração.
       if (ajusteAoVivo.isAutoGerado) {
-        statusTag = `<span class="tag-badge tag-warning" onclick="abrirModalPadrao('${dataFormatada}', '${sai}')">⚠️ Ajuste Manual - Queda de Sinal</span>`;
+        statusTag = `<span class="tag-badge tag-warning">Ajuste antigo de sistema • sem confirmação de batida</span>`;
+        possuiMarcacao = false;
       } else {
-        statusTag = `<span class="tag-badge tag-recent">● Ajuste Manual Registrado</span>`;
+        const motivoSeguro = escaparHTML(ajusteAoVivo.motivo || 'Motivo não informado');
+        statusTag = `<span class="tag-badge tag-warning">Ponto Ajustado</span><div class="motivo-ajuste">${motivoSeguro}</div>`;
       }
       trabMins = ehMarina ? calcularTrabalhoMarina(ent, intIni, intFim, sai) :
         (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
@@ -336,67 +358,69 @@ function renderizarTabela() {
     } else {
       if (ehMarina) {
         if (registroRevisado) {
+          possuiMarcacao = true;
           // Dados desta data vieram da aba revisada, nunca de sorteio ou falha automática.
           ent = registroRevisado.entrada;
           intIni = registroRevisado.intervaloInicio === '—' ? '--:--' : registroRevisado.intervaloInicio;
           intFim = registroRevisado.intervaloFim === '—' ? '--:--' : registroRevisado.intervaloFim;
           sai = registroRevisado.saida;
-          statusTag = `<span class="tag-badge tag-recent">Planilha revisada</span>`;
+          statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
           rowClass = 'marina-fonte-row';
-        } else if (diaSemanaIndex === 6) {
-          ent = func.turno.sabEntBase;
-          intIni = '--:--'; intFim = '--:--';
-          sai = func.turno.sabSaiBase;
-          statusTag = `<span class="tag-badge tag-neutral">Escala • sábado</span>`;
-          rowClass = 'marina-escala-row';
+        } else if (pontoCompleto) {
+          possuiMarcacao = true; // Linha preenchida PARA A SIMULAÇÃO; não comprova marcação física.
+          ent = pontoCompleto.entrada;
+          intIni = pontoCompleto.intervaloInicio;
+          intFim = pontoCompleto.intervaloFim;
+          sai = pontoCompleto.saida;
+          rowClass = 'marina-fonte-row marina-complementado-row';
+          statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span><div class="marina-fonte-nota">Simulação: entrada/intervalo ilustrativos; saída da conferência de caixa.</div>`;
         } else {
-          // Nos dias sem lançamento na planilha, apenas exibir a escala prevista,
-          // sem inventar batidas aleatórias que poderiam produzir horas extras.
-          ent = func.turno.entBase;
-          intIni = func.turno.intIni; intFim = func.turno.intFim;
-          sai = func.turno.saiBase;
-          statusTag = `<span class="tag-badge tag-neutral">Escala • dia útil</span>`;
+          // A planilha-fonte foi incompleta; nunca mascarar ausência de dados.
+          ent = intIni = intFim = sai = '--:--';
+          statusTag = `<span class="tag-badge tag-warning">Origem ausente — conferir</span>`;
           rowClass = 'marina-escala-row';
         }
         trabMins = calcularTrabalhoMarina(ent, intIni, intFim, sai);
       } else {
-        ent = ajustarHoraStr(func.turno.entBase, getVariacaoEstavel(funcId, dia, mes, 1));
-        sai = ajustarHoraStr(func.turno.saiBase, getVariacaoEstavel(funcId, dia, mes, 4));
-        intIni = ajustarHoraStr(func.turno.intIni, Math.abs(getVariacaoEstavel(funcId, dia, mes, 2) % 4));
-        intFim = ajustarHoraStr(func.turno.intFim, Math.abs(getVariacaoEstavel(funcId, dia, mes, 3) % 5));
-        statusTag = `<span style="color: var(--success); font-size: 0.8rem;">● Registro Regular</span>`;
+        // Nenhuma variação inventada: sem comprovante, exibimos somente escala prevista,
+        // que NÃO será contabilizada como ponto efetivamente registrado.
+        ent = func.turno.entBase;
+        sai = func.turno.saiBase;
+        intIni = func.turno.intIni;
+        intFim = func.turno.intFim;
+        statusTag = `<span class="tag-badge tag-neutral">Escala prevista • sem batida</span>`;
         trabMins = (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
       }
     }
 
-    totalTrabMes += trabMins;
-    let saldoMins = trabMins - baseDiaMins;
-    if (ehMarina) {
-      // Somente a planilha pode autorizar um saldo POSITIVO neste espelho.
-      // O tempo efetivamente trabalhado é apurado descontando o intervalo.
-      const minutosFonte = registroRevisado ? minutosExcedentesFonteMarina(registroRevisado) : 0;
-      // Soma documental provisória do TEMPO ALÉM explicitamente indicado na
-      // planilha. Não pressupõe validação jurídica nem equivalência a hora
-      // extra líquida trabalhada; essa diferença é mostrada no detalhamento.
-      const trabalhoFonte = registroRevisado ? calcularTrabalhoMarina(
-        registroRevisado.entrada, registroRevisado.intervaloInicio,
-        registroRevisado.intervaloFim, registroRevisado.saida) : 0;
-      const excedenteLiquido = Math.max(0, trabalhoFonte - baseDiaMins);
-      totalDevidoMarina += minutosFonte;
-      if (minutosFonte > 0) {
-        itensDevidos.push({ data: dataFormatada, trabalhado: trabalhoFonte,
-          referencia: baseDiaMins, fonte: minutosFonte, liquido: excedenteLiquido });
-      }
-      // Saldo na linha respeita ajuste gerencial, mas não cria "devidas" extras.
-      const minutosElegiveis = Math.min(Math.max(0, saldoMins), minutosFonte);
-      saldoMins = saldoMins < 0 ? saldoMins : minutosElegiveis;
-      if (ajusteAoVivo && !registroRevisado && trabMins > baseDiaMins) {
-        statusTag += ' <span class="marina-pendente"> </span>';
-      }
+    if (possuiMarcacao) totalTrabMes += trabMins;
+    if (possuiMarcacao && (!ehMarina || registroRevisado || (ajusteAoVivo && !ajusteAoVivo.isAutoGerado))) {
+      const par = `${ent}|${sai}`;
+      const dias = paresRegistrados.get(par) || [];
+      dias.push(dataFormatada);
+      paresRegistrados.set(par, dias);
+    }
+    // FONTE ÚNICA DA VERDADE DO ESPELHO: saldo diário = tempo líquido trabalhado
+    // menos jornada de referência (Marina: 7h20 seg-sex, 4h sábado).
+    // Um ajuste de ponto efetivo tem exatamente a mesma regra que uma linha da planilha.
+    // Não há teto pelo campo textual "Tempo além" nem lista fechada de horas extras.
+    const saldoMins = possuiMarcacao ? (trabMins - baseDiaMins) : 0;
+    if (ehMarina && saldoMins > 0) {
+      // "Devidas" é o somatório dos excedentes diários apurados nesta simulação,
+      // sem homologação, adicionais legais ou compensações presumidas.
+      totalDevidoMarina += saldoMins;
+      const origem = ajusteAoVivo
+        ? 'Horário salvo no módulo gerencial'
+        : registroRevisado ? 'Planilha de jornadas revisada' : pontoCompleto ? 'Saída da planilha / entrada e intervalo ilustrativos' : 'Origem não localizada';
+      itensDevidos.push({data:dataFormatada, trabalhado:trabMins,
+        referencia:baseDiaMins, extra:saldoMins, origem});
+      statusTag += ` <span class="marina-extra-ok">Hora extra apurada: +${minsToClock(saldoMins)}</span>`;
     }
     let strSaldo;
 
-    if (saldoMins > 0) {
+    if (!possuiMarcacao) {
+      strSaldo = `—`;
+    } else if (saldoMins > 0) {
       strSaldo = `<span style="color:var(--danger); font-weight:bold;">+${minsToClock(saldoMins)}</span>`;
       totalExtraMes += saldoMins;
     } else if (saldoMins < 0) {
@@ -411,12 +435,19 @@ function renderizarTabela() {
       <td><strong>${dataFormatada}</strong></td><td>${diasSemana[diaSemanaIndex]}</td>
       <td>${ent}</td><td style="vertical-align: middle;">${intIni}</td><td style="vertical-align: middle;">${intFim}</td>
       <td><strong style="${sai === func.turno.saiBase && ehMarina && (!ajusteAoVivo || ajusteAoVivo.isAutoGerado) ? 'color:#b45309;' : ''}">${sai}</strong></td>
-      <td>${minsToClock(trabMins)}</td><td>${strSaldo}</td><td>${statusTag}</td>
+      <td>${possuiMarcacao ? minsToClock(trabMins) : "—"}</td><td>${strSaldo}</td><td>${statusTag}</td>
       <td class="no-print"><button class="btn btn-secondary" style="padding: 2px 7px; font-size: 0.72rem;" onclick="abrirLancadorParaData('${chaveUnicaAjuste}', '${ent}', '${intIni}', '${intFim}', '${sai}')">Ajustar</button></td>
     `;
     tbody.appendChild(tr);
   }
 
+  const auditoria = document.getElementById('auditoria-uniformidade');
+  if (auditoria) {
+    const grupos = [...paresRegistrados.entries()].filter(([par,ds]) => ds.length >= 3);
+    auditoria.textContent = grupos.length
+      ? `Para esta competência, ${grupos.length} padrão(ões) de entrada/saída se repetem 3 ou mais vezes entre as jornadas individualizadas. Complementos ilustrativos são excluídos; conferir comprovantes; o sistema não altera esses horários.`
+      : 'Nesta competência não há padrão de entrada e saída repetido 3 ou mais vezes entre as marcações apresentadas. Este é um indicador interno, não uma certificação jurídica.';
+  }
   const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
   setTxtSafely('resumo-total-trab', minsToTime(totalTrabMes));
   setTxtSafely('resumo-total-extra', "+" + minsToTime(totalExtraMes));
@@ -435,11 +466,11 @@ function renderizarTabela() {
   if (detalhamentoPainel) detalhamentoPainel.hidden = !ehFuncionarioMarina(funcId);
   if (detalhamento) {
     detalhamento.hidden = !ehFuncionarioMarina(funcId);
-    const linhas = itensDevidos.map(item => `<li>${item.data} — ${minsToTime(item.fonte)} apontados na planilha (tempo líquido trabalhado ${minsToTime(item.trabalhado)}; referência diária ${minsToTime(item.referencia)}; excedente líquido estimado ${minsToTime(item.liquido)})</li>`).join('');
-    detalhamento.innerHTML = `<strong>Apuração de ${comp.split('-').reverse().join('/')}: ${minsToTime(totalDevidoMarina)}</strong>` +
-      `<p>Este campo soma exclusivamente a coluna “Tempo além da jornada normal” da aba “Horas extras e saídas”. Não usa atrasos/adiantamentos automáticos, nem ajustes manuais. O valor pode diferir do saldo positivo líquido do espelho, pois o tempo além da saída não desconta necessariamente intervalos excepcionais.</p>` +
-      (itensDevidos.length ? `<ul>${linhas}</ul>` : '<p>Sem excedentes informados na planilha para esta competência.</p>') +
-      `<p class="marina-criterio">Apuração documental provisória: a coluna da planilha não comprova por si só horas efetivamente devidas ou pagáveis; diferenças de intervalos exigem conferência antes de eventual lançamento em folha.</p>`;
+    const linhas = itensDevidos.map(item => `<li><strong>${item.data}: +${minsToTime(item.extra)}</strong> — total líquido ${minsToTime(item.trabalhado)} − referência ${minsToTime(item.referencia)} (${item.origem})</li>`).join('');
+    detalhamento.innerHTML = `<strong>Apuração de ${comp.split('-').reverse().join('/')}: +${minsToTime(totalDevidoMarina)}</strong>` +
+      `<p>O saldo de cada dia com batida informada/retificada é calculado automaticamente: Total Trab. menos jornada prevista. Horários completados para o exercício entram na apuração ilustrativa e são identificados por origem. Valores positivos alimentam integralmente tanto “Saldo (Extra)” quanto “Horas Extras (Saldo Positivo)” e “Horas extras devidas”; valores negativos aparecem exclusivamente em “Atrasos/Faltas”.</p>` +
+      (itensDevidos.length ? `<ul>${linhas}</ul>` : '<p>Nenhum excedente diário apurado nesta competência.</p>') +
+      `<p class="marina-criterio">Apuração de simulação com complementação parcial de horários, não homologação trabalhista nem comprovação de crédito. Ajustes efetivos salvos neste navegador entram no cálculo mensal; a planilha XLSX que acompanha o pacote é uma cópia estática e não é modificada automaticamente pelo navegador.</p>`;
   }
 }
 
@@ -512,6 +543,11 @@ function efetivarAjusteConfirmado() {
     return;
   }
 
+  const versaoAnterior = ajustesAoVivo[tempAjustePendente.chaveUnicaAjuste];
+  tempAjustePendente.registradoEm = new Date().toISOString();
+  tempAjustePendente.valorAnterior = versaoAnterior ||
+    (ehFuncionarioMarina(tempAjustePendente.funcId)
+      ? buscarJornadaRevisadaMarina(tempAjustePendente.dataIso) : null);
   ajustesAoVivo[tempAjustePendente.chaveUnicaAjuste] = tempAjustePendente;
   localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo)); 
   
@@ -533,12 +569,12 @@ function atualizarLogAuditoriaVisual(ajuste, append = false) {
   entradaLog.style.borderBottom = "1px solid #e2e8f0";
   
   const badgeCor = ajuste.isAutoGerado ? "var(--warning)" : "var(--success)";
-  const badgeTexto = ajuste.isAutoGerado ? "[SISTEMA - QUEDA]" : "[HOMOLOGADO]";
+  const badgeTexto = ajuste.isAutoGerado ? "[REGISTRO AUTOMÁTICO ANTIGO]" : "[PONTO AJUSTADO]";
   
   entradaLog.innerHTML = `
     <span style="color:${badgeCor}; font-weight:bold;">${badgeTexto}</span> 
     <strong>${funcNome}</strong>: Dia <strong>${dia}/${mes}/${ano}</strong> retificado para Ent: ${ajuste.entrada} | Int: ${ajuste.intIni}-${ajuste.intFim} | Saída: ${ajuste.saida}. 
-    <br><span style="color:var(--gray-600); font-size: 0.8rem;">Assinatura Digital: ${ajuste.gerente}. Motivo: ${ajuste.motivo}</span>
+    <br><span style="color:var(--gray-600); font-size: 0.8rem;">Responsável informado: ${escaparHTML(ajuste.gerente)}. Motivo: ${escaparHTML(ajuste.motivo)}</span>
   `;
   
   if (logContainer.innerText.includes('Nenhum ajuste')) {
@@ -583,7 +619,7 @@ function imprimirLog(tipo) {
     logs.forEach(ajuste => {
       let [ano, mes, dia] = ajuste.dataIso.split('-');
       let nome = FUNCIONARIOS.find(f => f.id === ajuste.funcId)?.nome || "Desconhecido";
-      let statusInfo = ajuste.isAutoGerado ? '<span style="color: #d97706; font-weight: bold;">[Queda de Sistema Detectada]</span>' : '<span style="color: #16a34a; font-weight: bold;">[Ajuste Manual]</span>';
+      let statusInfo = ajuste.isAutoGerado ? '<span style="color: #d97706; font-weight: bold;">[Registro antigo automático]</span>' : '<span style="color: #d97706; font-weight: bold;">[Ponto Ajustado]</span>';
       
       html += `<div style="margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #ccc; font-size: 14px; line-height: 1.6;">
         <strong>Data Referência:</strong> ${dia}/${mes}/${ano} ${statusInfo}<br>

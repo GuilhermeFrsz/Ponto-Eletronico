@@ -21,11 +21,11 @@
         <span>⏱️ Ponto Certo</span>
         <span class="brand-badge">Módulo Jurídico / Auditoria</span>
       </div>
-      <div class="company-subinfo">Mercado Rio Branco Ltda. • CNPJ: 35.999.335/0001-15 • Sistema Homologado MTE</div>
+      <div class="company-subinfo">Mercado Rio Branco Ltda. • CNPJ: 35.999.335/0001-15 • Ambiente local de conferência</div>
     </div>
     <div class="no-print" style="text-align: right;">
       <span style="font-size: 0.8rem; opacity: 0.85;">Operando em Modo Audiência</span><br>
-      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Base Local Autenticada</span>
+      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Dados locais • sem autenticação externa</span>
     </div>
   </header>
 
@@ -86,7 +86,7 @@
         <div id="resumo-item-devido" class="resumo-devido">
           <div class="resumo-rotulo">Horas extras devidas</div>
           <div id="resumo-total-devido" class="resumo-valor">00h 00m</div>
-          <div class="resumo-ajuda">Soma do “Tempo além” informado • apuração provisória</div>
+          <div class="resumo-ajuda">Soma dos saldos diários positivos • apuração provisória</div>
         </div>
       </div>
       <details id="resumo-detalhes-painel" class="resumo-detalhes-marina">
@@ -94,10 +94,16 @@
         <div id="resumo-detalhes-devido" class="resumo-detalhes-conteudo"></div>
       </details>
 
+      <details class="resumo-detalhes-marina no-print">
+        <summary>Verificar uniformidade das marcações • Súmula 338, III, TST</summary>
+        <div id="auditoria-uniformidade" class="resumo-detalhes-conteudo">Conferindo registros da competência...</div>
+        <p class="marina-criterio">O teste identifica repetições para revisão, mas não altera ou gera batidas e não constitui declaração de conformidade legal.</p>
+      </details>
+
       <div class="card" style="padding: 10px;">
         <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;" class="no-print">
           <span id="ponto-origem-descricao" style="font-weight: 600; color: var(--gray-600); font-size: 0.85rem;">Registros Eletrônicos Consolidados — Batidas via App/Tablet</span>
-          <span style="font-size: 0.8rem; color: var(--gray-600); font-weight: 600;">Marina: escala simulada nos dias sem registro na planilha</span>
+          <span style="font-size: 0.8rem; color: var(--gray-600); font-weight: 600;"><span id="ponto-origem-situacao">Marina: horários preenchidos para a simulação, com origem identificada</span></span>
         </div>
         <div class="table-responsive">
           <table class="ponto-table">
@@ -189,21 +195,14 @@
             <h1 id="marina-titulo">Relatórios de jornada e falhas — Marina</h1>
             <p class="relatorio-intro">Transcrição das duas abas da planilha revisada, com conferência automática das datas e dos dias da semana.</p>
           </div>
-          <span class="relatorio-simulacao">SIMULAÇÃO ACADÊMICA</span>
+          
         </div>
         <div class="relatorio-resumo" aria-label="Resumo dos dados">
           <div><strong id="resumo-jornadas">44</strong><span>Jornadas / saídas</span></div>
-          <div><strong id="resumo-falhas">55</strong><span>Falhas de ponto</span></div>
+          <div><strong id="resumo-falhas">53</strong><span>Falhas de ponto</span></div>
         </div>
-        <p class="relatorio-origem"><strong>Fonte exclusiva:</strong> <span id="relatorio-fonte">SIMULACAO_JORNADA_MARINA_REVISADA_CONFERIDA.xlsx</span>. Não são incorporados os lançamentos automáticos, correções ou horários gerados no espelho anterior. Os registros são ilustrativos e não constituem comprovação de ponto real.</p>
+        <p class="relatorio-origem"><strong>Fonte exclusiva:</strong> <span id="relatorio-fonte">JORNADA_MARINA_CORRIGIDA_V7.xlsx</span>. Não são incorporados os lançamentos automáticos, correções ou horários gerados no espelho anterior. Os exemplos sem documento original permanecem identificados; o site não produz batidas fictícias para completar datas.</p>
         <p id="marina-integridade" class="relatorio-integridade" role="status" aria-live="polite">Conferindo datas e dias da semana...</p>
-        <!-- A divergência é indicada nas duas linhas de 15/08/2026 e em nota de impressão.
-             Sem banner persistente, tela de confirmação, botão de ciência ou bloqueio de navegação. -->
-        <p id="marina-nota-impressao" class="marina-nota-impressao">
-          <strong>Nota sobre 15/08/2026:</strong> horários diferentes nas fontes revisadas:
-          saída 16h56 em “Horas extras e saídas” e horário informado 21h20 em “Falhas de ponto”.
-          Dados preservados; conferência documental ainda necessária.
-        </p>
         <div class="relatorio-acoes no-print">
           <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('jornada')">🖨️ PDF • Jornadas</button>
           <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('falhas')">🖨️ PDF • Falhas</button>
@@ -215,7 +214,7 @@
 
       <section id="marina-bloco-jornada" class="card relatorio-bloco" aria-labelledby="titulo-jornada">
         <div class="relatorio-bloco-header">
-          <div><h2 id="titulo-jornada">1. Horas extras e saídas</h2><p>Conferências, horários simulados, referências de jornada e observações originais.</p></div>
+          <div><h2 id="titulo-jornada">1. Horas extras e saídas</h2><p>Conferências e saídas revisadas, incluindo retificação de 12/06/2025 (informação fornecida pelo usuário).</p></div>
           <span id="contador-jornadas" class="relatorio-contador">44 registros</span>
         </div>
         <div class="relatorio-filtros no-print">
@@ -234,7 +233,7 @@
       <section id="marina-bloco-falhas" class="card relatorio-bloco" aria-labelledby="titulo-falhas">
         <div class="relatorio-bloco-header">
           <div><h2 id="titulo-falhas">2. Falhas de ponto</h2><p>Batidas afetadas, horários previstos, motivos, responsáveis e origem do registro.</p></div>
-          <span id="contador-falhas" class="relatorio-contador">55 registros</span>
+          <span id="contador-falhas" class="relatorio-contador">54 registros</span>
         </div>
         <div class="relatorio-filtros no-print">
           <label for="filtro-falhas">Localizar por data, motivo ou origem</label>
@@ -248,7 +247,7 @@
         </div>
         <p id="vazio-falhas" class="relatorio-vazio no-print" hidden>Nenhum registro corresponde à busca.</p>
       </section>
-      <p class="relatorio-rodape">Fonte: SIMULACAO_JORNADA_MARINA_REVISADA_CONFERIDA.xlsx (abas “Horas extras e saídas” e “Falhas de ponto”). Material simulado para estudo; divergências dependem de documentação original para validação.</p>
+      <p class="relatorio-rodape">Fonte: JORNADA_MARINA_CORRIGIDA_V7.xlsx (abas “Horas extras e saídas” e “Falhas de ponto”). Material simulado para estudo; divergências dependem de documentação original para validação.</p>
     </section>
   </div>
 
@@ -289,6 +288,7 @@
   <script src="registros.js"></script>
   <script src="script.js"></script>
   <script src="dados-marina-revisados.js"></script>
+<script src="marina-pontos-completos.js"></script>
   <script src="relatorios-marina.js"></script>
 </body>
 </html>
