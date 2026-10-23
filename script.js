@@ -243,8 +243,7 @@ function alterarFuncionario() {
   const func = FUNCIONARIOS.find(f => f.id === id);
   
   if(func) {
-    const avisoCenario = document.getElementById('aviso-cenario-sabados');
-  if (avisoCenario) avisoCenario.hidden = !ehFuncionarioMarina(id);
+  
   const declaracao = document.getElementById('ponto-declaracao-impressao');
   if (declaracao) declaracao.textContent = ehFuncionarioMarina(id) ?
     'Cenário de adequação para estudo: quatro jornadas de sábado foram hipoteticamente ajustadas; os horários V12 anteriores estão preservados em comparativo. Documento não substitui controle original.' :
@@ -594,8 +593,7 @@ function renderizarTabela() {
         ? `Para esta competência, ${grupos.length} padrão(ões) de entrada/saída se repetem 3 ou mais vezes entre as jornadas individualizadas. Complementos ilustrativos são excluídos; conferir comprovantes; o sistema não altera esses horários.`
         : 'Nesta competência não há padrão de entrada e saída repetido 3 ou mais vezes entre as marcações apresentadas. Este é um indicador interno, não uma certificação jurídica.';
   }
-  const avisoCenario = document.getElementById('aviso-cenario-sabados');
-  if (avisoCenario) avisoCenario.hidden = !ehFuncionarioMarina(funcId);
+  
   const declaracao = document.getElementById('ponto-declaracao-impressao');
   if (declaracao) declaracao.textContent = ehFuncionarioMarina(funcId) ?
     'Cenário de adequação para estudo: quatro jornadas de sábado foram hipoteticamente ajustadas; os horários V12 anteriores estão preservados em comparativo. Documento não substitui controle original.' :
@@ -948,7 +946,7 @@ function renderizarTabela() {
         sai = registroRevisado.saida;
         statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
           if (registroRevisado?.classificacao?.startsWith('Cenário alternativo')) {
-            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Cenário de sábado • comparar</button>`;
+            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Sábado</button>`;
           }
         rowClass = 'marina-fonte-row';
       } else if (pontoCompleto) {
@@ -1023,9 +1021,7 @@ function renderizarTabela() {
     `;
     tbody.appendChild(tr);
   }
-
-  const avisoCenario = document.getElementById('aviso-cenario-sabados');
-  if (avisoCenario) avisoCenario.hidden = !ehFuncionarioMarina(funcId);
+  
   const declaracao = document.getElementById('ponto-declaracao-impressao');
   if (declaracao) declaracao.textContent = ehFuncionarioMarina(funcId) ?
     'Cenário de adequação para estudo: quatro jornadas de sábado foram hipoteticamente ajustadas; os horários V12 anteriores estão preservados em comparativo. Documento não substitui controle original.' :

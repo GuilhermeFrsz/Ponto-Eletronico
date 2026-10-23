@@ -1,0 +1,13 @@
+PONTO CERTO — V15 • AJUSTE VISUAL DO ESPELHO
+
+1. Extraia o ZIP completo para uma pasta nova, mantendo os nomes de todos os arquivos.
+2. Abra index.html no navegador.
+
+Alterações sobre a V14:
+- Removido do Espelho de Ponto Individual o painel “Cenário alternativo de adequação dos sábados”.
+- Botões amarelos dos sábados excepcionais exibem apenas “Sábado”.
+- Clicar em “Sábado” continua abrindo o comparativo, com histórico e horários de referência.
+- Nenhuma batida, total mensal, escala, atestado, ajuste ou fonte foi alterado.
+- Navegação das quatro páginas e formatação compacta para impressão mantidas.
+
+Os dados demonstrativos e cenários anteriores não devem ser tratados como batidas reais autenticadas.
