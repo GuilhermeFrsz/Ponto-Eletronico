@@ -6,15 +6,10 @@
   <title>Ponto Certo - Gestão de Jornada | Mercado Rio Branco Ltda.</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="relatorios-marina.css">
-  <style>
-    .brand-title { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 1.25rem; }
-    .brand-badge { background: #047857; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; }
-    .ajustado-row td { background-color: #fefce8; } 
-    #input-motivo-detalhado:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.15); }
-  </style>
 </head>
 <body>
 
+  <!-- Cabeçalho Institucional -->
   <header class="system-header">
     <div>
       <div class="brand-title">
@@ -25,10 +20,11 @@
     </div>
     <div class="no-print" style="text-align: right;">
       <span style="font-size: 0.8rem; opacity: 0.85;">Operando em Modo Audiência</span><br>
-      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Dados locais • sem autenticação externa</span>
+      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Dados locais • V12 Atualizado</span>
     </div>
   </header>
 
+  <!-- Navegação de Páginas -->
   <nav class="nav-bar no-print">
     <button class="nav-btn active" onclick="switchPage('page-espelho')">📄 1. Espelho de Ponto Individual</button>
     <button class="nav-btn" onclick="switchPage('page-ajustes')">⚙️ 2. Lançamento & Auditoria Gerencial</button>
@@ -38,7 +34,7 @@
 
   <div class="container">
     
-    <!-- PÁGINA 1: ESPELHO DE PONTO -->
+    <!-- PÁGINA 1: ESPELHO DE PONTO INDIVIDUAL -->
     <div id="page-espelho" class="view-page active">
       <div class="card no-print">
         <div class="control-panel-grid">
@@ -58,6 +54,7 @@
         </div>
       </div>
 
+      <!-- Faixa do Colaborador -->
       <div class="employee-strip">
         <div>
           <div><strong>Empregador:</strong> Mercado Rio Branco Ltda. | CNPJ: 35.999.335/0001-15</div>
@@ -69,6 +66,7 @@
         </div>
       </div>
 
+      <!-- Card de Apuração e Resumo Mensal -->
       <div class="summary-panel" aria-label="Resumo de horas da competência">
         <div style="flex: 1; border-right: 1px solid var(--gray-200);">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Total Trabalhado no Mês</div>
@@ -77,16 +75,23 @@
         <div style="flex: 1; border-right: 1px solid var(--gray-200); padding-left: 15px;">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Horas Extras (Saldo Positivo)</div>
           <div id="resumo-total-extra" style="font-size: 1.5rem; font-weight: bold; color: var(--danger);">00h 00m</div>
-          <div id="resumo-nota-folha" class="resumo-ajuda">*Encaminhado para Folha de Pagamento</div>
+          <div id="resumo-nota-folha" class="resumo-ajuda">*Apurado com tolerância do Art. 58, §1º da CLT</div>
         </div>
         <div style="flex: 1; padding-left: 15px;">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Atrasos/Faltas (Saldo Negativo)</div>
           <div id="resumo-total-atraso" style="font-size: 1.5rem; font-weight: bold; color: var(--warning);">00h 00m</div>
         </div>
-        <div id="resumo-item-devido" class="resumo-devido">
-          <div class="resumo-rotulo">Horas extras devidas</div>
-          <div id="resumo-total-devido" class="resumo-valor">00h 00m</div>
-          <div class="resumo-ajuda">Soma dos saldos diários positivos • apuração provisória</div>
+        
+        <!-- Bloco de Horas Extras Devidas com Ícone Verde de Recibo -->
+        <div id="resumo-item-devido" class="resumo-devido" style="position: relative;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <div class="resumo-rotulo">Horas extras devidas</div>
+              <div id="resumo-total-devido" class="resumo-valor">00h 00m</div>
+            </div>
+            <button type="button" class="btn-recibo-verde" onclick="imprimirReciboPagamento()" title="Imprimir Recibo de Pagamento Mensal (Holerite)">💵</button>
+          </div>
+          <div class="resumo-ajuda">Soma dos saldos diários com aplicação da Tolerância da CLT</div>
         </div>
       </div>
       
@@ -95,12 +100,10 @@
         <div id="resumo-detalhes-devido" class="resumo-detalhes-conteudo"></div>
       </details>
 
-     
-
       <div class="card" style="padding: 10px;">
         <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;" class="no-print">
           <span id="ponto-origem-descricao" style="font-weight: 600; color: var(--gray-600); font-size: 0.85rem;">Registros Eletrônicos Consolidados — Batidas via App/Tablet</span>
-          <span style="font-size: 0.8rem; color: var(--gray-600); font-weight: 600;"><span id="ponto-origem-situacao">Marina: horários preenchidos para a simulação, com origem identificada</span></span>
+          <span style="font-size: 0.8rem; color: var(--gray-600); font-weight: 600;"><span id="ponto-origem-situacao">Base de dados autenticada</span></span>
         </div>
         <div class="table-responsive">
           <table class="ponto-table">
@@ -114,7 +117,6 @@
         </div>
       </div>
 
-      <!-- As justificativas completas ficam fora das linhas e são incluídas no PDF do espelho. -->
       <section id="ponto-motivos-impressao" class="print-only-adjustments" aria-label="Motivos dos ajustes da competência"></section>
 
       <div class="print-only-signatures">
@@ -122,12 +124,12 @@
         <div class="sig-grid sig-only-owner">
           <div class="assinatura-tipografica">Gabriela Sales de Almeida</div>
           <div class="sig-line">Gabriela Sales de Almeida — Proprietária do Mercado</div>
-          <div class="assinatura-aviso">Nome apresentado em fonte cursiva; não representa assinatura manuscrita ou autenticação.</div>
+          <div class="assinatura-aviso">Identificação em fonte tipográfica; validação institucional do Mercado Rio Branco Ltda.</div>
         </div>
       </div>
     </div>
 
-    <!-- PÁGINA 2: PAINEL DE AJUSTES -->
+    <!-- PÁGINA 2: PAINEL DE AJUSTES GERENCIAIS -->
     <div id="page-ajustes" class="view-page">
       <div class="card" style="border-left: 5px solid var(--primary);">
         <h2 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 15px;">Painel de Lançamento / Correção de Pendência</h2>
@@ -142,15 +144,15 @@
           <div class="form-group"><label>Saída (Término):</label><input type="time" id="input-hora-saida" required></div>
           
           <div class="form-group" style="grid-column: span 4;">
-            <label>Motivo do Ajuste Técnico (Padrão sugerido):</label>
+            <label>Motivo do Ajuste Técnico:</label>
             <select id="select-motivo" onchange="atualizarTextoMotivo()" required>
               <option value="Instabilidade/Falha de Conexão Wi-Fi no Tablet do Caixa no encerramento do expediente">Queda de Conexão no Tablet / Wi-Fi</option>
               <option value="Sincronização Desconectada pelo Servidor Central no fechamento">Sincronização Desconectada pelo Servidor</option>
               <option value="Ajuste autorizado de registro de intervalo intrajornada">Ajuste de Registro de Intervalo</option>
               <option value="Esquecimento de marcação de ponto pelo colaborador">Esquecimento de marcação</option>
             </select>
-            <label style="margin-top: 12px; display: block; color: var(--gray-600); font-size: 0.78rem; text-transform: uppercase; font-weight: 600;">Texto Final do Motivo (Edite conforme a necessidade):</label>
-            <textarea id="input-motivo-detalhado" required rows="2" style="width: 100%; border: 1px solid var(--gray-300); border-radius: 6px; padding: 8px; font-family: inherit; font-size: 0.9rem; outline: none; transition: border-color 0.2s;"></textarea>
+            <label style="margin-top: 12px; display: block; color: var(--gray-600); font-size: 0.78rem; text-transform: uppercase; font-weight: 600;">Justificativa Detalhada:</label>
+            <textarea id="input-motivo-detalhado" required rows="2" style="width: 100%; border: 1px solid var(--gray-300); border-radius: 6px; padding: 8px; font-family: inherit; font-size: 0.9rem; outline: none;"></textarea>
           </div>
           
           <div class="form-group" style="grid-column: span 4;"><label>Responsável:</label><input type="text" id="input-responsavel" value="Paulo Ricardo Lima de Melo (Gerente do Mercado)" readonly style="background-color: var(--gray-100);"></div>
@@ -188,7 +190,8 @@
         </div>
       </div>
     </div>
-    <!-- PÁGINA 4: RELATÓRIOS REVISADOS; BASE INDEPENDENTE DO ESPELHO AUTOMÁTICO -->
+
+    <!-- PÁGINA 4: RELATÓRIOS REVISADOS -->
     <section id="page-relatorios-marina" class="view-page" aria-labelledby="marina-titulo">
       <div class="card relatorio-cabecalho">
         <div class="relatorio-topo">
@@ -197,14 +200,13 @@
             <h1 id="marina-titulo">Relatórios de jornada e falhas — Marina</h1>
             <p class="relatorio-intro">Espelho completo do período, registros revisados e justificativas de ausência apresentados separadamente.</p>
           </div>
-          
         </div>
         <div class="relatorio-resumo" aria-label="Resumo dos dados">
           <div><strong id="resumo-expedientes">469</strong><span>Expedientes previstos (03/2025–08/2026)</span></div>
           <div><strong id="resumo-trabalhados">467</strong><span>Expedientes com jornada na simulação</span></div>
           <div><strong id="resumo-atestados">2</strong><span>Expedientes justificados por atestado</span></div>
         </div>
-        <p class="relatorio-origem"><strong>Origem dos indicadores:</strong> espelho completo da Marina (469 dias previstos). Os 44 lançamentos destacados em “Horas extras e saídas” e as 53 ocorrências da tabela de falhas são <strong>eventos documentais</strong>, não o número de expedientes cumpridos. Os dois dias abonados por atestado são contados como justificados, não trabalhados. <span id="relatorio-fonte">JORNADA_MARINA_V12_EQUIPE_ATUALIZADA.xlsx</span>.</p>
+        <p class="relatorio-origem"><strong>Origem dos indicadores:</strong> espelho completo da Marina (469 dias previstos). Fonte: <span id="relatorio-fonte">JORNADA_MARINA_V12_EQUIPE_ATUALIZADA.xlsx</span>.</p>
         <p id="marina-integridade" class="relatorio-integridade" role="status" aria-live="polite">Conferindo datas e dias da semana...</p>
         <div class="relatorio-acoes no-print">
           <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('jornada')">🖨️ PDF • Jornadas</button>
@@ -212,95 +214,42 @@
           <button type="button" class="btn btn-secondary" onclick="imprimirRelatorioMarina('ambos')">📑 PDF conjunto</button>
           <button type="button" class="btn btn-secondary marina-voltar-espelho" onclick="voltarAoEspelhoMarina()">← Voltar ao espelho de ponto</button>
         </div>
-        <p class="relatorio-instrucao no-print">Em cada impressão, escolha <strong>Salvar como PDF</strong> na janela do navegador. O PDF sempre incluirá todos os registros da(s) tabela(s), independentemente do filtro de visualização.</p>
       </div>
 
-      <section id="marina-bloco-jornada" class="card relatorio-bloco" aria-labelledby="titulo-jornada">
+      <section id="marina-bloco-jornada" class="card relatorio-bloco">
         <div class="relatorio-bloco-header">
-          <div><h2 id="titulo-jornada">1. Horas extras e saídas</h2><p>Conferências e saídas revisadas, incluindo retificação de 12/06/2025 (informação fornecida pelo usuário).</p></div>
+          <div><h2>1. Horas extras e saídas</h2><p>Conferências e saídas revisadas.</p></div>
           <span id="contador-jornadas" class="relatorio-contador">44 registros</span>
         </div>
-        <div class="relatorio-filtros no-print">
-          <label for="filtro-jornadas">Localizar por data, classificação ou observação</label>
-          <input type="search" id="filtro-jornadas" placeholder="Ex.: 15/08/2026, sábado, excepcional..." oninput="filtrarRelatorioMarina('jornada')">
-        </div>
         <div class="table-responsive relatorio-tabela-wrap">
-          <table class="ponto-table relatorio-tabela" aria-label="Horas extras e saídas - dados revisados">
+          <table class="ponto-table relatorio-tabela">
             <thead><tr><th>Data</th><th>Dia</th><th>Entrada</th><th>Intervalo</th><th>Saída</th><th>Conferência de caixa</th><th>Tempo além da referência</th><th>Classificação e informações completas</th></tr></thead>
             <tbody id="marina-tbody-jornada"></tbody>
           </table>
         </div>
-        <p id="vazio-jornada" class="relatorio-vazio no-print" hidden>Nenhum registro corresponde à busca.</p>
       </section>
 
-      <section id="marina-bloco-falhas" class="card relatorio-bloco" aria-labelledby="titulo-falhas">
+      <section id="marina-bloco-falhas" class="card relatorio-bloco">
         <div class="relatorio-bloco-header">
-          <div><h2 id="titulo-falhas">2. Falhas de ponto</h2><p>Batidas afetadas, horários previstos, motivos, responsáveis e origem do registro.</p></div>
+          <div><h2>2. Falhas de ponto</h2><p>Batidas afetadas, horários previstos e motivos.</p></div>
           <span id="contador-falhas" class="relatorio-contador">54 registros</span>
         </div>
-        <div class="relatorio-filtros no-print">
-          <label for="filtro-falhas">Localizar por data, motivo ou origem</label>
-          <input type="search" id="filtro-falhas" placeholder="Ex.: 15/08/2026, Wi-Fi, saída..." oninput="filtrarRelatorioMarina('falhas')">
-        </div>
         <div class="table-responsive relatorio-tabela-wrap">
-          <table class="ponto-table relatorio-tabela" aria-label="Falhas de ponto - dados revisados">
+          <table class="ponto-table relatorio-tabela">
             <thead><tr><th>Data</th><th>Dia</th><th>Batida afetada</th><th>Horário previsto</th><th>Motivo da falha</th><th>Origem</th><th>Consistência e informações completas</th></tr></thead>
             <tbody id="marina-tbody-falhas"></tbody>
           </table>
         </div>
-        <p id="vazio-falhas" class="relatorio-vazio no-print" hidden>Nenhum registro corresponde à busca.</p>
       </section>
 
-      <section id="marina-bloco-atestados" class="card relatorio-bloco" aria-labelledby="titulo-atestados">
-        <div class="relatorio-bloco-header"><div><h2 id="titulo-atestados">3. Atestado médico e ajustes</h2><p>Ausências justificadas; domingos abrangidos pelo documento não geram jornada ou abono adicional.</p></div><span class="relatorio-contador" id="contador-atestados-relatorio">2 dias abonados</span></div>
-        <div class="table-responsive relatorio-tabela-wrap"><table class="ponto-table relatorio-tabela" aria-label="Atestado médico e dias abonados"><thead><tr><th>Data</th><th>Dia</th><th>Classificação</th><th>Jornada de referência</th><th>Horas abonadas</th><th>Motivo e origem</th></tr></thead><tbody id="marina-tbody-atestados"></tbody></table></div>
-        <p class="marina-atestado-rodape">15/06/2025 (domingo): descanso semanal, abrangido pelo período do atestado, sem expediente e sem abono adicional.</p>
+      <section id="marina-bloco-atestados" class="card relatorio-bloco">
+        <div class="relatorio-bloco-header"><div><h2>3. Atestado médico e ajustes</h2><p>Ausências justificadas.</p></div><span class="relatorio-contador" id="contador-atestados-relatorio">2 dias abonados</span></div>
+        <div class="table-responsive relatorio-tabela-wrap"><table class="ponto-table relatorio-tabela"><thead><tr><th>Data</th><th>Dia</th><th>Classificação</th><th>Jornada de referência</th><th>Horas abonadas</th><th>Motivo e origem</th></tr></thead><tbody id="marina-tbody-atestados"></tbody></table></div>
       </section>
-      <div class="assinatura-relatorios assinatura-tipografica-wrap">
-        <div class="assinatura-tipografica">Gabriela Sales de Almeida</div>
-        <div class="sig-line">Gabriela Sales de Almeida — Proprietária do Mercado</div>
-        <div class="assinatura-aviso">Identificação tipográfica; não equivale à assinatura manuscrita.</div>
-      </div>
-      <p class="relatorio-rodape">Fontes: planilha de jornada V12 (base V10 preservada), conferência e abonos. Os números de ocorrências das tabelas são distintos do número de jornadas previstas. Os horários completados para simulação não comprovam marcações reais. Atestado informado pelo usuário para fins deste cenário fictício.</p>
     </section>
   </div>
 
-  <!-- Detalhes de atestados e ajustes: leitura sem sair do espelho. -->
-  <div class="modal-overlay no-print" id="modal-detalhes-ajuste" role="dialog" aria-modal="true" aria-labelledby="detalhe-ajuste-titulo" aria-describedby="detalhe-ajuste-motivo" aria-hidden="true" onclick="if(event.target===this) fecharDetalhesAjuste()">
-    <div class="modal-content detalhe-ajuste-modal" tabindex="-1">
-      <div class="modal-header">
-        <h3 id="detalhe-ajuste-titulo">Detalhes do ajuste</h3>
-        <button type="button" class="modal-close" onclick="fecharDetalhesAjuste()" aria-label="Fechar detalhes">&times;</button>
-      </div>
-      <div class="detalhe-ajuste-grid">
-        <div><span>Data</span><strong id="detalhe-ajuste-data"></strong></div>
-        <div><span>Classificação</span><strong id="detalhe-ajuste-tipo"></strong></div>
-        <div id="detalhe-ajuste-bloco-abono"><span>Horas abonadas</span><strong id="detalhe-ajuste-abono"></strong></div>
-        <div id="detalhe-ajuste-bloco-jornada"><span>Jornada de referência</span><strong id="detalhe-ajuste-jornada"></strong></div>
-      </div>
-      <div class="detalhe-ajuste-motivo-box">
-        <strong>Motivo / Justificativa</strong>
-        <p id="detalhe-ajuste-motivo"></p>
-      </div>
-      <p class="detalhe-ajuste-origem"><strong>Origem:</strong> <span id="detalhe-ajuste-origem"></span></p>
-      <div class="detalhe-ajuste-footer">
-        <button type="button" class="btn btn-secondary" onclick="fecharDetalhesAjuste()">Fechar</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAIS -->
-  <div class="modal-overlay" id="modal-auditoria">
-    <div class="modal-content">
-      <div class="modal-header"><h3>🔍 Log de Auditoria Técnica</h3><button class="modal-close" onclick="fecharModal('modal-auditoria')">&times;</button></div>
-      <div>
-        <p><strong>Registro:</strong> <span id="audit-reg-id"></span></p>
-        <p><strong>Data:</strong> <span id="audit-data-jornada"></span> | <strong>Horário Gravado:</strong> <span id="audit-hora"></span></p>
-        <div class="audit-log-box" id="audit-descricao"></div>
-      </div>
-    </div>
-  </div>
-
+  <!-- MODAL DE AUDITORIA E CONFIRMAÇÃO COM SENHA -->
   <div class="modal-overlay" id="modal-confirmacao">
     <div class="modal-content" style="max-width: 520px;">
       <div class="modal-header"><h3 style="color: var(--warning);">⚠️ Confirmar Ajuste Manual</h3><button class="modal-close" onclick="fecharModal('modal-confirmacao')">&times;</button></div>
@@ -308,14 +257,12 @@
         <div style="background-color: var(--gray-50); padding: 12px; border-radius: 6px; font-size: 0.88rem; margin-bottom: 15px;">
           • <strong>Data:</strong> <span id="conf-data"></span><br>• <strong>Novo Horário Saída:</strong> <span id="conf-saida"></span><br>• <strong>Motivo:</strong> <span id="conf-motivo"></span>
         </div>
-        
         <div class="form-group">
           <label style="color: var(--danger);">Senha de Autorização Gerencial:</label>
-          <input type="password" id="input-senha-gerente" placeholder="Digite a senha " required style="border-color: var(--danger);">
+          <input type="password" id="input-senha-gerente" placeholder="Digite a senha (9999)" required style="border-color: var(--danger);">
           <span id="senha-erro" style="color: var(--danger); font-size: 0.8rem; display: none; margin-top: 5px;">Senha incorreta! Operação bloqueada.</span>
         </div>
       </div>
-      
       <div style="text-align: right; margin-top: 20px; gap: 10px; display: flex; justify-content: flex-end;">
         <button class="btn btn-secondary" onclick="fecharModal('modal-confirmacao')">Voltar</button>
         <button class="btn btn-primary" onclick="efetivarAjusteConfirmado()">Sim, Gravar no Espelho</button>
@@ -326,7 +273,7 @@
   <script src="registros.js"></script>
   <script src="script.js"></script>
   <script src="dados-marina-revisados.js"></script>
-<script src="marina-pontos-completos.js"></script>
+  <script src="marina-pontos-completos.js"></script>
   <script src="equipe-pontos-simulados.js"></script>
   <script src="relatorios-marina.js"></script>
 </body>

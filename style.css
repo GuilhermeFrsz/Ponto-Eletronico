@@ -182,3 +182,35 @@ table.ponto-table tr.equipe-simulada-row { background:#f0fdfa; }
 }
 
 .marina-abono-resumo[hidden] { display:none!important; }
+
+/* BOTÃO VERDE DE EMISSÃO DO HOLERITE / RECIBO MENSAL */
+.btn-recibo-verde {
+  background-color: #10b981;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.btn-recibo-verde:hover {
+  background-color: #059669;
+  transform: scale(1.08);
+}
+
+.tag-neutral {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  font-size: 0.72rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}

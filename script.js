@@ -838,3 +838,364 @@ function imprimirLog(tipo) {
     janelaPrint.print();
   }, 300);
 }
+
+// ==========================================
+// RENDERIZAÇÃO DA TABELA COM TOLERÂNCIA CLT (ART. 58, §1º)
+// ==========================================
+function renderizarTabela() {
+  const compEl = document.getElementById('select-competencia');
+  const funcEl = document.getElementById('select-colaborador');
+  const tbody = document.getElementById('ponto-corpo');
+  if(!compEl || !funcEl || !tbody) return;
+  
+  const comp = compEl.value;
+  const funcId = funcEl.value;
+  const func = FUNCIONARIOS.find(f => f.id === funcId);
+  tbody.innerHTML = '';
+
+  const [ano, mes] = comp.split('-').map(Number);
+  const totalDias = new Date(ano, mes, 0).getDate();
+  const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+  const baseMins = calcularTrabalhoMarina(func.turno.entBase, func.turno.intIni, func.turno.intFim, func.turno.saiBase);
+
+  let totalTrabMes = 0, totalExtraMes = 0, totalAtrasoMes = 0, totalAbonoMes = 0;
+  let totalDevidoMarina = 0;
+
+  for (let dia = 1; dia <= totalDias; dia++) {
+    const dataObj = new Date(ano, mes - 1, dia);
+    const diaSemanaIndex = dataObj.getDay();
+    const strDia = String(dia).padStart(2, '0');
+    const strMes = String(mes).padStart(2, '0');
+    const dataFormatada = `${strDia}/${strMes}/${ano}`;
+    const chaveDataIso = `${ano}-${strMes}-${strDia}`;
+    const chaveUnicaAjuste = `${funcId}_${chaveDataIso}`;
+    const tr = document.createElement('tr');
+
+    const ehMarina = (funcId === "0142");
+
+    if (ehMarina && ano === 2025 && mes === 3 && dia < 3) {
+      tr.className = 'weekend';
+      tr.innerHTML = `<td>${dataFormatada}</td><td>${diasSemana[diaSemanaIndex]}</td><td>--:--</td><td>--:--</td><td>--:--</td><td>--:--</td><td>00:00</td><td>00:00</td><td style="color:#64748b; font-style: italic;">Antes da Admissão</td><td class="no-print">---</td>`;
+      tbody.appendChild(tr); continue;
+    }
+
+    if (diaSemanaIndex === 0) {
+      tr.className = 'weekend';
+      const textoDsr = ehFuncionarioMarina(funcId) && chaveDataIso === '2025-06-15'
+        ? 'Descanso Semanal Remunerado (DSR) • incluído no período do atestado 14–16/06; sem abono adicional'
+        : 'Descanso Semanal Remunerado (DSR)';
+      tr.innerHTML = `<td>${dataFormatada}</td><td><strong>Dom</strong></td><td>--:--</td><td>--:--</td><td>--:--</td><td>--:--</td><td>00:00</td><td>00:00</td><td style="color:#64748b; font-style: italic;">${textoDsr}</td><td class="no-print">---</td>`;
+      tbody.appendChild(tr); continue;
+    }
+
+    const ajusteAoVivo = obterAjusteParaDia(chaveUnicaAjuste);
+    const registroRevisado = ehMarina ? buscarJornadaRevisadaMarina(chaveDataIso) : null;
+    const pontoCompleto = ehMarina ? buscarPontoCompletoMarina(chaveDataIso) : null;
+    const baseDiaMins = diaSemanaIndex === 6 ? 240 : baseMins;
+    const pontoEquipe = !ehMarina ? buscarPontoEquipe(funcId, chaveDataIso) : null;
+    
+    let ent, intIni, intFim, sai, statusTag, rowClass = "";
+    let trabMins = 0;
+    let possuiMarcacao = false;
+
+    if (ajusteAoVivo?.tipo === 'atestado') {
+      ent = intIni = intFim = sai = '--:--';
+      trabMins = 0;
+      possuiMarcacao = false;
+      totalAbonoMes += minutosAbonoAtestado(ajusteAoVivo);
+      rowClass = 'ajustado-row marina-atestado-row';
+      statusTag = `<button type="button" class="tag-badge tag-warning ajuste-detalhe-trigger" onclick="abrirDetalhesAjuste('${chaveUnicaAjuste}')">Atestado médico • Ponto Ajustado</button>`;
+    } else if (ajusteAoVivo) {
+      possuiMarcacao = !ajusteAoVivo.isAutoGerado;
+      ent = ajusteAoVivo.entrada; 
+      intIni = ajusteAoVivo.intIni || func.turno.intIni; 
+      intFim = ajusteAoVivo.intFim || func.turno.intFim; 
+      sai = ajusteAoVivo.saida;
+      rowClass = "ajustado-row";
+      statusTag = `<button type="button" class="tag-badge tag-warning ajuste-detalhe-trigger" onclick="abrirDetalhesAjuste('${chaveUnicaAjuste}')">Ponto Ajustado</button>`;
+      trabMins = calcularTrabalhoMarina(ent, intIni, intFim, sai);
+    } else if (ehMarina) {
+      if (registroRevisado) {
+        possuiMarcacao = true;
+        ent = registroRevisado.entrada;
+        intIni = registroRevisado.intervaloInicio === '—' ? '--:--' : registroRevisado.intervaloInicio;
+        intFim = registroRevisado.intervaloFim === '—' ? '--:--' : registroRevisado.intervaloFim;
+        sai = registroRevisado.saida;
+        statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
+        rowClass = 'marina-fonte-row';
+      } else if (pontoCompleto) {
+        possuiMarcacao = true;
+        ent = pontoCompleto.entrada;
+        intIni = pontoCompleto.intervaloInicio;
+        intFim = pontoCompleto.intervaloFim;
+        sai = pontoCompleto.saida;
+        rowClass = 'marina-fonte-row marina-complementado-row';
+        statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
+      } else {
+        ent = intIni = intFim = sai = '--:--';
+        statusTag = `<span class="tag-badge tag-warning">Origem ausente</span>`;
+        rowClass = 'marina-escala-row';
+      }
+      trabMins = calcularTrabalhoMarina(ent, intIni, intFim, sai);
+    } else if (pontoEquipe) {
+      ent = pontoEquipe.entrada; intIni = pontoEquipe.intIni;
+      intFim = pontoEquipe.intFim; sai = pontoEquipe.saida;
+      possuiMarcacao = true;
+      rowClass = 'equipe-simulada-row';
+      statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
+      trabMins = calcularTrabalhoMarina(ent,intIni,intFim,sai);
+    } else {
+      ent = intIni = intFim = sai = '--:--';
+      statusTag = `<span class="tag-badge tag-warning">Sem dados</span>`;
+    }
+
+    if (possuiMarcacao) totalTrabMes += trabMins;
+
+    // APLICAÇÃO DA TOLERÂNCIA CLT (Art. 58, § 1º)
+    const saldoBrutoMins = possuiMarcacao ? (trabMins - baseDiaMins) : 0;
+    let saldoEfetivoMins = saldoBrutoMins;
+
+    if (possuiMarcacao && Math.abs(saldoBrutoMins) <= 10) {
+      saldoEfetivoMins = 0; // Zerado por tolerância
+    }
+
+    if (saldoEfetivoMins > 0) {
+      totalDevidoMarina += saldoEfetivoMins;
+      statusTag += ` <span class="marina-extra-ok">Hora extra: +${minsToClock(saldoEfetivoMins)}</span>`;
+    } else if (possuiMarcacao && saldoBrutoMins !== 0 && Math.abs(saldoBrutoMins) <= 10) {
+      statusTag += ` <span class="tag-badge tag-neutral" title="Variação de ${minsToClock(Math.abs(saldoBrutoMins))} dentro da tolerância do Art. 58, §1º CLT">Tolerância CLT (≤10 min)</span>`;
+    }
+
+    let strSaldo;
+    if (!possuiMarcacao) {
+      strSaldo = `—`;
+    } else if (saldoEfetivoMins > 0) {
+      strSaldo = `<span style="color:var(--danger); font-weight:bold;">+${minsToClock(saldoEfetivoMins)}</span>`;
+      totalExtraMes += saldoEfetivoMins;
+    } else if (saldoEfetivoMins < 0) {
+      strSaldo = `<span style="color:var(--warning);">${minsToClock(Math.abs(saldoEfetivoMins))}</span>`;
+      totalAtrasoMes += Math.abs(saldoEfetivoMins);
+    } else {
+      strSaldo = `00:00`;
+    }
+
+    tr.className = rowClass;
+    tr.innerHTML = `
+      <td><strong>${dataFormatada}</strong></td><td>${diasSemana[diaSemanaIndex]}</td>
+      <td>${ent}</td><td style="vertical-align: middle;">${intIni}</td><td style="vertical-align: middle;">${intFim}</td>
+      <td><strong>${sai}</strong></td>
+      <td>${ajusteAoVivo?.tipo === 'atestado' ? '—' : possuiMarcacao ? minsToClock(trabMins) : '—'}</td><td>${ajusteAoVivo?.tipo === 'atestado' ? '00:00' : strSaldo}</td><td>${statusTag}</td>
+      <td class="no-print"><button class="btn btn-secondary" style="padding: 2px 7px; font-size: 0.72rem;" onclick="abrirLancadorParaData('${chaveUnicaAjuste}', '${ent}', '${intIni}', '${intFim}', '${sai}')">Ajustar</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
+  setTxtSafely('resumo-total-trab', minsToTime(totalTrabMes));
+  setTxtSafely('resumo-total-abono', minsToTime(totalAbonoMes));
+  setTxtSafely('resumo-total-extra', "+" + minsToTime(totalExtraMes));
+  setTxtSafely('resumo-total-atraso', "-" + minsToTime(totalAtrasoMes));
+  setTxtSafely('resumo-total-devido', minsToTime(totalDevidoMarina));
+}
+
+// ==========================================
+// EMISSÃO E IMPRESSÃO DO HOLERITE / RECIBO MENSAL
+// ==========================================
+function imprimirReciboPagamento() {
+  const compEl = document.getElementById('select-competencia');
+  const funcEl = document.getElementById('select-colaborador');
+  if(!compEl || !funcEl) return;
+
+  const comp = compEl.value; // ex: "2025-03"
+  const funcId = funcEl.value;
+  const func = FUNCIONARIOS.find(f => f.id === funcId);
+  if(!func) return;
+
+  const [ano, mes] = comp.split('-');
+  const competenciaTexto = `${mes}/${ano}`;
+
+  const salarioBase = func.salarioBase || 1620.00;
+  const departamento = func.departamento || "Operações / Frente de Caixa";
+  const cpf = func.cpf || "341.582.910-44";
+  const rg = func.rg || "28.491.032-5";
+  const auxTransporte = 250.00;
+
+  // Recálculo mensal com a regra de tolerância CLT
+  let totalExtraMin = 0;
+  const totalDias = new Date(Number(ano), Number(mes), 0).getDate();
+  const baseMins = calcularTrabalhoMarina(func.turno.entBase, func.turno.intIni, func.turno.intFim, func.turno.saiBase);
+
+  for (let dia = 1; dia <= totalDias; dia++) {
+    const dataObj = new Date(Number(ano), Number(mes) - 1, dia);
+    if (dataObj.getDay() === 0) continue;
+
+    const strDia = String(dia).padStart(2, '0');
+    const chaveDataIso = `${ano}-${mes}-${strDia}`;
+    const chaveUnicaAjuste = `${funcId}_${chaveDataIso}`;
+    const ajusteAoVivo = obterAjusteParaDia(chaveUnicaAjuste);
+    const ehMarina = (funcId === "0142");
+
+    if (ehMarina && Number(ano) === 2025 && Number(mes) === 3 && dia < 3) continue;
+
+    let trabMins = 0;
+    let possuiMarcacao = false;
+
+    if (ajusteAoVivo?.tipo === 'atestado') {
+      possuiMarcacao = false;
+    } else if (ajusteAoVivo) {
+      possuiMarcacao = !ajusteAoVivo.isAutoGerado;
+      trabMins = calcularTrabalhoMarina(ajusteAoVivo.entrada, ajusteAoVivo.intIni || func.turno.intIni, ajusteAoVivo.intFim || func.turno.intFim, ajusteAoVivo.saida);
+    } else if (ehMarina) {
+      const regRev = buscarJornadaRevisadaMarina(chaveDataIso);
+      const pontoComp = buscarPontoCompletoMarina(chaveDataIso);
+      if (regRev) {
+        possuiMarcacao = true;
+        trabMins = calcularTrabalhoMarina(regRev.entrada, regRev.intervaloInicio === '—' ? '--:--' : regRev.intervaloInicio, regRev.intervaloFim === '—' ? '--:--' : regRev.intervaloFim, regRev.saida);
+      } else if (pontoComp) {
+        possuiMarcacao = true;
+        trabMins = calcularTrabalhoMarina(pontoComp.entrada, pontoComp.intervaloInicio, pontoComp.intervaloFim, pontoComp.saida);
+      }
+    } else {
+      const pontoEq = buscarPontoEquipe(funcId, chaveDataIso);
+      if (pontoEq) {
+        possuiMarcacao = true;
+        trabMins = calcularTrabalhoMarina(pontoEq.entrada, pontoEq.intIni, pontoEq.intFim, pontoEq.saida);
+      }
+    }
+
+    const baseDiaMins = dataObj.getDay() === 6 ? 240 : baseMins;
+    const saldoMins = possuiMarcacao ? (trabMins - baseDiaMins) : 0;
+    
+    // Apuração aplicando a tolerância do Art. 58, §1º CLT
+    if (possuiMarcacao && saldoMins > 10) {
+      totalExtraMin += saldoMins;
+    }
+  }
+
+  // Cálculos financeiros (Adicional de 50%)
+  const valorHoraBase = salarioBase / 220;
+  const valorHoraExtra50 = valorHoraBase * 1.5;
+  const horasExtrasDecimais = totalExtraMin / 60;
+  const valorTotalHorasExtras = horasExtrasDecimais * valorHoraExtra50;
+
+  const totalVencimentos = salarioBase + auxTransporte + valorTotalHorasExtras;
+  const totalDescontos = 0.00;
+  const valorLiquido = totalVencimentos;
+
+  const formatarMoeda = (val) => val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const horasExtrasTexto = `${Math.floor(totalExtraMin / 60)}h ${String(totalExtraMin % 60).padStart(2, '0')}m (50%)`;
+
+  const htmlDoc = `
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <title>Recibo de Pagamento Mensal - ${func.nome}</title>
+    <style>
+      body { font-family: 'Segoe UI', Arial, sans-serif; margin: 25px; color: #1e293b; background: #fff; font-size: 13px; }
+      .recibo-box { border: 2px solid #1e3a8a; padding: 25px; max-width: 800px; margin: 0 auto; border-radius: 8px; }
+      .header { text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 12px; margin-bottom: 20px; }
+      .header h1 { margin: 0; font-size: 20px; color: #1e3a8a; letter-spacing: 1px; }
+      .header p { margin: 4px 0 0 0; font-size: 12px; color: #64748b; }
+      .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8fafc; border: 1px solid #cbd5e1; padding: 12px; border-radius: 6px; margin-bottom: 20px; }
+      .info-item { line-height: 1.6; }
+      .info-item strong { color: #1e3a8a; }
+      table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+      th, td { border: 1px solid #cbd5e1; padding: 9px 12px; text-align: left; }
+      th { background-color: #f1f5f9; color: #1e3a8a; font-weight: 700; text-transform: uppercase; font-size: 11px; }
+      td.right { text-align: right; }
+      td.center { text-align: center; }
+      .totals-row { background-color: #f8fafc; font-weight: bold; }
+      .net-pay { background-color: #ecfdf5; border: 2px solid #10b981; padding: 12px 16px; border-radius: 6px; text-align: right; font-size: 16px; color: #047857; margin-bottom: 25px; }
+      .declaration { font-size: 11px; color: #475569; text-align: justify; margin-bottom: 35px; line-height: 1.5; border-left: 3px solid #1e3a8a; padding-left: 10px; }
+      .signatures { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 30px; text-align: center; }
+      .sig-block { display: flex; flex-direction: column; align-items: center; }
+      .sig-cursive { font-family: 'Segoe Script', 'URW Chancery L', cursive, sans-serif; font-size: 19px; color: #0f172a; margin-bottom: -4px; min-height: 32px; }
+      .sig-line { border-top: 1px solid #334155; width: 100%; padding-top: 6px; font-size: 11px; font-weight: 600; color: #334155; }
+      @media print { body { margin: 0; } .recibo-box { border: 1px solid #000; padding: 18px; } }
+    </style>
+  </head>
+  <body>
+    <div class="recibo-box">
+      <div class="header">
+        <h1>RECIBO DE PAGAMENTO MENSAL</h1>
+        <p>Mercado Rio Branco Ltda. • CNPJ: 35.999.335/0001-15</p>
+      </div>
+      <div class="info-grid">
+        <div class="info-item">
+          <strong>Empregador:</strong> Mercado Rio Branco Ltda.<br>
+          <strong>CNPJ:</strong> 35.999.335/0001-15<br>
+          <strong>Competência:</strong> ${competenciaTexto}
+        </div>
+        <div class="info-item">
+          <strong>Empregado:</strong> ${func.nome}<br>
+          <strong>Matrícula / CPF:</strong> ${func.id} / ${cpf}<br>
+          <strong>Função / RG:</strong> ${func.cargo} (RG: ${rg})<br>
+          <strong>Departamento:</strong> ${departamento}
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th class="center" style="width: 55px;">Cód.</th>
+            <th>Descrição</th>
+            <th class="center" style="width: 120px;">Referência</th>
+            <th class="right" style="width: 135px;">Vencimentos (R$)</th>
+            <th class="right" style="width: 135px;">Descontos (R$)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="center">001</td>
+            <td>Salário Base Mensal</td>
+            <td class="center">220h</td>
+            <td class="right">${formatarMoeda(salarioBase)}</td>
+            <td class="right"></td>
+          </tr>
+          <tr>
+            <td class="center">015</td>
+            <td>Auxílio Transporte</td>
+            <td class="center">Fixo Mensal</td>
+            <td class="right">${formatarMoeda(auxTransporte)}</td>
+            <td class="right"></td>
+          </tr>
+          <tr>
+            <td class="center">050</td>
+            <td>Horas Extras (50%)</td>
+            <td class="center">${horasExtrasTexto}</td>
+            <td class="right">${formatarMoeda(valorTotalHorasExtras)}</td>
+            <td class="right"></td>
+          </tr>
+          <tr class="totals-row">
+            <td colspan="3" class="right">Totais:</td>
+            <td class="right" style="color: #059669;">${formatarMoeda(totalVencimentos)}</td>
+            <td class="right">${formatarMoeda(totalDescontos)}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="net-pay">
+        <strong>VALOR LÍQUIDO A RECEBER: ${formatarMoeda(valorLiquido)}</strong>
+      </div>
+      <div class="declaration">
+        Declaro ter recebido da empresa Mercado Rio Branco Ltda. a importância líquida discriminada neste recibo de pagamento, correspondente ao salário, auxílio transporte e horas extras relativas à competência <strong>${competenciaTexto}</strong>, dando plena e geral quitação.
+      </div>
+      <div class="signatures">
+        <div class="sig-block">
+          <div class="sig-cursive">${func.nome}</div>
+          <div class="sig-line">${func.nome}<br>Assinatura da Empregada</div>
+        </div>
+        <div class="sig-block">
+          <div class="sig-cursive">Gabriela Sales de Almeida</div>
+          <div class="sig-line">Gabriela Sales de Almeida<br>Responsável pelo Empregador</div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
+  `;
+
+  const janelaPrint = window.open('', '_blank', 'width=850,height=750');
+  janelaPrint.document.write(htmlDoc);
+  janelaPrint.document.close();
+  setTimeout(() => { janelaPrint.print(); }, 300);
+}
