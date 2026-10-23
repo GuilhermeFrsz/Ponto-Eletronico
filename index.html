@@ -20,16 +20,16 @@
     </div>
     <div class="no-print" style="text-align: right;">
       <span style="font-size: 0.8rem; opacity: 0.85;">Operando em Modo Audiência</span><br>
-      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Dados locais • V13 • Cenário de adequação</span>
+      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Dados locais • V14 • Navegação corrigida</span>
     </div>
   </header>
 
   <!-- Navegação de Páginas -->
   <nav class="nav-bar no-print">
-    <button class="nav-btn active" onclick="switchPage('page-espelho')">📄 1. Espelho de Ponto Individual</button>
-    <button class="nav-btn" onclick="switchPage('page-ajustes')">⚙️ 2. Lançamento & Auditoria Gerencial</button>
-    <button class="nav-btn" onclick="switchPage('page-colaboradores')">👥 3. Quadro Geral de Funcionários</button>
-    <button class="nav-btn" onclick="switchPage('page-relatorios-marina')">📋 4. Relatórios Revisados • Marina</button>
+    <button class="nav-btn active" data-page="page-espelho">📄 1. Espelho de Ponto Individual</button>
+    <button class="nav-btn" data-page="page-ajustes">⚙️ 2. Lançamento & Auditoria Gerencial</button>
+    <button class="nav-btn" data-page="page-colaboradores">👥 3. Quadro Geral de Funcionários</button>
+    <button class="nav-btn" data-page="page-relatorios-marina">📋 4. Relatórios Revisados • Marina</button>
   </nav>
 
   <div class="container">
@@ -66,7 +66,8 @@
         </div>
       </div>
 
-      
+      <div id="aviso-cenario-sabados" class="card no-print" hidden style="border-left:4px solid #b45309; padding:10px 14px; background:#fffbeb; font-size:12px;">
+<strong>Cenário alternativo de adequação dos sábados.</strong> Quatro jornadas foram hipoteticamente limitadas a até 2 horas extras, com intervalo de 15 minutos. Os horários anteriores continuam no comparativo; <strong>não são registros originais retificados</strong>. Clique no status amarelo para comparar.
 </div>
 <!-- Card de Apuração e Resumo Mensal -->
       <div class="summary-panel" aria-label="Resumo de horas da competência">
@@ -214,7 +215,7 @@
           <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('jornada')">🖨️ PDF • Jornadas</button>
           <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('falhas')">🖨️ PDF • Falhas</button>
           <button type="button" class="btn btn-secondary" onclick="imprimirRelatorioMarina('ambos')">📑 PDF conjunto</button>
-          <button type="button" class="btn btn-secondary marina-voltar-espelho" onclick="voltarAoEspelhoMarina()">← Voltar ao espelho de ponto</button>
+          <button type="button" class="btn btn-secondary marina-voltar-espelho" onclick="switchPage('page-espelho')">← Voltar ao espelho de ponto</button>
         </div>
       </div>
 
@@ -287,5 +288,7 @@
   <script src="marina-pontos-completos.js"></script>
   <script src="equipe-pontos-simulados.js"></script>
   <script src="relatorios-marina.js"></script>
+  <!-- Correção V14: navegação independente, carregada por último -->
+  <script src="navegacao.js"></script>
 </body>
 </html>

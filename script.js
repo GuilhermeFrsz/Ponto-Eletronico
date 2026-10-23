@@ -484,7 +484,7 @@ function renderizarTabela() {
           sai = registroRevisado.saida;
           statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
           if (registroRevisado?.classificacao?.startsWith('Cenário alternativo')) {
-            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Sábado • </button>`;
+            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Cenário de sábado • comparar</button>`;
           }
           rowClass = 'marina-fonte-row';
         } else if (pontoCompleto) {

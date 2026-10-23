@@ -1,0 +1,25 @@
+PONTO CERTO • V14 • CORREÇÃO DA NAVEGAÇÃO E IMPRESSÃO
+
+1. Extraia TODO o conteúdo do ZIP em uma pasta nova.
+2. Abra o arquivo index.html (não renomeie os arquivos).
+3. Os arquivos devem ficar juntos, no mesmo diretório:
+   index.html, script.js, registros.js, style.css,
+   marina-pontos-completos.js, dados-marina-revisados.js,
+   equipe-pontos-simulados.js, relatorios-marina.js,
+   relatorios-marina.css, navegacao.js.
+
+CORREÇÕES
+- Navegação independente e estável entre as páginas 1, 2, 3 e 4.
+- Nomes de arquivos normalizados, evitando o erro com script(2).js e afins.
+- Remoção de um indicador duplicado na página 4.
+- Etiquetas de status e botões reduzidos na impressão do espelho.
+- Botão verde do recibo ocultado quando se imprime o espelho.
+- Dados, cálculos, funcionários e cenários de sábado V13 preservados.
+
+DICAS
+Caso o navegador abra a versão antiga, feche-a e abra o index.html
+da pasta recém-extraída. Alterações salvas em localStorage são locais
+ao navegador e à origem do arquivo; não apague dados de navegação
+sem salvar um backup de eventuais ajustes.
+
+Os dados são demonstrativos; horários ilustrativos não são marcações oficiais.

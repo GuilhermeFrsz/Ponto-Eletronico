@@ -214,3 +214,50 @@ table.ponto-table tr.equipe-simulada-row { background:#f0fdfa; }
   border-radius: 4px;
   font-weight: 600;
 }
+
+/* V14 — versão compacta dos indicadores e controles na impressão do espelho.
+   O espelho mantém os status, mas botões não dominam a célula ou a folha. */
+@media print {
+  body:not(.print-revisado) #page-espelho .btn-recibo-verde,
+  body:not(.print-revisado) #page-espelho .no-print,
+  body:not(.print-revisado) #page-espelho .btn {
+    display: none !important;
+  }
+  body:not(.print-revisado) #page-espelho .tag-badge,
+  body:not(.print-revisado) #page-espelho button.ajuste-detalhe-trigger {
+    display: inline-block !important;
+    font-size: 7px !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+    padding: 1px 3px !important;
+    margin: 0 !important;
+    border-radius: 3px !important;
+    box-shadow: none !important;
+    white-space: normal !important;
+    max-width: 100% !important;
+    vertical-align: middle !important;
+    background: transparent !important;
+    color: #222 !important;
+    border: 1px solid #bbb !important;
+    letter-spacing: 0 !important;
+    min-height: 0 !important;
+  }
+  body:not(.print-revisado) #page-espelho table.ponto-table { font-size: 8.5px !important; }
+  body:not(.print-revisado) #page-espelho table.ponto-table th,
+  body:not(.print-revisado) #page-espelho table.ponto-table td { padding: 3px 3px !important; }
+  body:not(.print-revisado) #page-espelho .marina-extra-ok,
+  body:not(.print-revisado) #page-espelho .marina-abono-ok {
+    display: inline-block !important;
+    font-size: 7px !important;
+    line-height: 1.1 !important;
+    padding: 1px 3px !important;
+    margin: 1px 0 0 !important;
+    font-weight: 600 !important;
+    border: 1px solid #bbb !important;
+    border-radius: 3px !important;
+    color: #222 !important;
+    background: transparent !important;
+  }
+  body:not(.print-revisado) #page-espelho .marina-fonte-nota,
+  body:not(.print-revisado) #page-espelho .marina-pendente { font-size: 6.5px !important; line-height: 1.15 !important; }
+}
