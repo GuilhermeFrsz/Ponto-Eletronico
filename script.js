@@ -12,7 +12,8 @@ const MARINA_ATESTADOS = Object.freeze({
     tipo:'atestado', entrada:'', intIni:'', intFim:'', saida:'',
     abonoMin:240, jornadaReferencia:'13:00–17:00 (sábado)',
     motivo:'Atestado médico apresentado para afastamento de 14 a 16/06/2025. Ausência abonada em 14/06/2025 (sábado), conforme jornada de 4h. Não houve trabalho ou batidas neste dia.',
-    gerente:'Lançamento inicial a partir da documentação fornecida (simulação)',
+    gerente:'Lançamento inicial a partir da documentação fornecida ',
+    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025',
     isPrecarregado:true, isAutoGerado:false
   }),
   '0142_2025-06-16': Object.freeze({
@@ -20,8 +21,8 @@ const MARINA_ATESTADOS = Object.freeze({
     tipo:'atestado', entrada:'', intIni:'', intFim:'', saida:'',
     abonoMin:480, jornadaReferencia:'13:00–21:20 (segunda-feira; 8h de abono solicitado)',
     motivo:'Atestado médico apresentado para afastamento de 14 a 16/06/2025. Ausência abonada em 16/06/2025 (segunda-feira), 8h conforme critério informado. Não houve trabalho ou batidas neste dia.',
-    gerente:'Lançamento inicial a partir da documentação fornecida (simulação)',
-    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 (cenário fictício)',
+    gerente:'Lançamento inicial a partir da documentação fornecida',
+    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 ',
     isPrecarregado:true, isAutoGerado:false
   })
 });
