@@ -13,7 +13,6 @@ const MARINA_ATESTADOS = Object.freeze({
     abonoMin:240, jornadaReferencia:'13:00–17:00 (sábado)',
     motivo:'Atestado médico apresentado para afastamento de 14 a 16/06/2025. Ausência abonada em 14/06/2025 (sábado), conforme jornada de 4h. Não houve trabalho ou batidas neste dia.',
     gerente:'Lançamento inicial a partir da documentação fornecida (simulação)',
-    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 (cenário fictício)',
     isPrecarregado:true, isAutoGerado:false
   }),
   '0142_2025-06-16': Object.freeze({
