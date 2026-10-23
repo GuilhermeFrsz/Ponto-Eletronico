@@ -64,6 +64,7 @@ let removidosSinteticosMarina = false;
 for (const [chave, ajuste] of Object.entries(ajustesAoVivo)) {
   if (ajuste && ajuste.funcId === '0142' && ajuste.isAutoGerado === true) {
     delete ajustesAoVivo[chave];
+    //atenção
     removidosSinteticosMarina = true;
   }
 }
