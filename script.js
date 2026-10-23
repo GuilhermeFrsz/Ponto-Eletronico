@@ -384,6 +384,14 @@ function renderizarTabela() {
   const funcEl = document.getElementById('select-colaborador');
   const tbody = document.getElementById('ponto-corpo');
   if(!compEl || !funcEl || !tbody) return;
+
+    // TRAVA DE SEGURANÇA - CLT ART. 59 (Máximo 2h extras no Sábado)
+  if (diaSemanaIndex === 6) { // 6 = Sábado
+    // Se o horário de saída ultrapassar 19:00 (17:00 + 2h limite CLT)
+    if (timeToMins(sai) > timeToMins("19:00")) {
+      sai = "19:00"; // Trava a saída no limite legal permitido
+    }
+  }
   
   const comp = compEl.value;
   const funcId = funcEl.value;
