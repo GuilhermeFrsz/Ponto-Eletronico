@@ -12,8 +12,8 @@ const MARINA_ATESTADOS = Object.freeze({
     tipo:'atestado', entrada:'', intIni:'', intFim:'', saida:'',
     abonoMin:240, jornadaReferencia:'13:00–17:00 (sábado)',
     motivo:'Atestado médico apresentado para afastamento de 14 a 16/06/2025. Ausência abonada em 14/06/2025 (sábado), conforme jornada de 4h. Não houve trabalho ou batidas neste dia.',
-    gerente:'Lançamento inicial a partir da documentação fornecida ',
-    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025',
+    gerente:'Lançamento inicial a partir da documentação fornecida (simulação)',
+    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 (cenário fictício)',
     isPrecarregado:true, isAutoGerado:false
   }),
   '0142_2025-06-16': Object.freeze({
@@ -21,17 +21,17 @@ const MARINA_ATESTADOS = Object.freeze({
     tipo:'atestado', entrada:'', intIni:'', intFim:'', saida:'',
     abonoMin:480, jornadaReferencia:'13:00–21:20 (segunda-feira; 8h de abono solicitado)',
     motivo:'Atestado médico apresentado para afastamento de 14 a 16/06/2025. Ausência abonada em 16/06/2025 (segunda-feira), 8h conforme critério informado. Não houve trabalho ou batidas neste dia.',
-    gerente:'Lançamento inicial a partir da documentação fornecida',
-    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 ',
+    gerente:'Lançamento inicial a partir da documentação fornecida (simulação)',
+    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 (cenário fictício)',
     isPrecarregado:true, isAutoGerado:false
   })
 });
 function obterAjustesAtivos() {
   // Os lançamentos salvos pelo usuário prevalecem sobre os ajustes pré-carregados.
-  return Object.values({...MARINA_ATESTADOS, ...ajustesAoVivo});
+  return Object.values({...MARINA_ATESTADOS, ...(typeof EQUIPE_AJUSTES_INICIAIS !== "undefined" ? EQUIPE_AJUSTES_INICIAIS : {}), ...ajustesAoVivo});
 }
 function obterAjusteParaDia(chave) {
-  return ajustesAoVivo[chave] || MARINA_ATESTADOS[chave] || null;
+  return (ajustesAoVivo[chave]?.isAutoGerado ? null : ajustesAoVivo[chave]) || MARINA_ATESTADOS[chave] || (typeof EQUIPE_AJUSTES_INICIAIS !== "undefined" ? EQUIPE_AJUSTES_INICIAIS[chave] : null) || null;
 }
 function minutosAbonoAtestado(ajuste) {
   if (!ajuste || ajuste.tipo !== 'atestado') return 0;
@@ -68,6 +68,18 @@ for (const [chave, ajuste] of Object.entries(ajustesAoVivo)) {
   }
 }
 if (removidosSinteticosMarina) {
+  localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo));
+}
+
+// V12: arquiva marcações geradas por versões antigas para que a base demonstrativa
+// uniforme da equipe seja aplicada em todos os meses, mantendo ajustes manuais autênticos.
+let autosAntigosV12 = [];
+for (const [chave, a] of Object.entries(ajustesAoVivo)) {
+  if (a && a.isAutoGerado === true) { autosAntigosV12.push(a); delete ajustesAoVivo[chave]; }
+}
+if (autosAntigosV12.length) {
+  const arquivo = JSON.parse(localStorage.getItem('pontoHistoricoAutosV12') || '[]');
+  localStorage.setItem('pontoHistoricoAutosV12', JSON.stringify(arquivo.concat(autosAntigosV12)));
   localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo));
 }
 
@@ -150,7 +162,7 @@ function popularFalhasConexaoHistoricas() {
               intFim: f.turno.intFim,
               saida: f.turno.saiBase,
               motivo: "Instabilidade/Falha de Conexão Wi-Fi no Tablet do Caixa no encerramento do expediente",
-              gerente: "Paulo Henrique Ribeiro (Gerente)",
+              gerente: "Paulo Ricardo Lima de Melo (Gerente)",
               isAutoGerado: true
             };
             houveMudanca = true;
@@ -234,20 +246,20 @@ function alterarFuncionario() {
     const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
     const setValSafely = (elId, val) => { const el = document.getElementById(elId); if(el) el.value = val; };
     
-    setTxtSafely('ponto-origem-situacao', ehFuncionarioMarina(id) ? 'Marina: pontos da simulação e ausências abonadas identificados separadamente' : 'Dados demonstrativos; nem toda linha tem registro de batida');
+    setTxtSafely('ponto-origem-situacao', ehFuncionarioMarina(id) ? 'Marina: pontos demonstrativos e ausências abonadas identificados separadamente' : 'Equipe: batidas ilustrativas completas, com ajustes demonstrativos destacados');
     setTxtSafely('strip-nome', func.nome);
-    setTxtSafely('sig-nome', func.nome);
     setTxtSafely('strip-cargo', func.cargo);
     setTxtSafely('strip-matricula', func.id);
     setTxtSafely('strip-jornada', func.turno.texto);
     setTxtSafely('ponto-origem-descricao', ehFuncionarioMarina(id)
       ? 'Jornada completa para simulação: saídas provenientes da fonte e entradas/intervalos ilustrativos identificados'
-      : 'Dados demonstrativos; horários não são comprovantes de batida');
+      : 'Jornadas geradas para a apresentação, com variações ilustrativas e ajustes documentados apenas no cenário fictício');
     setTxtSafely('ponto-declaracao-impressao', ehFuncionarioMarina(id)
       ? 'ESPELHO ILUSTRATIVO: os registros preenchidos são dados demonstrativos; alguns horários foram completados a partir da conferência de caixa. Atestado de 14–16/06/2025: 12h de ausência abonada em 14 e 16/06; 15/06 foi DSR. Dias abonados não constituem trabalho efetivo. Não é comprovante original ou controle oficial de ponto.'
-      : 'Registros de exemplo, sem comprovação de ponto original; assinaturas meramente ilustrativas.');
+      : 'ESPELHO DEMONSTRATIVO: horários e ajustes simulados; não são comprovantes originais de batida, não atestam trabalho real nem constituem controle eletrônico homologado. Nome da proprietária impresso em tipografia cursiva para identificação, sem assinatura manuscrita/autenticação.');
     setValSafely('input-jornada-base', func.turno.texto);
     setValSafely('ajuste-target-nome', `${func.nome} (Mat. ${func.id})`);
+    setValSafely('input-responsavel', 'Paulo Ricardo Lima de Melo (Gerente do Mercado)');
   }
   renderizarTabela();
 }
@@ -344,11 +356,24 @@ function atualizarIndicadoresExpedientes() {
   }
 }
 function calcularTrabalhoMarina(entrada, inicioIntervalo, fimIntervalo, saida) {
-  const totalBruto = timeToMins(saida) - timeToMins(entrada);
-  const semIntervalo = !inicioIntervalo || inicioIntervalo === '--:--' || inicioIntervalo === '—' ||
-    !fimIntervalo || fimIntervalo === '--:--' || fimIntervalo === '—';
-  const intervalo = semIntervalo ? 0 : timeToMins(fimIntervalo) - timeToMins(inicioIntervalo);
-  return Math.max(0, totalBruto - Math.max(0, intervalo));
+  // Calcula em uma linha do tempo crescente; inclui turnos que passam da meia-noite.
+  const semIntervalo = !inicioIntervalo || ['--:--', '—'].includes(inicioIntervalo) ||
+    !fimIntervalo || ['--:--', '—'].includes(fimIntervalo);
+  const lista = semIntervalo ? [entrada,saida] : [entrada,inicioIntervalo,fimIntervalo,saida];
+  if (lista.some(x => !/^\d{2}:\d{2}$/.test(String(x)))) return 0;
+  const valores = []; let dias = 0;
+  for (const t of lista) {
+    let m = timeToMins(t) + dias*1440;
+    while (valores.length && m < valores[valores.length - 1]) { dias++; m += 1440; }
+    valores.push(m);
+  }
+  return Math.max(0, valores[valores.length-1] - valores[0] -
+    (semIntervalo ? 0 : valores[2] - valores[1]));
+}
+function buscarPontoEquipe(funcId, dataIso) {
+  if (typeof EQUIPE_PONTOS_SIMULADOS === 'undefined') return null;
+  const r = EQUIPE_PONTOS_SIMULADOS[funcId]?.[dataIso];
+  return r ? {entrada:r[0],intIni:r[1],intFim:r[2],saida:r[3],previsto:r[4],status:r[5]} : null;
 }
 
 // ==========================================
@@ -368,7 +393,7 @@ function renderizarTabela() {
   const [ano, mes] = comp.split('-').map(Number);
   const totalDias = new Date(ano, mes, 0).getDate();
   const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-  const baseMins = (timeToMins(func.turno.intIni) - timeToMins(func.turno.entBase)) + (timeToMins(func.turno.saiBase) - timeToMins(func.turno.intFim));
+  const baseMins = calcularTrabalhoMarina(func.turno.entBase, func.turno.intIni, func.turno.intFim, func.turno.saiBase);
 
   let totalTrabMes = 0, totalExtraMes = 0, totalAtrasoMes = 0, totalAbonoMes = 0;
   let totalDevidoMarina = 0;
@@ -405,10 +430,11 @@ function renderizarTabela() {
     // Ajustes automáticos antigos não podem alterar os horários de Marina.
     // Um ajuste gerencial efetivo (não automático) segue visível e auditável.
     const ajusteGravado = ajustesAoVivo[chaveUnicaAjuste];
-    const ajusteAoVivo = ehMarina ? (ajusteGravado?.isAutoGerado ? MARINA_ATESTADOS[chaveUnicaAjuste] || null : obterAjusteParaDia(chaveUnicaAjuste)) : ajusteGravado;
+    const ajusteAoVivo = obterAjusteParaDia(chaveUnicaAjuste);
     const registroRevisado = ehMarina ? buscarJornadaRevisadaMarina(chaveDataIso) : null;
     const pontoCompleto = ehMarina ? buscarPontoCompletoMarina(chaveDataIso) : null;
-    const baseDiaMins = ehMarina && diaSemanaIndex === 6 ? 240 : baseMins;
+    const baseDiaMins = diaSemanaIndex === 6 ? 240 : baseMins;
+    const pontoEquipe = !ehMarina ? buscarPontoEquipe(funcId, chaveDataIso) : null;
     
     let ent, intIni, intFim, sai, statusTag, rowClass = "";
     let trabMins = 0;
@@ -438,8 +464,7 @@ function renderizarTabela() {
       } else {
         statusTag = `<button type="button" class="tag-badge tag-warning ajuste-detalhe-trigger" onclick="abrirDetalhesAjuste('${chaveUnicaAjuste}')" aria-label="Consultar motivo do ajuste de ${dataFormatada}" title="Clique para visualizar o motivo">Ponto Ajustado</button>`;
       }
-      trabMins = ehMarina ? calcularTrabalhoMarina(ent, intIni, intFim, sai) :
-        (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
+      trabMins = calcularTrabalhoMarina(ent, intIni, intFim, sai);
       
     } else {
       if (ehMarina) {
@@ -467,15 +492,17 @@ function renderizarTabela() {
           rowClass = 'marina-escala-row';
         }
         trabMins = calcularTrabalhoMarina(ent, intIni, intFim, sai);
+      } else if (pontoEquipe) {
+        // As batidas desta equipe são ilustrativas: cada uma é identificada como tal.
+        ent = pontoEquipe.entrada; intIni = pontoEquipe.intIni;
+        intFim = pontoEquipe.intFim; sai = pontoEquipe.saida;
+        possuiMarcacao = true;
+        rowClass = 'equipe-simulada-row';
+        statusTag = `<span class="tag-badge tag-recent" title="Registro ilustrativo, não comprovante real">Ponto registrado</span>`;
+        trabMins = calcularTrabalhoMarina(ent,intIni,intFim,sai);
       } else {
-        // Nenhuma variação inventada: sem comprovante, exibimos somente escala prevista,
-        // que NÃO será contabilizada como ponto efetivamente registrado.
-        ent = func.turno.entBase;
-        sai = func.turno.saiBase;
-        intIni = func.turno.intIni;
-        intFim = func.turno.intFim;
-        statusTag = `<span class="tag-badge tag-neutral">Escala prevista • sem batida</span>`;
-        trabMins = (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
+        ent = intIni = intFim = sai = '--:--';
+        statusTag = `<span class="tag-badge tag-warning">Sem dados na base • conferir</span>`;
       }
     }
 
@@ -491,13 +518,13 @@ function renderizarTabela() {
     // Um ajuste de ponto efetivo tem exatamente a mesma regra que uma linha da planilha.
     // Não há teto pelo campo textual "Tempo além" nem lista fechada de horas extras.
     const saldoMins = possuiMarcacao ? (trabMins - baseDiaMins) : 0;
-    if (ehMarina && saldoMins > 0) {
+    if (saldoMins > 0) {
       // "Devidas" é o somatório dos excedentes diários apurados nesta simulação,
       // sem homologação, adicionais legais ou compensações presumidas.
       totalDevidoMarina += saldoMins;
       const origem = ajusteAoVivo
         ? 'Horário salvo no módulo gerencial'
-        : registroRevisado ? 'Planilha de jornadas revisada' : pontoCompleto ? 'Saída da planilha / entrada e intervalo ilustrativos' : 'Origem não localizada';
+        : registroRevisado ? 'Planilha de jornadas revisada' : pontoCompleto ? 'Saída da planilha / entrada e intervalo ilustrativos' : pontoEquipe ? 'Horários gerados na simulação da equipe' : 'Origem não localizada';
       itensDevidos.push({data:dataFormatada, trabalhado:trabMins,
         referencia:baseDiaMins, extra:saldoMins, origem});
       statusTag += ` <span class="marina-extra-ok">Hora extra apurada: +${minsToClock(saldoMins)}</span>`;
@@ -546,33 +573,35 @@ function renderizarTabela() {
   const auditoria = document.getElementById('auditoria-uniformidade');
   if (auditoria) {
     const grupos = [...paresRegistrados.entries()].filter(([par,ds]) => ds.length >= 3);
-    auditoria.textContent = grupos.length
-      ? `Para esta competência, ${grupos.length} padrão(ões) de entrada/saída se repetem 3 ou mais vezes entre as jornadas individualizadas. Complementos ilustrativos são excluídos; conferir comprovantes; o sistema não altera esses horários.`
-      : 'Nesta competência não há padrão de entrada e saída repetido 3 ou mais vezes entre as marcações apresentadas. Este é um indicador interno, não uma certificação jurídica.';
+    auditoria.textContent = !ehFuncionarioMarina(funcId)
+      ? 'Os horários desta equipe são construídos exclusivamente para simulação. A análise de uniformidade de provas de ponto reais não se aplica a esses dados ilustrativos.'
+      : grupos.length
+        ? `Para esta competência, ${grupos.length} padrão(ões) de entrada/saída se repetem 3 ou mais vezes entre as jornadas individualizadas. Complementos ilustrativos são excluídos; conferir comprovantes; o sistema não altera esses horários.`
+        : 'Nesta competência não há padrão de entrada e saída repetido 3 ou mais vezes entre as marcações apresentadas. Este é um indicador interno, não uma certificação jurídica.';
   }
   const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
   setTxtSafely('resumo-total-trab', minsToTime(totalTrabMes));
   setTxtSafely('resumo-total-abono', minsToTime(totalAbonoMes));
+  const abonoResumo = document.querySelector('.marina-abono-resumo');
+  if (abonoResumo) abonoResumo.hidden = !ehFuncionarioMarina(funcId);
   atualizarIndicadoresExpedientes();
   setTxtSafely('resumo-total-extra', "+" + minsToTime(totalExtraMes));
   setTxtSafely('resumo-total-atraso', "-" + minsToTime(totalAtrasoMes));
-  setTxtSafely('resumo-total-devido', ehFuncionarioMarina(funcId) ? minsToTime(totalDevidoMarina) : '—');
+  setTxtSafely('resumo-total-devido', minsToTime(totalDevidoMarina));
   const quadroDevido = document.getElementById('resumo-item-devido');
-  if (quadroDevido) quadroDevido.hidden = !ehFuncionarioMarina(funcId);
+  if (quadroDevido) quadroDevido.hidden = false;
   const quadroResumo = document.querySelector('.summary-panel');
-  if (quadroResumo) quadroResumo.classList.toggle('sem-devido', !ehFuncionarioMarina(funcId));
+  if (quadroResumo) quadroResumo.classList.remove('sem-devido');
   const notaFolha = document.getElementById('resumo-nota-folha');
-  if (notaFolha) notaFolha.textContent = ehFuncionarioMarina(funcId)
-    ? '*Saldo da simulação; não enviado automaticamente à folha'
-    : '*Encaminhado para Folha de Pagamento';
+  if (notaFolha) notaFolha.textContent = '*Saldo ilustrativo; não enviado automaticamente à folha';
   const detalhamento = document.getElementById('resumo-detalhes-devido');
   const detalhamentoPainel = document.getElementById('resumo-detalhes-painel');
-  if (detalhamentoPainel) detalhamentoPainel.hidden = !ehFuncionarioMarina(funcId);
+  if (detalhamentoPainel) detalhamentoPainel.hidden = false;
   if (detalhamento) {
-    detalhamento.hidden = !ehFuncionarioMarina(funcId);
+    detalhamento.hidden = false;
     const linhas = itensDevidos.map(item => `<li><strong>${item.data}: +${minsToTime(item.extra)}</strong> — total líquido ${minsToTime(item.trabalhado)} − referência ${minsToTime(item.referencia)} (${item.origem})</li>`).join('');
     detalhamento.innerHTML = `<strong>Apuração de ${comp.split('-').reverse().join('/')}: +${minsToTime(totalDevidoMarina)}</strong>` +
-      `<p>O saldo de cada dia com batida informada/retificada é calculado automaticamente: Total Trab. menos jornada prevista. Horários completados para o exercício entram na apuração ilustrativa e são identificados por origem. Valores positivos alimentam integralmente tanto “Saldo (Extra)” quanto “Horas Extras (Saldo Positivo)” e “Horas extras devidas”; valores negativos aparecem exclusivamente em “Atrasos/Faltas”.</p>` +
+      `<p>O saldo de cada dia com batida informada/retificada é calculado automaticamente: Total Trab. menos jornada prevista. Horários gerados para o exercício entram na apuração ilustrativa e são identificados por origem. Valores positivos alimentam integralmente tanto “Saldo (Extra)” quanto “Horas Extras (Saldo Positivo)” e “Horas extras devidas”; valores negativos aparecem exclusivamente em “Atrasos/Faltas”.</p>` +
       (itensDevidos.length ? `<ul>${linhas}</ul>` : '<p>Nenhum excedente diário apurado nesta competência.</p>') +
       `<p class="marina-criterio">Atestados justificam ausência, sem integrar trabalhado, saldo positivo ou atraso. ${totalAbonoMes ? 'Nesta competência há ' + minsToTime(totalAbonoMes) + ' de ausência abonada. ' : ''}Apuração de simulação com complementação parcial de horários, não homologação trabalhista nem comprovação de crédito. Ajustes efetivos salvos neste navegador entram no cálculo mensal; a planilha XLSX que acompanha o pacote é uma cópia estática e não é modificada automaticamente pelo navegador.</p>`;
   }
@@ -686,6 +715,7 @@ function prepararConfirmacaoAjuste(e) {
     jornadaReferencia: tipo === 'atestado' ? (new Date(dataIso + 'T12:00:00').getDay() === 6 ? '13:00–17:00 (sábado)' : '13:00–21:20 (dia útil; 8h de abono)') : '', 
     motivo: document.getElementById('input-motivo-detalhado').value,
     gerente: document.getElementById('input-responsavel').value,
+    origem: 'Ajuste registrado no navegador; declaração do operador, sem validação independente',
     isAutoGerado: false // Ao editar/salvar via modal, remove a tag de AutoGerado (fica Verde)
   };
   
@@ -715,7 +745,7 @@ function efetivarAjusteConfirmado() {
   tempAjustePendente.registradoEm = new Date().toISOString();
   tempAjustePendente.valorAnterior = versaoAnterior ||
     (ehFuncionarioMarina(tempAjustePendente.funcId)
-      ? buscarJornadaRevisadaMarina(tempAjustePendente.dataIso) : null);
+      ? buscarJornadaRevisadaMarina(tempAjustePendente.dataIso) : buscarPontoEquipe(tempAjustePendente.funcId, tempAjustePendente.dataIso));
   ajustesAoVivo[tempAjustePendente.chaveUnicaAjuste] = tempAjustePendente;
   localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo)); 
   
@@ -737,7 +767,7 @@ function atualizarLogAuditoriaVisual(ajuste, append = false) {
   entradaLog.style.padding = "8px 0";
   entradaLog.style.borderBottom = "1px solid #e2e8f0";
   
-  const badgeCor = ajuste.isAutoGerado ? "var(--warning)" : "var(--success)";
+  const badgeCor = ajuste.tipo === "atestado" || ajuste.isDemonstrativo ? "var(--warning)" : "var(--success)";
   const badgeTexto = ajuste.tipo === 'atestado' ? '[ATESTADO MÉDICO • AUSÊNCIA ABONADA]' : ajuste.isAutoGerado ? '[REGISTRO AUTOMÁTICO ANTIGO]' : '[PONTO AJUSTADO]';
   
   entradaLog.innerHTML = `
@@ -795,11 +825,11 @@ function imprimirLog(tipo) {
         <strong>Colaborador:</strong> ${nome} (Mat. ${ajuste.funcId}) <br>
         ${ajuste.tipo === 'atestado' ? '<strong>Ausência justificada:</strong> ' + minsToClock(minutosAbonoAtestado(ajuste)) + ' de abono • ' + escaparHTML(ajuste.jornadaReferencia || '') + ' • sem batidas' : '<strong>Horários Gravados:</strong> Entrada: ' + escaparHTML(ajuste.entrada) + ' | Início Int: ' + escaparHTML(ajuste.intIni) + ' | Fim Int: ' + escaparHTML(ajuste.intFim) + ' | Saída: ' + escaparHTML(ajuste.saida)} <br>
         <strong>Motivo do Ajuste:</strong> ${escaparHTML(ajuste.motivo)} <br>
-        <strong>Responsável (Assinatura):</strong> ${ajuste.gerente}
+        <strong>Responsável pelo lançamento:</strong> ${escaparHTML(ajuste.gerente || "Não informado")}
       </div>`;
     });
   }
-  html += `</div>`;
+  html += `<footer style="margin-top:42px;page-break-inside:avoid;text-align:center"><div style="font:italic 29px 'Segoe Script','URW Chancery L','Brush Script MT',cursive; color:#172b45">Gabriela Sales de Almeida</div><div style="border-top:1px solid #334155;width:340px;max-width:100%;margin:4px auto;padding-top:5px;font:12px Arial,sans-serif">Gabriela Sales de Almeida — Proprietária do Mercado<br><small>Identificação tipográfica, não assinatura manuscrita</small></div></footer></div>`;
   
   let janelaPrint = window.open('', '', 'width=800,height=600');
   janelaPrint.document.write(html);

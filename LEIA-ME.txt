@@ -1,44 +1,40 @@
-PONTO CERTO — V11 • DETALHES DOS AJUSTES EM JANELA
+PONTO CERTO — V12 • EQUIPE COMPLETA E IDENTIFICAÇÃO DA PROPRIETÁRIA
 
-Abra index.html na pasta extraída.
+INSTALE: extraia este ZIP em uma pasta NOVA e abra index.html.
 
-MARINA: AFASTAMENTO INFORMADO EM DOCUMENTO DE CENÁRIO FICTÍCIO
-- 14/06/2025 (sábado): afastamento justificado, 4h00 de abono.
-- 15/06/2025 (domingo): DSR, sem expediente e sem abono adicional.
-- 16/06/2025 (segunda): afastamento justificado, 8h00 de abono (regra solicitada),
-  com referência 13:00–21:20, porém SEM simulação de batidas.
-- Hora abonada não equivale a hora efetivamente trabalhada. Não gera saldo
-  positivo de extras nem saldo negativo de atraso. O total trabalhado mensal
-  exclui as duas datas e há campo próprio para horas justificadas.
-- A jornada habitual de seg. a sex. do sistema é 7h20 líquidas, diferente das
-  8h abonadas pelo critério solicitado para o atestado.
+FUNCIONÁRIOS CONFIRMADOS NO QUADRO:
+- Gabriela Sales de Almeida — Proprietária do Mercado (mat. 0045).
+- Mykaelle Santos da Silva — Supervisora (mat. 0088).
+- Paulo Ricardo Lima de Melo — Gerente do Mercado (mat. 0102).
 
-INDICADORES DE COBERTURA: 469 expedientes previstos para o período, 467 com
-jornada na simulação e 2 abonados por atestado. Os 44 eventos destacados na
-aba Horas extras e saídas e 53 falhas de ponto não representam o total de
-expedientes.
+MARINA: seus horários, atestados e ajustes de V11 foram preservados; referências
+anteriores ao gerente foram atualizadas na planilha V12 e no relatório.
 
-AJUSTES: em 2. Lançamento & Auditoria Gerencial, os afastamentos de 14 e
-16/06/2025 já aparecem no log. O formulário oferece tipo Atestado médico,
-sem campos de marcações. Para alterar algo, o sistema utiliza o mecanismo
-local de confirmação já existente. Ajustes feitos no navegador não gravam
-automaticamente alterações no Excel.
+DEMAIS 27 COLABORADORES: 12.690 registros ilustrativos (mar/2025 a ago/2026,
+sem domingos), jornadas completas com entrada, pausa e saída; sábado de 4h.
+A planilha EQUIPE_ESPELHO_COMPLETO_V12.csv contém cada marcação em formato
+compatível com Excel. EQUIPE_RESUMO_AJUSTES_V12.xlsx contém quadro de pessoal,
+18 ajustes didáticos e totalização de 486 competências funcionário/mês.
+Esses arquivos são instantâneos dos dados; editar o Excel não altera o site.
 
-PLANILHAS: consulte 'Atestados e ajustes', 'Espelho completo (simulado)' e
-'Resumo mensal (simulado)'. A planilha de conferência preserva históricos
-originais, com observações sobre os lançamentos posteriores por atestado.
+PONTOS AJUSTADOS: os turnos com término habitual às 21h20 têm algumas
+ocorrências demonstrativas selecionadas. Clique no status laranja para o motivo.
+NÃO houve atestados novos para os demais funcionários.
 
-FONTE: atestado exibido pelo usuário como caso fictício. Nem o documento nem
-os horários demonstrativos foram verificados como registros originais reais.
-A simulação não é homologação de controle eletrônico ou cálculo de crédito.
+ASSINATURA EM IMPRESSÕES: espelho, relatórios e auditoria imprimem somente
+Gabriela Sales de Almeida como signatária, com nome exibido em fonte cursiva
+(tipografia, sem imitar assinatura autêntica). Os nomes de gerentes podem
+aparecer no corpo da auditoria como responsáveis por lançamentos, mas
+NÃO são signatários.
 
-V11 • MELHORIA DE NAVEGAÇÃO (SEM ALTERAR CÁLCULOS)
-- No espelho, clique na etiqueta laranja "Atestado médico • Ponto Ajustado"
-  para abrir uma janela com a data, horas abonadas, jornada prevista,
-  justificativa integral e origem do lançamento.
-- O mesmo comportamento foi aplicado aos demais "Ponto Ajustado".
-- A justificativa não ocupa a célula da tabela, mantendo as linhas compactas.
-- Para fechar a janela use Fechar, X, Escape ou clique fora dela.
-- A impressão do espelho inclui um quadro próprio com as justificativas
-  completas dos ajustes da competência, preservando a rastreabilidade.
-- Planilhas XLSX e todos os cálculos permanecem idênticos aos da V10.
+OS HORÁRIOS DA EQUIPE SÃO SIMULADOS PARA APRESENTAÇÃO ACADÊMICA, NÃO
+COMPROVANTES REAIS. A simples variação de horários não valida controles
+perante a Súmula 338, III, do TST. O site não substitui sistema oficial.
+
+MODIFICAÇÕES FEITAS NO NAVEGADOR: podem ficar salvas no armazenamento local
+deste navegador; as planilhas incluídas não mudam automaticamente.
+
+Para ver assinatura impressa: selecione um funcionário, escolha a competência
+e clique 'Imprimir PDF'. Na janela de impressão, escolha 'Salvar como PDF'.
+Para impressão da auditoria: vá ao módulo 2 e escolha Geral ou Individual.
+Para relatórios de Marina: módulo 4 e os botões PDF correspondentes.

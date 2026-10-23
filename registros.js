@@ -1,26 +1,26 @@
 // ==========================================
 // 1. CONFIGURAÇÕES DE TURNOS
 // ==========================================
-const TURNO_CAIXA = { entBase: "13:00", intIni: "16:00", intFim: "17:00", saiBase: "21:20", texto: "13:00 às 21:20 (Int: 1h)" };
+const TURNO_CAIXA = { entBase: "13:00", intIni: "16:00", intFim: "17:00", saiBase: "21:20", texto: "Seg–Sex 13:00–21:20 (1h int.) | Sáb 13:00–17:00 (sem int.)" };
 // Escala específica de Marina: de segunda a sexta, 7h20 líquidos; aos sábados, 4h sem intervalo.
 const TURNO_MARINA = {
   entBase: "13:00", intIni: "16:00", intFim: "17:00", saiBase: "21:20",
   sabEntBase: "13:00", sabSaiBase: "17:00",
   texto: "Seg–Sex: 13:00–21:20 (1h int.) | Sáb: 13:00–17:00 (sem int.)"
 };
-const TURNO_ADM = { entBase: "08:00", intIni: "12:00", intFim: "13:00", saiBase: "17:00", texto: "08:00 às 17:00 (Int: 1h)" };
-const TURNO_MADRUGA = { entBase: "22:00", intIni: "02:00", intFim: "03:00", saiBase: "05:20", texto: "22:00 às 05:20 (Int: 1h)" };
-const TURNO_CEDO = { entBase: "07:00", intIni: "11:00", intFim: "12:00", saiBase: "15:20", texto: "07:00 às 15:20 (Int: 1h)" };
-const TURNO_FECHAMENTO = { entBase: "13:30", intIni: "17:30", intFim: "18:30", saiBase: "22:00", texto: "13:30 às 22:00 (Int: 1h)" }; 
+const TURNO_ADM = { entBase: "08:00", intIni: "12:00", intFim: "13:00", saiBase: "17:00", texto: "Seg–Sex 08:00–17:00 (1h int.) | Sáb 08:00–12:00" };
+const TURNO_MADRUGA = { entBase: "22:00", intIni: "02:00", intFim: "03:00", saiBase: "05:20", texto: "Seg–Sex 22:00–05:20 (1h int.; dia seguinte) | Sáb 22:00–02:00" };
+const TURNO_CEDO = { entBase: "07:00", intIni: "11:00", intFim: "12:00", saiBase: "15:20", texto: "Seg–Sex 07:00–15:20 (1h int.) | Sáb 07:00–11:00" };
+const TURNO_FECHAMENTO = { entBase: "13:30", intIni: "17:30", intFim: "18:30", saiBase: "22:00", texto: "Seg–Sex 13:30–22:00 (1h int.) | Sáb 13:30–17:30" }; 
 
 // ==========================================
 // 2. QUADRO DE FUNCIONÁRIOS (28 Empregados)
 // ==========================================
 const FUNCIONARIOS = [
   { id: "0142", nome: "Marina Lopes Barbosa de Oliveira", cargo: "Operadora de Caixa", turno: TURNO_MARINA },
-  { id: "0102", nome: "Paulo Ricardo Lima de Melo", cargo: "Gerente de Loja", turno: TURNO_FECHAMENTO }, 
-  { id: "0088", nome: "Mykaelle Santos da Silva", cargo: "Supervisora do Caixa", turno: TURNO_FECHAMENTO }, 
-  { id: "0045", nome: "Gabriela Sales de Almeida", cargo: "Sócia-Proprietária / Preposta", turno: TURNO_ADM }, 
+  { id: "0102", nome: "Paulo Ricardo Lima de Melo", cargo: "Gerente do Mercado", turno: TURNO_FECHAMENTO }, 
+  { id: "0088", nome: "Mykaelle Santos da Silva", cargo: "Supervisora", turno: TURNO_FECHAMENTO }, 
+  { id: "0045", nome: "Gabriela Sales de Almeida", cargo: "Proprietária do Mercado", turno: TURNO_ADM }, 
   { id: "0115", nome: "Daniele Cristina Souza", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
   { id: "0091", nome: "Thiago Rocha Mendonça", cargo: "Apoio e Reposição", turno: TURNO_CAIXA },
   { id: "0012", nome: "Carlos Eduardo Farias", cargo: "Açougueiro Líder", turno: TURNO_CEDO },

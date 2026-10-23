@@ -95,6 +95,7 @@
         <div id="resumo-detalhes-devido" class="resumo-detalhes-conteudo"></div>
       </details>
 
+     
 
       <div class="card" style="padding: 10px;">
         <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;" class="no-print">
@@ -118,9 +119,10 @@
 
       <div class="print-only-signatures">
         <p id="ponto-declaracao-impressao" style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.</p>
-        <div class="sig-grid">
-          <div><div class="sig-line"><span id="sig-nome"></span></div><div style="font-size: 8.5px; color: #555;">Assinatura do Empregado</div></div>
-          <div><div class="sig-line">Gabi — Sócia-Proprietária / Preposta</div><div style="font-size: 8.5px; color: #555;">Mercado Rio Branco Ltda.</div></div>
+        <div class="sig-grid sig-only-owner">
+          <div class="assinatura-tipografica">Gabriela Sales de Almeida</div>
+          <div class="sig-line">Gabriela Sales de Almeida — Proprietária do Mercado</div>
+          <div class="assinatura-aviso">Nome apresentado em fonte cursiva; não representa assinatura manuscrita ou autenticação.</div>
         </div>
       </div>
     </div>
@@ -151,7 +153,7 @@
             <textarea id="input-motivo-detalhado" required rows="2" style="width: 100%; border: 1px solid var(--gray-300); border-radius: 6px; padding: 8px; font-family: inherit; font-size: 0.9rem; outline: none; transition: border-color 0.2s;"></textarea>
           </div>
           
-          <div class="form-group" style="grid-column: span 4;"><label>Responsável:</label><input type="text" id="input-responsavel" value="Paulo Henrique Ribeiro (Gerente)" readonly style="background-color: var(--gray-100);"></div>
+          <div class="form-group" style="grid-column: span 4;"><label>Responsável:</label><input type="text" id="input-responsavel" value="Paulo Ricardo Lima de Melo (Gerente do Mercado)" readonly style="background-color: var(--gray-100);"></div>
           
           <div style="grid-column: span 4; display: flex; justify-content: flex-end; gap: 10px; margin-top: 5px;">
             <button type="button" class="btn btn-secondary" onclick="switchPage('page-espelho')">Cancelar</button>
@@ -202,7 +204,7 @@
           <div><strong id="resumo-trabalhados">467</strong><span>Expedientes com jornada na simulação</span></div>
           <div><strong id="resumo-atestados">2</strong><span>Expedientes justificados por atestado</span></div>
         </div>
-        <p class="relatorio-origem"><strong>Origem dos indicadores:</strong> espelho completo da Marina (469 dias previstos). Os 44 lançamentos destacados em “Horas extras e saídas” e as 53 ocorrências da tabela de falhas são <strong>eventos documentais</strong>, não o número de expedientes cumpridos. Os dois dias abonados por atestado são contados como justificados, não trabalhados. <span id="relatorio-fonte">JORNADA_MARINA_COMPLETA_V10.xlsx</span>.</p>
+        <p class="relatorio-origem"><strong>Origem dos indicadores:</strong> espelho completo da Marina (469 dias previstos). Os 44 lançamentos destacados em “Horas extras e saídas” e as 53 ocorrências da tabela de falhas são <strong>eventos documentais</strong>, não o número de expedientes cumpridos. Os dois dias abonados por atestado são contados como justificados, não trabalhados. <span id="relatorio-fonte">JORNADA_MARINA_V12_EQUIPE_ATUALIZADA.xlsx</span>.</p>
         <p id="marina-integridade" class="relatorio-integridade" role="status" aria-live="polite">Conferindo datas e dias da semana...</p>
         <div class="relatorio-acoes no-print">
           <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('jornada')">🖨️ PDF • Jornadas</button>
@@ -254,7 +256,12 @@
         <div class="table-responsive relatorio-tabela-wrap"><table class="ponto-table relatorio-tabela" aria-label="Atestado médico e dias abonados"><thead><tr><th>Data</th><th>Dia</th><th>Classificação</th><th>Jornada de referência</th><th>Horas abonadas</th><th>Motivo e origem</th></tr></thead><tbody id="marina-tbody-atestados"></tbody></table></div>
         <p class="marina-atestado-rodape">15/06/2025 (domingo): descanso semanal, abrangido pelo período do atestado, sem expediente e sem abono adicional.</p>
       </section>
-      <p class="relatorio-rodape">Fontes: planilhas V10 de jornada, conferência e abonos. Os números de ocorrências das tabelas são distintos do número de jornadas previstas. Os horários completados para simulação não comprovam marcações reais. Atestado informado pelo usuário para fins deste cenário fictício.</p>
+      <div class="assinatura-relatorios assinatura-tipografica-wrap">
+        <div class="assinatura-tipografica">Gabriela Sales de Almeida</div>
+        <div class="sig-line">Gabriela Sales de Almeida — Proprietária do Mercado</div>
+        <div class="assinatura-aviso">Identificação tipográfica; não equivale à assinatura manuscrita.</div>
+      </div>
+      <p class="relatorio-rodape">Fontes: planilha de jornada V12 (base V10 preservada), conferência e abonos. Os números de ocorrências das tabelas são distintos do número de jornadas previstas. Os horários completados para simulação não comprovam marcações reais. Atestado informado pelo usuário para fins deste cenário fictício.</p>
     </section>
   </div>
 
@@ -320,6 +327,7 @@
   <script src="script.js"></script>
   <script src="dados-marina-revisados.js"></script>
 <script src="marina-pontos-completos.js"></script>
+  <script src="equipe-pontos-simulados.js"></script>
   <script src="relatorios-marina.js"></script>
 </body>
 </html>

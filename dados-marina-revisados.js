@@ -1,6 +1,6 @@
 // Transcrição de informações originais e revisões, com histórico documental.
 const MARINA_REVISADA = {
-  "fonte": "JORNADA_MARINA_COMPLETA_V10_ATESTADO.xlsx (eventos originalmente transcritos da base V7)",
+  "fonte": "JORNADA_MARINA_V12_EQUIPE_ATUALIZADA.xlsx (eventos preservados de versões anteriores)",
   "natureza": "SIMULAÇÃO ACADÊMICA — DADOS ILUSTRATIVOS, NÃO COMPROVAM REGISTROS REAIS",
   "jornadas": [
     {
@@ -628,7 +628,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:00",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -639,7 +639,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:28",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -650,7 +650,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:02 e 21:32",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -661,7 +661,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:24",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -672,7 +672,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:58 e 21:26",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -683,7 +683,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:06",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -694,7 +694,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:57 e 21:42",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -705,7 +705,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:01",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -716,7 +716,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:42",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -727,7 +727,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:59",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -738,7 +738,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:06 e 21:24",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -749,7 +749,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:28",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -760,7 +760,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:55 e 21:24",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -771,7 +771,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:01",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -782,7 +782,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:04 e 21:30",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -793,7 +793,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:02",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -804,7 +804,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:38",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -815,7 +815,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:04",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -826,7 +826,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:42",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -837,7 +837,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:59 e 21:35",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -848,7 +848,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:32",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -859,7 +859,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:57 e 21:35",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -870,7 +870,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:06",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -881,7 +881,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:58 e 21:35",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -892,7 +892,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:55",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -903,7 +903,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:26",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -914,7 +914,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:57",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -925,7 +925,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:26",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -936,7 +936,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:58 e 21:22",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -947,7 +947,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:30",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -958,7 +958,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:57 e 21:42",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -969,7 +969,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:58",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -980,7 +980,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:01 e 21:24",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -991,7 +991,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:55",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1002,7 +1002,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:38",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1013,7 +1013,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:04",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1024,7 +1024,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:32",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1035,7 +1035,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:00 e 21:38",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1046,7 +1046,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:26",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1057,7 +1057,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:57 e 21:26",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1068,7 +1068,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:06",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1079,7 +1079,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:57 e 21:38",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1090,7 +1090,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:00",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1101,7 +1101,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:28",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1112,7 +1112,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:57",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1123,7 +1123,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:22",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real. Restaurada da fonte V5 após correção do ano do lançamento de horas extras; não é evidência de saída real."
     },
@@ -1134,7 +1134,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:02 e 21:42",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1145,7 +1145,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:28",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1156,7 +1156,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:00 e 21:22",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1167,7 +1167,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:06",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1178,7 +1178,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "12:55 e 21:28",
       "motivo": "Falha de comunicação entre o tablet do caixa e o sistema",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1189,7 +1189,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "13:01",
       "motivo": "Instabilidade de conexão Wi-Fi no tablet do caixa",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     },
@@ -1200,7 +1200,7 @@ const MARINA_REVISADA = {
       "horarioPrevisto": "21:26",
       "motivo": "Ausência/intermitência de sinal no local de registro",
       "providencia": "FICTÍCIO/SIMULADO — conferir os registros disponíveis e efetuar ajuste manual somente após validação",
-      "responsavel": "Paulo Henrique Ribeiro (gerente — simulação)",
+      "responsavel": "Paulo Ricardo Lima de Melo (gerente — simulação)",
       "origem": "FICTÍCIO/SIMULADO",
       "nota": "Ocorrência fictícia para exercício; horários variados e aproximados, sem pretensão de reproduzir registro real."
     }

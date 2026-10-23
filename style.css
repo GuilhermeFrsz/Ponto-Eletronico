@@ -167,3 +167,18 @@ table.ponto-table tr.marina-escala-row { background:#f8fafc; }
   .print-only-adjustments ul { padding-left:18px; margin:4px 0; }
   .print-only-adjustments li { margin-bottom:5px; }
 }
+
+/* V12 — registro ilustrativo da equipe e assinatura tipográfica única de Gabriela. */
+table.ponto-table tr.equipe-simulada-row { background:#f0fdfa; }
+.assinatura-relatorios { display:none; }
+.assinatura-tipografica-wrap { text-align:center; max-width:410px; margin:38px auto 14px; break-inside:avoid; }
+.assinatura-tipografica { font-family:'Segoe Script','URW Chancery L','Apple Chancery','Brush Script MT',cursive; font-weight:normal; font-size:27px; font-style:italic; color:#172b45; }
+.assinatura-aviso { color:#64748b; font-size:9px; padding-top:5px; }
+@media print {
+ .sig-grid.sig-only-owner { display:block!important; width:390px; max-width:100%; margin:42px auto 12px; text-align:center; }
+ .sig-only-owner .sig-line { border-top:1px solid #334155; padding-top:6px; }
+ body.print-revisado .assinatura-relatorios { display:block!important; }
+ body.print-revisado #page-espelho .print-only-signatures { display:none!important; }
+}
+
+.marina-abono-resumo[hidden] { display:none!important; }
