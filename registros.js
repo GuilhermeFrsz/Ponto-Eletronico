@@ -18,9 +18,9 @@ const TURNO_FECHAMENTO = { entBase: "13:30", intIni: "17:30", intFim: "18:30", s
 // ==========================================
 const FUNCIONARIOS = [
   { id: "0142", nome: "Marina Lopes Barbosa de Oliveira", cargo: "Operadora de Caixa", turno: TURNO_MARINA },
-  { id: "0102", nome: "Paulo Henrique Ribeiro", cargo: "Gerente de Loja", turno: TURNO_FECHAMENTO }, 
+  { id: "0102", nome: "Paulo Ricardo Lima de Melo", cargo: "Gerente de Loja", turno: TURNO_FECHAMENTO }, 
   { id: "0088", nome: "Mykaelle Santos da Silva", cargo: "Supervisora do Caixa", turno: TURNO_FECHAMENTO }, 
-  { id: "0045", nome: "Gabi (Gabriela Martins)", cargo: "Sócia-Proprietária / Preposta", turno: TURNO_ADM }, 
+  { id: "0045", nome: "Gabriela Sales de Almeida", cargo: "Sócia-Proprietária / Preposta", turno: TURNO_ADM }, 
   { id: "0115", nome: "Daniele Cristina Souza", cargo: "Operadora de Caixa", turno: TURNO_CAIXA },
   { id: "0091", nome: "Thiago Rocha Mendonça", cargo: "Apoio e Reposição", turno: TURNO_CAIXA },
   { id: "0012", nome: "Carlos Eduardo Farias", cargo: "Açougueiro Líder", turno: TURNO_CEDO },
