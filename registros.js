@@ -38,7 +38,7 @@ const FUNCIONARIOS = [
   { id: "0095", nome: "Tatiane Meireles Prado", cargo: "Operadora de Caixa", departamento: "Frente de Caixa", cpf: "708.291.011-22", rg: "32.109.283-7", salarioBase: 1620.00, turno: TURNO_CAIXA },
   { id: "0108", nome: "Bruno Cesar Vasconcelos", cargo: "Padeiro", departamento: "Padaria", cpf: "809.302.122-33", rg: "18.203.948-8", salarioBase: 2300.00, turno: TURNO_CEDO },
   { id: "0112", nome: "Vanessa Lins Machado", cargo: "Auxiliar Financeiro", departamento: "Financeiro", cpf: "910.413.233-44", rg: "15.293.847-9", salarioBase: 2100.00, turno: TURNO_ADM },
-  { id: "0120", nome: "André Felipe Siqueira", cargo: "Operador de Empilhadeira", departamento: "Depósito", cpf: "011.524.344-55", rg: "27.394.810-0", salarioBase: 2400.00, turno: TURNO_ADM },
+  { id: "0120", nome: "André Felipe Siqueira", cargo: "Auxiliar de Limpeza", departamento: "Services", cpf: "011.524.344-55", rg: "27.394.810-0", salarioBase: 1620.00, turno: TURNO_CAIXA },
   { id: "0125", nome: "Patrícia Moura Teodoro", cargo: "Auxiliar de Perecíveis", departamento: "Hortifruti", cpf: "122.635.455-66", rg: "30.402.918-1", salarioBase: 1620.00, turno: TURNO_CAIXA },
   { id: "0130", nome: "Edson Morais Santana", cargo: "Repositor Noturno", departamento: "Mercearia", cpf: "233.746.566-77", rg: "21.109.283-2", salarioBase: 1800.00, turno: TURNO_MADRUGA },
   { id: "0134", nome: "Sabrina Caldas Paiva", cargo: "Operadora de Caixa", departamento: "Frente de Caixa", cpf: "344.857.677-88", rg: "33.203.948-3", salarioBase: 1620.00, turno: TURNO_CAIXA },
