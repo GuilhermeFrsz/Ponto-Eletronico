@@ -975,7 +975,7 @@ function renderizarTabela() {
       rowClass = 'equipe-simulada-row';
       statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
           if (registroRevisado?.classificacao?.startsWith('Cenário alternativo')) {
-            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Cenário de sábado • comparar</button>`;
+            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Sábado</button>`;
           }
       trabMins = calcularTrabalhoMarina(ent,intIni,intFim,sai);
     } else {
