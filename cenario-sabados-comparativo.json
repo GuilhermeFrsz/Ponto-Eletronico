@@ -1,0 +1,157 @@
+{
+  "descricao": "Cenário alternativo, não uma retificação autenticada",
+  "base": "Dados V12 carregados pelo usuário",
+  "criterio": "≤ 120 minutos excedentes líquidos aos sábados; pausa ≥15 min quando >4h trabalhadas",
+  "datas": {
+    "2025-03-15": {
+      "revisado": {
+        "data": "2025-03-15",
+        "dia": "sábado",
+        "entrada": "13:05",
+        "intervaloInicio": "15:30",
+        "intervaloFim": "16:30",
+        "saida": "21:56",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:36",
+        "conferenciaFim": "21:52",
+        "tempoAlem": "04h56",
+        "classificacao": "Sábado excepcional — encerramento às 21h56",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:36–21:52 e saída 21:56. Jornada excepcional simulada; intervalo de 1h (15:30–16:30). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "espelho": {
+        "data": "2025-03-15",
+        "dia": "Sáb",
+        "entrada": "13:05",
+        "intervaloInicio": "15:30",
+        "intervaloFim": "16:30",
+        "saida": "21:56",
+        "totalMin": 471,
+        "referenciaMin": 240,
+        "saldoMin": 231,
+        "complementado": false,
+        "origem": "Horários da planilha de jornadas revisada"
+      }
+    },
+    "2025-09-06": {
+      "revisado": {
+        "data": "2025-09-06",
+        "dia": "sábado",
+        "entrada": "13:00",
+        "intervaloInicio": "15:45",
+        "intervaloFim": "16:45",
+        "saida": "21:55",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:36",
+        "conferenciaFim": "21:52",
+        "tempoAlem": "04h55",
+        "classificacao": "Sábado excepcional — encerramento às 21h55",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:36–21:52 e saída 21:55. Jornada excepcional simulada; intervalo de 1h (15:45–16:45). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "espelho": {
+        "data": "2025-09-06",
+        "dia": "Sáb",
+        "entrada": "13:00",
+        "intervaloInicio": "15:45",
+        "intervaloFim": "16:45",
+        "saida": "21:55",
+        "totalMin": 475,
+        "referenciaMin": 240,
+        "saldoMin": 235,
+        "complementado": false,
+        "origem": "Horários da planilha de jornadas revisada"
+      }
+    },
+    "2026-05-09": {
+      "revisado": {
+        "data": "2026-05-09",
+        "dia": "sábado",
+        "entrada": "13:01",
+        "intervaloInicio": "16:00",
+        "intervaloFim": "17:00",
+        "saida": "22:00",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:46",
+        "conferenciaFim": "21:58",
+        "tempoAlem": "05h00",
+        "classificacao": "Sábado excepcional — encerramento às 22h00",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:46–21:58 e saída 22:00. Jornada excepcional simulada; intervalo de 1h (16:00–17:00). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "espelho": {
+        "data": "2026-05-09",
+        "dia": "Sáb",
+        "entrada": "13:01",
+        "intervaloInicio": "16:00",
+        "intervaloFim": "17:00",
+        "saida": "22:00",
+        "totalMin": 479,
+        "referenciaMin": 240,
+        "saldoMin": 239,
+        "complementado": false,
+        "origem": "Horários da planilha de jornadas revisada"
+      }
+    },
+    "2026-08-29": {
+      "revisado": {
+        "data": "2026-08-29",
+        "dia": "sábado",
+        "entrada": "13:05",
+        "intervaloInicio": "16:10",
+        "intervaloFim": "17:10",
+        "saida": "22:00",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:44",
+        "conferenciaFim": "21:56",
+        "tempoAlem": "05h00",
+        "classificacao": "Sábado excepcional — encerramento às 22h00",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:44–21:56 e saída 22:00. Jornada excepcional simulada; intervalo de 1h (16:10–17:10). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "espelho": {
+        "data": "2026-08-29",
+        "dia": "Sáb",
+        "entrada": "13:05",
+        "intervaloInicio": "16:10",
+        "intervaloFim": "17:10",
+        "saida": "22:00",
+        "totalMin": 475,
+        "referenciaMin": 240,
+        "saldoMin": 235,
+        "complementado": false,
+        "origem": "Horários da planilha de jornadas revisada"
+      }
+    }
+  },
+  "cenario": {
+    "2025-03-15": {
+      "entrada": "13:05",
+      "intervaloInicio": "15:58",
+      "intervaloFim": "16:13",
+      "saida": "18:53",
+      "conferenciaInicio": "18:33",
+      "conferenciaFim": "18:48"
+    },
+    "2025-09-06": {
+      "entrada": "12:58",
+      "intervaloInicio": "16:12",
+      "intervaloFim": "16:27",
+      "saida": "18:56",
+      "conferenciaInicio": "18:37",
+      "conferenciaFim": "18:51"
+    },
+    "2026-05-09": {
+      "entrada": "13:01",
+      "intervaloInicio": "15:48",
+      "intervaloFim": "16:03",
+      "saida": "18:58",
+      "conferenciaInicio": "18:41",
+      "conferenciaFim": "18:54"
+    },
+    "2026-08-29": {
+      "entrada": "13:05",
+      "intervaloInicio": "16:04",
+      "intervaloFim": "16:19",
+      "saida": "18:55",
+      "conferenciaInicio": "18:38",
+      "conferenciaFim": "18:52"
+    }
+  }
+}

@@ -243,6 +243,12 @@ function alterarFuncionario() {
   const func = FUNCIONARIOS.find(f => f.id === id);
   
   if(func) {
+    const avisoCenario = document.getElementById('aviso-cenario-sabados');
+  if (avisoCenario) avisoCenario.hidden = !ehFuncionarioMarina(id);
+  const declaracao = document.getElementById('ponto-declaracao-impressao');
+  if (declaracao) declaracao.textContent = ehFuncionarioMarina(id) ?
+    'Cenário de adequação para estudo: quatro jornadas de sábado foram hipoteticamente ajustadas; os horários V12 anteriores estão preservados em comparativo. Documento não substitui controle original.' :
+    'Espelho demonstrativo de jornada, sem comprovação independente de marcações.';
     const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
     const setValSafely = (elId, val) => { const el = document.getElementById(elId); if(el) el.value = val; };
     
@@ -384,14 +390,7 @@ function renderizarTabela() {
   const funcEl = document.getElementById('select-colaborador');
   const tbody = document.getElementById('ponto-corpo');
   if(!compEl || !funcEl || !tbody) return;
-
-    // TRAVA DE SEGURANÇA - CLT ART. 59 (Máximo 2h extras no Sábado)
-  if (diaSemanaIndex === 6) { // 6 = Sábado
-    // Se o horário de saída ultrapassar 19:00 (17:00 + 2h limite CLT)
-    if (timeToMins(sai) > timeToMins("19:00")) {
-      sai = "19:00"; // Trava a saída no limite legal permitido
-    }
-  }
+  
   
   const comp = compEl.value;
   const funcId = funcEl.value;
@@ -484,6 +483,9 @@ function renderizarTabela() {
           intFim = registroRevisado.intervaloFim === '—' ? '--:--' : registroRevisado.intervaloFim;
           sai = registroRevisado.saida;
           statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
+          if (registroRevisado?.classificacao?.startsWith('Cenário alternativo')) {
+            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Cenário de sábado • comparar</button>`;
+          }
           rowClass = 'marina-fonte-row';
         } else if (pontoCompleto) {
           possuiMarcacao = true; // Linha preenchida PARA A SIMULAÇÃO; não comprova marcação física.
@@ -526,6 +528,9 @@ function renderizarTabela() {
     // Um ajuste de ponto efetivo tem exatamente a mesma regra que uma linha da planilha.
     // Não há teto pelo campo textual "Tempo além" nem lista fechada de horas extras.
     const saldoMins = possuiMarcacao ? (trabMins - baseDiaMins) : 0;
+    if (possuiMarcacao && diaSemanaIndex === 6 && saldoMins > 120) {
+      statusTag += ` <span class="tag-badge tag-warning" title="Excedente real/histórico preservado; não limitar automaticamente">⚠️ Excedente acima de 2h — conferir</span>`;
+    }
     if (saldoMins > 0) {
       // "Devidas" é o somatório dos excedentes diários apurados nesta simulação,
       // sem homologação, adicionais legais ou compensações presumidas.
@@ -575,7 +580,9 @@ function renderizarTabela() {
       const abono = a.tipo === 'atestado' ? ` — ${minsToClock(minutosAbonoAtestado(a))} abonadas` : '';
       itens.push(`<li><strong>${dataBR} — ${rotulo}${abono}.</strong> ${escaparHTML(a.motivo || 'Motivo não informado')}</li>`);
     }
-    motivosImpressao.innerHTML = itens.length ? `<h3>Justificativas dos ajustes da competência</h3><ul>${itens.join('')}</ul>` : '';
+    const cenariosMes = Object.entries(COMPARATIVO_SABADOS_V13).filter(([d]) => d.startsWith(comp) && ehFuncionarioMarina(funcId));
+    for(const [d,r] of cenariosMes) itens.push(`<li><b>${d.split('-').reverse().join('/')}: cenário alternativo</b> — saída anterior ${r.original.saida}; cenário ${r.cenario.saida}. Origem original preservada.</li>`);
+    motivosImpressao.innerHTML = itens.length ? `<h3>Notas de origem e ajustes da competência</h3><ul>${itens.join('')}</ul>` : '';
   }
 
   const auditoria = document.getElementById('auditoria-uniformidade');
@@ -587,7 +594,13 @@ function renderizarTabela() {
         ? `Para esta competência, ${grupos.length} padrão(ões) de entrada/saída se repetem 3 ou mais vezes entre as jornadas individualizadas. Complementos ilustrativos são excluídos; conferir comprovantes; o sistema não altera esses horários.`
         : 'Nesta competência não há padrão de entrada e saída repetido 3 ou mais vezes entre as marcações apresentadas. Este é um indicador interno, não uma certificação jurídica.';
   }
-  const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
+  const avisoCenario = document.getElementById('aviso-cenario-sabados');
+  if (avisoCenario) avisoCenario.hidden = !ehFuncionarioMarina(funcId);
+  const declaracao = document.getElementById('ponto-declaracao-impressao');
+  if (declaracao) declaracao.textContent = ehFuncionarioMarina(funcId) ?
+    'Cenário de adequação para estudo: quatro jornadas de sábado foram hipoteticamente ajustadas; os horários V12 anteriores estão preservados em comparativo. Documento não substitui controle original.' :
+    'Espelho demonstrativo de jornada, sem comprovação independente de marcações.';
+    const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
   setTxtSafely('resumo-total-trab', minsToTime(totalTrabMes));
   setTxtSafely('resumo-total-abono', minsToTime(totalAbonoMes));
   const abonoResumo = document.querySelector('.marina-abono-resumo');
@@ -727,6 +740,10 @@ function prepararConfirmacaoAjuste(e) {
     isAutoGerado: false // Ao editar/salvar via modal, remove a tag de AutoGerado (fica Verde)
   };
   
+  if (tipo === 'ponto' && new Date(dataIso + 'T12:00:00').getDay() === 6) {
+    const m=calcularTrabalhoMarina(tempAjustePendente.entrada,tempAjustePendente.intIni,tempAjustePendente.intFim,tempAjustePendente.saida);
+    if(m>360) alert('Atenção: este sábado ultrapassa o parâmetro geral de 2 horas extras do art. 59 da CLT. O registro foi mantido para conferência, sem correção automática.');
+  }
   document.getElementById('conf-data').textContent = dataIso.split('-').reverse().join('/');
   document.getElementById('conf-saida').textContent = tipo === 'atestado' ? 'Sem batida • abono ' + minsToClock(tempAjustePendente.abonoMin) : tempAjustePendente.saida;
   document.getElementById('conf-motivo').textContent = tempAjustePendente.motivo;
@@ -930,6 +947,9 @@ function renderizarTabela() {
         intFim = registroRevisado.intervaloFim === '—' ? '--:--' : registroRevisado.intervaloFim;
         sai = registroRevisado.saida;
         statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
+          if (registroRevisado?.classificacao?.startsWith('Cenário alternativo')) {
+            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Cenário de sábado • comparar</button>`;
+          }
         rowClass = 'marina-fonte-row';
       } else if (pontoCompleto) {
         possuiMarcacao = true;
@@ -939,6 +959,9 @@ function renderizarTabela() {
         sai = pontoCompleto.saida;
         rowClass = 'marina-fonte-row marina-complementado-row';
         statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
+          if (registroRevisado?.classificacao?.startsWith('Cenário alternativo')) {
+            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Cenário de sábado • comparar</button>`;
+          }
       } else {
         ent = intIni = intFim = sai = '--:--';
         statusTag = `<span class="tag-badge tag-warning">Origem ausente</span>`;
@@ -951,6 +974,9 @@ function renderizarTabela() {
       possuiMarcacao = true;
       rowClass = 'equipe-simulada-row';
       statusTag = `<span class="tag-badge tag-recent">Ponto registrado</span>`;
+          if (registroRevisado?.classificacao?.startsWith('Cenário alternativo')) {
+            statusTag = `<button type="button" class="tag-badge tag-warning" onclick="abrirComparativoSabado('${chaveDataIso}')" title="Consultar horários originais e cenário">Cenário de sábado • comparar</button>`;
+          }
       trabMins = calcularTrabalhoMarina(ent,intIni,intFim,sai);
     } else {
       ent = intIni = intFim = sai = '--:--';
@@ -959,19 +985,19 @@ function renderizarTabela() {
 
     if (possuiMarcacao) totalTrabMes += trabMins;
 
-    // APLICAÇÃO DA TOLERÂNCIA CLT (Art. 58, § 1º)
+    // APURAÇÃO DOS SALDOS POR JORNADA EFETIVA
     const saldoBrutoMins = possuiMarcacao ? (trabMins - baseDiaMins) : 0;
+    if (possuiMarcacao && diaSemanaIndex === 6 && saldoBrutoMins > 120) {
+      statusTag += ` <span class="tag-badge tag-warning">⚠️ Acima de 2h extras — conferir</span>`;
+    }
     let saldoEfetivoMins = saldoBrutoMins;
 
-    if (possuiMarcacao && Math.abs(saldoBrutoMins) <= 10) {
-      saldoEfetivoMins = 0; // Zerado por tolerância
-    }
+    // Não zerar saldos diários com base apenas no total líquido de até 10min.
+    // O art. 58, §1º, trata de variações de marcação; o saldo aqui é uma apuração ilustrativa de jornada.
 
     if (saldoEfetivoMins > 0) {
       totalDevidoMarina += saldoEfetivoMins;
       statusTag += ` <span class="marina-extra-ok">Hora extra: +${minsToClock(saldoEfetivoMins)}</span>`;
-    } else if (possuiMarcacao && saldoBrutoMins !== 0 && Math.abs(saldoBrutoMins) <= 10) {
-      statusTag += ` <span class="tag-badge tag-neutral" title="Variação de ${minsToClock(Math.abs(saldoBrutoMins))} dentro da tolerância do Art. 58, §1º CLT">Tolerância CLT (≤10 min)</span>`;
     }
 
     let strSaldo;
@@ -998,7 +1024,13 @@ function renderizarTabela() {
     tbody.appendChild(tr);
   }
 
-  const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
+  const avisoCenario = document.getElementById('aviso-cenario-sabados');
+  if (avisoCenario) avisoCenario.hidden = !ehFuncionarioMarina(funcId);
+  const declaracao = document.getElementById('ponto-declaracao-impressao');
+  if (declaracao) declaracao.textContent = ehFuncionarioMarina(funcId) ?
+    'Cenário de adequação para estudo: quatro jornadas de sábado foram hipoteticamente ajustadas; os horários V12 anteriores estão preservados em comparativo. Documento não substitui controle original.' :
+    'Espelho demonstrativo de jornada, sem comprovação independente de marcações.';
+    const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
   setTxtSafely('resumo-total-trab', minsToTime(totalTrabMes));
   setTxtSafely('resumo-total-abono', minsToTime(totalAbonoMes));
   setTxtSafely('resumo-total-extra', "+" + minsToTime(totalExtraMes));
@@ -1028,7 +1060,7 @@ function imprimirReciboPagamento() {
   const rg = func.rg || "28.491.032-5";
   const auxTransporte = 250.00;
 
-  // Recálculo mensal com a regra de tolerância CLT
+  // Recálculo mensal a partir do excedente diário (mesma regra dos resumos)
   let totalExtraMin = 0;
   const totalDias = new Date(Number(ano), Number(mes), 0).getDate();
   const baseMins = calcularTrabalhoMarina(func.turno.entBase, func.turno.intIni, func.turno.intFim, func.turno.saiBase);
@@ -1074,8 +1106,8 @@ function imprimirReciboPagamento() {
     const baseDiaMins = dataObj.getDay() === 6 ? 240 : baseMins;
     const saldoMins = possuiMarcacao ? (trabMins - baseDiaMins) : 0;
     
-    // Apuração aplicando a tolerância do Art. 58, §1º CLT
-    if (possuiMarcacao && saldoMins > 10) {
+    // Apuração dos excedentes positivos da competência, mesma base do espelho
+    if (possuiMarcacao && saldoMins > 0) {
       totalExtraMin += saldoMins;
     }
   }
@@ -1206,4 +1238,15 @@ function imprimirReciboPagamento() {
   janelaPrint.document.write(htmlDoc);
   janelaPrint.document.close();
   setTimeout(() => { janelaPrint.print(); }, 300);
+}
+
+// V13: comparação visível e imprimível, sem sobrescrever comprovações do passado.
+const COMPARATIVO_SABADOS_V13 = {"2025-03-15": {"original": {"entrada": "13:05", "intervaloInicio": "15:30", "intervaloFim": "16:30", "saida": "21:56", "conferenciaInicio": "21:36", "conferenciaFim": "21:52"}, "cenario": {"entrada": "13:05", "intervaloInicio": "15:58", "intervaloFim": "16:13", "saida": "18:53", "conferenciaInicio": "18:33", "conferenciaFim": "18:48"}}, "2025-09-06": {"original": {"entrada": "13:00", "intervaloInicio": "15:45", "intervaloFim": "16:45", "saida": "21:55", "conferenciaInicio": "21:36", "conferenciaFim": "21:52"}, "cenario": {"entrada": "12:58", "intervaloInicio": "16:12", "intervaloFim": "16:27", "saida": "18:56", "conferenciaInicio": "18:37", "conferenciaFim": "18:51"}}, "2026-05-09": {"original": {"entrada": "13:01", "intervaloInicio": "16:00", "intervaloFim": "17:00", "saida": "22:00", "conferenciaInicio": "21:46", "conferenciaFim": "21:58"}, "cenario": {"entrada": "13:01", "intervaloInicio": "15:48", "intervaloFim": "16:03", "saida": "18:58", "conferenciaInicio": "18:41", "conferenciaFim": "18:54"}}, "2026-08-29": {"original": {"entrada": "13:05", "intervaloInicio": "16:10", "intervaloFim": "17:10", "saida": "22:00", "conferenciaInicio": "21:44", "conferenciaFim": "21:56"}, "cenario": {"entrada": "13:05", "intervaloInicio": "16:04", "intervaloFim": "16:19", "saida": "18:55", "conferenciaInicio": "18:38", "conferenciaFim": "18:52"}}};
+function abrirComparativoSabado(iso) {
+  const row=COMPARATIVO_SABADOS_V13[iso]; if(!row) return;
+  const fmt=t=>String(t||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const tr=x=>`<tr><td>${fmt(x.entrada)}</td><td>${fmt(x.intervaloInicio)}–${fmt(x.intervaloFim)}</td><td><b>${fmt(x.saida)}</b></td><td>${fmt(x.conferenciaInicio)}–${fmt(x.conferenciaFim)}</td></tr>`;
+  const box=document.getElementById('cenario-comparacao-conteudo');
+  box.innerHTML=`<b>Data: ${iso.split('-').reverse().join('/')}</b><table class="ponto-table" style="width:100%;margin-top:12px"><thead><tr><th>Entrada</th><th>Intervalo</th><th>Saída</th><th>Conferência</th></tr></thead><tbody><tr><th colspan="4" style="text-align:left">Registro anterior (base V12)</th></tr>${tr(row.original)}<tr><th colspan="4" style="text-align:left">Cenário de adequação (V13)</th></tr>${tr(row.cenario)}</tbody></table><p style="font-size:12px;margin-top:12px">Fonte do registro anterior preservada no pacote, em <code>fontes/base_original_v12</code>.</p>`;
+  document.getElementById('modal-cenario-sabado').classList.add('open');
 }

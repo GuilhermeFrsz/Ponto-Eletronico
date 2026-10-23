@@ -1,0 +1,40 @@
+PONTO CERTO — V12 • EQUIPE COMPLETA E IDENTIFICAÇÃO DA PROPRIETÁRIA
+
+INSTALE: extraia este ZIP em uma pasta NOVA e abra index.html.
+
+FUNCIONÁRIOS CONFIRMADOS NO QUADRO:
+- Gabriela Sales de Almeida — Proprietária do Mercado (mat. 0045).
+- Mykaelle Santos da Silva — Supervisora (mat. 0088).
+- Paulo Ricardo Lima de Melo — Gerente do Mercado (mat. 0102).
+
+MARINA: seus horários, atestados e ajustes de V11 foram preservados; referências
+anteriores ao gerente foram atualizadas na planilha V12 e no relatório.
+
+DEMAIS 27 COLABORADORES: 12.690 registros ilustrativos (mar/2025 a ago/2026,
+sem domingos), jornadas completas com entrada, pausa e saída; sábado de 4h.
+A planilha EQUIPE_ESPELHO_COMPLETO_V12.csv contém cada marcação em formato
+compatível com Excel. EQUIPE_RESUMO_AJUSTES_V12.xlsx contém quadro de pessoal,
+18 ajustes didáticos e totalização de 486 competências funcionário/mês.
+Esses arquivos são instantâneos dos dados; editar o Excel não altera o site.
+
+PONTOS AJUSTADOS: os turnos com término habitual às 21h20 têm algumas
+ocorrências demonstrativas selecionadas. Clique no status laranja para o motivo.
+NÃO houve atestados novos para os demais funcionários.
+
+ASSINATURA EM IMPRESSÕES: espelho, relatórios e auditoria imprimem somente
+Gabriela Sales de Almeida como signatária, com nome exibido em fonte cursiva
+(tipografia, sem imitar assinatura autêntica). Os nomes de gerentes podem
+aparecer no corpo da auditoria como responsáveis por lançamentos, mas
+NÃO são signatários.
+
+OS HORÁRIOS DA EQUIPE SÃO SIMULADOS PARA APRESENTAÇÃO ACADÊMICA, NÃO
+COMPROVANTES REAIS. A simples variação de horários não valida controles
+perante a Súmula 338, III, do TST. O site não substitui sistema oficial.
+
+MODIFICAÇÕES FEITAS NO NAVEGADOR: podem ficar salvas no armazenamento local
+deste navegador; as planilhas incluídas não mudam automaticamente.
+
+Para ver assinatura impressa: selecione um funcionário, escolha a competência
+e clique 'Imprimir PDF'. Na janela de impressão, escolha 'Salvar como PDF'.
+Para impressão da auditoria: vá ao módulo 2 e escolha Geral ou Individual.
+Para relatórios de Marina: módulo 4 e os botões PDF correspondentes.

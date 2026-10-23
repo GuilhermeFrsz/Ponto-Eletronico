@@ -1,7 +1,7 @@
-// Transcrição de informações originais e revisões, com histórico documental.
+/* V13: cenários alternativos de sábado. Os 4 horários V12 foram preservados em fontes/base_original_v12. */
 const MARINA_REVISADA = {
-  "fonte": "JORNADA_MARINA_V12_EQUIPE_ATUALIZADA.xlsx (eventos preservados de versões anteriores)",
-  "natureza": "SIMULAÇÃO ACADÊMICA — DADOS ILUSTRATIVOS, NÃO COMPROVAM REGISTROS REAIS",
+  "fonte": "JORNADA_MARINA_CENARIO_SABADOS_V13.xlsx — cenário alternativo preservando origem V12",
+  "natureza": "CENÁRIO ALTERNATIVO DE ADEQUAÇÃO • NÃO SUBSTITUI MARCAÇÕES ORIGINAIS",
   "jornadas": [
     {
       "data": "2025-03-13",
@@ -21,15 +21,15 @@ const MARINA_REVISADA = {
       "data": "2025-03-15",
       "dia": "sábado",
       "entrada": "13:05",
-      "intervaloInicio": "15:30",
-      "intervaloFim": "16:30",
-      "saida": "21:56",
-      "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
-      "conferenciaInicio": "21:36",
-      "conferenciaFim": "21:52",
-      "tempoAlem": "04h56",
-      "classificacao": "Sábado excepcional — encerramento às 21h56",
-      "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:36–21:52 e saída 21:56. Jornada excepcional simulada; intervalo de 1h (15:30–16:30). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      "intervaloInicio": "15:58",
+      "intervaloFim": "16:13",
+      "saida": "18:53",
+      "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+      "conferenciaInicio": "18:33",
+      "conferenciaFim": "18:48",
+      "tempoAlem": "01h33",
+      "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+      "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 21:56; saída do cenário: 18:53. Conferência no cenário ilustrativa; não substitui documento de conferência original."
     },
     {
       "data": "2025-03-20",
@@ -286,16 +286,16 @@ const MARINA_REVISADA = {
     {
       "data": "2025-09-06",
       "dia": "sábado",
-      "entrada": "13:00",
-      "intervaloInicio": "15:45",
-      "intervaloFim": "16:45",
-      "saida": "21:55",
-      "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
-      "conferenciaInicio": "21:36",
-      "conferenciaFim": "21:52",
-      "tempoAlem": "04h55",
-      "classificacao": "Sábado excepcional — encerramento às 21h55",
-      "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:36–21:52 e saída 21:55. Jornada excepcional simulada; intervalo de 1h (15:45–16:45). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      "entrada": "12:58",
+      "intervaloInicio": "16:12",
+      "intervaloFim": "16:27",
+      "saida": "18:56",
+      "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+      "conferenciaInicio": "18:37",
+      "conferenciaFim": "18:51",
+      "tempoAlem": "01h43",
+      "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+      "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 21:55; saída do cenário: 18:56. Conferência no cenário ilustrativa; não substitui documento de conferência original."
     },
     {
       "data": "2025-09-17",
@@ -455,15 +455,15 @@ const MARINA_REVISADA = {
       "data": "2026-05-09",
       "dia": "sábado",
       "entrada": "13:01",
-      "intervaloInicio": "16:00",
-      "intervaloFim": "17:00",
-      "saida": "22:00",
-      "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
-      "conferenciaInicio": "21:46",
-      "conferenciaFim": "21:58",
-      "tempoAlem": "05h00",
-      "classificacao": "Sábado excepcional — encerramento às 22h00",
-      "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:46–21:58 e saída 22:00. Jornada excepcional simulada; intervalo de 1h (16:00–17:00). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      "intervaloInicio": "15:48",
+      "intervaloFim": "16:03",
+      "saida": "18:58",
+      "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+      "conferenciaInicio": "18:41",
+      "conferenciaFim": "18:54",
+      "tempoAlem": "01h42",
+      "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+      "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 22:00; saída do cenário: 18:58. Conferência no cenário ilustrativa; não substitui documento de conferência original."
     },
     {
       "data": "2026-05-21",
@@ -609,15 +609,15 @@ const MARINA_REVISADA = {
       "data": "2026-08-29",
       "dia": "sábado",
       "entrada": "13:05",
-      "intervaloInicio": "16:10",
-      "intervaloFim": "17:10",
-      "saida": "22:00",
-      "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
-      "conferenciaInicio": "21:44",
-      "conferenciaFim": "21:56",
-      "tempoAlem": "05h00",
-      "classificacao": "Sábado excepcional — encerramento às 22h00",
-      "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:44–21:56 e saída 22:00. Jornada excepcional simulada; intervalo de 1h (16:10–17:10). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      "intervaloInicio": "16:04",
+      "intervaloFim": "16:19",
+      "saida": "18:55",
+      "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+      "conferenciaInicio": "18:38",
+      "conferenciaFim": "18:52",
+      "tempoAlem": "01h35",
+      "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+      "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 22:00; saída do cenário: 18:55. Conferência no cenário ilustrativa; não substitui documento de conferência original."
     }
   ],
   "falhas": [
@@ -1212,5 +1212,131 @@ const MARINA_REVISADA = {
     "referenciaAnterior": "21:20 na ocorrência isolada de Falhas de ponto",
     "valorMantido": "16:56 em Horas extras e saídas e CONFERÊNCIA DE CAIXA",
     "justificativa": "Correção autorizada pelo usuário para harmonizar esta simulação; ocorrência conflitante retirada da tabela de falhas, sem alegar confirmação por registro externo."
-  }
+  },
+  "historicoCenarioSabados": [
+    {
+      "data": "2025-03-15",
+      "original": {
+        "data": "2025-03-15",
+        "dia": "sábado",
+        "entrada": "13:05",
+        "intervaloInicio": "15:30",
+        "intervaloFim": "16:30",
+        "saida": "21:56",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:36",
+        "conferenciaFim": "21:52",
+        "tempoAlem": "04h56",
+        "classificacao": "Sábado excepcional — encerramento às 21h56",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:36–21:52 e saída 21:56. Jornada excepcional simulada; intervalo de 1h (15:30–16:30). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "alternativo": {
+        "data": "2025-03-15",
+        "dia": "sábado",
+        "entrada": "13:05",
+        "intervaloInicio": "15:58",
+        "intervaloFim": "16:13",
+        "saida": "18:53",
+        "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+        "conferenciaInicio": "18:33",
+        "conferenciaFim": "18:48",
+        "tempoAlem": "01h33",
+        "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+        "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 21:56; saída do cenário: 18:53. Conferência no cenário ilustrativa; não substitui documento de conferência original."
+      }
+    },
+    {
+      "data": "2025-09-06",
+      "original": {
+        "data": "2025-09-06",
+        "dia": "sábado",
+        "entrada": "13:00",
+        "intervaloInicio": "15:45",
+        "intervaloFim": "16:45",
+        "saida": "21:55",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:36",
+        "conferenciaFim": "21:52",
+        "tempoAlem": "04h55",
+        "classificacao": "Sábado excepcional — encerramento às 21h55",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:36–21:52 e saída 21:55. Jornada excepcional simulada; intervalo de 1h (15:45–16:45). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "alternativo": {
+        "data": "2025-09-06",
+        "dia": "sábado",
+        "entrada": "12:58",
+        "intervaloInicio": "16:12",
+        "intervaloFim": "16:27",
+        "saida": "18:56",
+        "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+        "conferenciaInicio": "18:37",
+        "conferenciaFim": "18:51",
+        "tempoAlem": "01h43",
+        "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+        "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 21:55; saída do cenário: 18:56. Conferência no cenário ilustrativa; não substitui documento de conferência original."
+      }
+    },
+    {
+      "data": "2026-05-09",
+      "original": {
+        "data": "2026-05-09",
+        "dia": "sábado",
+        "entrada": "13:01",
+        "intervaloInicio": "16:00",
+        "intervaloFim": "17:00",
+        "saida": "22:00",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:46",
+        "conferenciaFim": "21:58",
+        "tempoAlem": "05h00",
+        "classificacao": "Sábado excepcional — encerramento às 22h00",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:46–21:58 e saída 22:00. Jornada excepcional simulada; intervalo de 1h (16:00–17:00). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "alternativo": {
+        "data": "2026-05-09",
+        "dia": "sábado",
+        "entrada": "13:01",
+        "intervaloInicio": "15:48",
+        "intervaloFim": "16:03",
+        "saida": "18:58",
+        "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+        "conferenciaInicio": "18:41",
+        "conferenciaFim": "18:54",
+        "tempoAlem": "01h42",
+        "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+        "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 22:00; saída do cenário: 18:58. Conferência no cenário ilustrativa; não substitui documento de conferência original."
+      }
+    },
+    {
+      "data": "2026-08-29",
+      "original": {
+        "data": "2026-08-29",
+        "dia": "sábado",
+        "entrada": "13:05",
+        "intervaloInicio": "16:10",
+        "intervaloFim": "17:10",
+        "saida": "22:00",
+        "jornadaReferencia": "Sábado excepcional: entrada por volta de 13h; intervalo de 1h; saída excepcional após 21h",
+        "conferenciaInicio": "21:44",
+        "conferenciaFim": "21:56",
+        "tempoAlem": "05h00",
+        "classificacao": "Sábado excepcional — encerramento às 22h00",
+        "observacoes": "Data e horários conferidos com a aba “CONFERÊNCIA DE CAIXA” da planilha-base: conferência 21:44–21:56 e saída 22:00. Jornada excepcional simulada; intervalo de 1h (16:10–17:10). Confirmar registros reais antes de qualquer conclusão sobre horas extras."
+      },
+      "alternativo": {
+        "data": "2026-08-29",
+        "dia": "sábado",
+        "entrada": "13:05",
+        "intervaloInicio": "16:04",
+        "intervaloFim": "16:19",
+        "saida": "18:55",
+        "jornadaReferencia": "Cenário alternativo de sábado: referência 13h–17h, máximo 2h adicionais, intervalo de 15min no prolongamento",
+        "conferenciaInicio": "18:38",
+        "conferenciaFim": "18:52",
+        "tempoAlem": "01h35",
+        "classificacao": "Cenário alternativo de adequação — sábados (até 2h extras)",
+        "observacoes": "Jornada hipotética do cenário de adequação; dados anteriores preservados no Comparativo e na base V12. Saída original: 22:00; saída do cenário: 18:55. Conferência no cenário ilustrativa; não substitui documento de conferência original."
+      }
+    }
+  ]
 };

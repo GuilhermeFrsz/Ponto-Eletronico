@@ -20,7 +20,7 @@
     </div>
     <div class="no-print" style="text-align: right;">
       <span style="font-size: 0.8rem; opacity: 0.85;">Operando em Modo Audiência</span><br>
-      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Dados locais • V12 Atualizado</span>
+      <span style="font-size: 0.75rem; font-weight: bold; color: #a7f3d0;">● Dados locais • V13 • Cenário de adequação</span>
     </div>
   </header>
 
@@ -66,7 +66,10 @@
         </div>
       </div>
 
-      <!-- Card de Apuração e Resumo Mensal -->
+      <div id="aviso-cenario-sabados" class="card no-print" hidden style="border-left:4px solid #b45309; padding:10px 14px; background:#fffbeb; font-size:12px;">
+<strong>Cenário alternativo de adequação dos sábados.</strong> Quatro jornadas foram hipoteticamente limitadas a até 2 horas extras, com intervalo de 15 minutos. Os horários anteriores continuam no comparativo; <strong>não são registros originais retificados</strong>. Clique no status amarelo para comparar.
+</div>
+<!-- Card de Apuração e Resumo Mensal -->
       <div class="summary-panel" aria-label="Resumo de horas da competência">
         <div style="flex: 1; border-right: 1px solid var(--gray-200);">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Total Trabalhado no Mês</div>
@@ -75,7 +78,7 @@
         <div style="flex: 1; border-right: 1px solid var(--gray-200); padding-left: 15px;">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Horas Extras (Saldo Positivo)</div>
           <div id="resumo-total-extra" style="font-size: 1.5rem; font-weight: bold; color: var(--danger);">00h 00m</div>
-          <div id="resumo-nota-folha" class="resumo-ajuda">*Apurado com tolerância do Art. 58, §1º da CLT</div>
+          <div id="resumo-nota-folha" class="resumo-ajuda">*Excedentes diários calculados pelo trabalho líquido menos a referência</div>
         </div>
         <div style="flex: 1; padding-left: 15px;">
           <div style="font-size: 0.8rem; color: var(--gray-600); text-transform: uppercase; font-weight: 600;">Atrasos/Faltas (Saldo Negativo)</div>
@@ -91,7 +94,7 @@
             </div>
             <button type="button" class="btn-recibo-verde" onclick="imprimirReciboPagamento()" title="Imprimir Recibo de Pagamento Mensal (Holerite)">💵</button>
           </div>
-          <div class="resumo-ajuda">Soma dos saldos diários com aplicação da Tolerância da CLT</div>
+          <div class="resumo-ajuda">Soma dos saldos positivos apurados nas linhas</div>
         </div>
       </div>
       
@@ -120,7 +123,7 @@
       <section id="ponto-motivos-impressao" class="print-only-adjustments" aria-label="Motivos dos ajustes da competência"></section>
 
       <div class="print-only-signatures">
-        <p id="ponto-declaracao-impressao" style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.</p>
+        <p id="ponto-declaracao-impressao" style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Espelho de estudo e conferência de jornada. Os quatro sábados alterados nesta versão são cenários hipotéticos de adequação e não substituem registros anteriores, disponíveis no comparativo.</p>
         <div class="sig-grid sig-only-owner">
           <div class="assinatura-tipografica">Gabriela Sales de Almeida</div>
           <div class="sig-line">Gabriela Sales de Almeida — Proprietária do Mercado</div>
@@ -269,6 +272,15 @@
       </div>
     </div>
   </div>
+
+
+<div class="modal-overlay" id="modal-cenario-sabado" role="dialog" aria-modal="true" aria-labelledby="cenario-titulo" onclick="if(event.target===this)fecharModal('modal-cenario-sabado')">
+<div class="modal-content" style="max-width:590px;">
+<h2 id="cenario-titulo" style="color:#92400e;">Comparação do cenário de sábado</h2>
+<p style="margin:8px 0 14px;">Os horários do cenário são ilustrativos e <strong>não substituem</strong> os registros anteriores.</p>
+<div id="cenario-comparacao-conteudo" style="line-height:1.7;"></div>
+<div style="text-align:right;margin-top:17px;"><button class="btn btn-secondary" type="button" onclick="fecharModal('modal-cenario-sabado')">Fechar</button></div>
+</div></div>
 
   <script src="registros.js"></script>
   <script src="script.js"></script>

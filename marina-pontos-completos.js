@@ -1,4 +1,4 @@
-/* Dados ilustrativos: 44 jornadas revisadas e 425 datas complementadas. Não são comprovantes de batida real. */
+/* V13: espelho de cenário alternativo. 4 horários V12 preservados em fontes/base_original_v12. */
 const MARINA_PONTOS_COMPLETOS = {
   "registros": {
     "2025-03-03": {
@@ -148,14 +148,15 @@ const MARINA_PONTOS_COMPLETOS = {
       "data": "2025-03-15",
       "dia": "Sáb",
       "entrada": "13:05",
-      "intervaloInicio": "15:30",
-      "intervaloFim": "16:30",
-      "saida": "21:56",
-      "totalMin": 471,
+      "intervaloInicio": "15:58",
+      "intervaloFim": "16:13",
+      "saida": "18:53",
+      "totalMin": 333,
       "referenciaMin": 240,
-      "saldoMin": 231,
+      "saldoMin": 93,
       "complementado": false,
-      "origem": "Horários da planilha de jornadas revisada"
+      "origem": "Cenário alternativo (horários hipotéticos); batidas V12 originais preservadas no comparativo",
+      "cenarioAdequacao": true
     },
     "2025-03-17": {
       "data": "2025-03-17",
@@ -2103,15 +2104,16 @@ const MARINA_PONTOS_COMPLETOS = {
     "2025-09-06": {
       "data": "2025-09-06",
       "dia": "Sáb",
-      "entrada": "13:00",
-      "intervaloInicio": "15:45",
-      "intervaloFim": "16:45",
-      "saida": "21:55",
-      "totalMin": 475,
+      "entrada": "12:58",
+      "intervaloInicio": "16:12",
+      "intervaloFim": "16:27",
+      "saida": "18:56",
+      "totalMin": 343,
       "referenciaMin": 240,
-      "saldoMin": 235,
+      "saldoMin": 103,
       "complementado": false,
-      "origem": "Horários da planilha de jornadas revisada"
+      "origem": "Cenário alternativo (horários hipotéticos); batidas V12 originais preservadas no comparativo",
+      "cenarioAdequacao": true
     },
     "2025-09-08": {
       "data": "2025-09-08",
@@ -4834,14 +4836,15 @@ const MARINA_PONTOS_COMPLETOS = {
       "data": "2026-05-09",
       "dia": "Sáb",
       "entrada": "13:01",
-      "intervaloInicio": "16:00",
-      "intervaloFim": "17:00",
-      "saida": "22:00",
-      "totalMin": 479,
+      "intervaloInicio": "15:48",
+      "intervaloFim": "16:03",
+      "saida": "18:58",
+      "totalMin": 342,
       "referenciaMin": 240,
-      "saldoMin": 239,
+      "saldoMin": 102,
       "complementado": false,
-      "origem": "Horários da planilha de jornadas revisada"
+      "origem": "Cenário alternativo (horários hipotéticos); batidas V12 originais preservadas no comparativo",
+      "cenarioAdequacao": true
     },
     "2026-05-11": {
       "data": "2026-05-11",
@@ -6082,14 +6085,15 @@ const MARINA_PONTOS_COMPLETOS = {
       "data": "2026-08-29",
       "dia": "Sáb",
       "entrada": "13:05",
-      "intervaloInicio": "16:10",
-      "intervaloFim": "17:10",
-      "saida": "22:00",
-      "totalMin": 475,
+      "intervaloInicio": "16:04",
+      "intervaloFim": "16:19",
+      "saida": "18:55",
+      "totalMin": 335,
       "referenciaMin": 240,
-      "saldoMin": 235,
+      "saldoMin": 95,
       "complementado": false,
-      "origem": "Horários da planilha de jornadas revisada"
+      "origem": "Cenário alternativo (horários hipotéticos); batidas V12 originais preservadas no comparativo",
+      "cenarioAdequacao": true
     },
     "2026-08-31": {
       "data": "2026-08-31",
