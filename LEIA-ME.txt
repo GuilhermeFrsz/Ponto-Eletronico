@@ -1,71 +1,44 @@
-PONTO CERTO V9 — RETIFICAÇÃO DE 15/08/2026
+PONTO CERTO — V11 • DETALHES DOS AJUSTES EM JANELA
 
-A ocorrência antiga de Falhas de ponto que dizia saída 21h20 foi retirada dos relatórios ATIVOS.
-A saída permanece 16h56, concordante com a aba Horas extras e saídas e Conferência de caixa.
-Histórico da retificação: planilha de jornadas, aba Histórico das alterações, e planilha de escalas, aba Retificações e conformidade.
-As versões V7 na pasta originais_v7 são ARQUIVOS HISTÓRICOS NÃO ATUALIZADOS, para rastreabilidade.
-Os demais dados da V8 e os cálculos de jornada não foram alterados.
-Esta correção documental decorre de autorização do usuário, sem validação por comprovante original de ponto.
+Abra index.html na pasta extraída.
 
-PONTO CERTO — V8 — ESPELHO COMPLETO (SIMULAÇÃO)
+MARINA: AFASTAMENTO INFORMADO EM DOCUMENTO DE CENÁRIO FICTÍCIO
+- 14/06/2025 (sábado): afastamento justificado, 4h00 de abono.
+- 15/06/2025 (domingo): DSR, sem expediente e sem abono adicional.
+- 16/06/2025 (segunda): afastamento justificado, 8h00 de abono (regra solicitada),
+  com referência 13:00–21:20, porém SEM simulação de batidas.
+- Hora abonada não equivale a hora efetivamente trabalhada. Não gera saldo
+  positivo de extras nem saldo negativo de atraso. O total trabalhado mensal
+  exclui as duas datas e há campo próprio para horas justificadas.
+- A jornada habitual de seg. a sex. do sistema é 7h20 líquidas, diferente das
+  8h abonadas pelo critério solicitado para o atestado.
 
-469 dias trabalhados no período de março/2025 a agosto/2026.
-- 44 jornadas individualizadas da planilha revisada preservadas integralmente.
-- 425 dias com saída extraída da CONFERÊNCIA DE CAIXA e entrada/intervalo
-  COMPLETADOS DE FORMA ILUSTRATIVA para este exercício. Não são batidas reais.
-- 03/06/2025: saída 21:22 da conferência, e horários de entrada/intervalo
-  ilustrativos identificados na própria linha.
-- 12/06/2025: mantém 13:00 / 16:00 / 17:00 / 22:00 (+00:40).
-- 12/06/2026: sem lançamento equivocado das 22h00.
-- Domingos e datas anteriores à admissão permanecem não trabalhados.
+INDICADORES DE COBERTURA: 469 expedientes previstos para o período, 467 com
+jornada na simulação e 2 abonados por atestado. Os 44 eventos destacados na
+aba Horas extras e saídas e 53 falhas de ponto não representam o total de
+expedientes.
 
-Todas as linhas de trabalho calculam Total Trab. e Saldo (Extra).
-Os positivos entram na soma do mês; negativos aparecem em atraso/falta,
-sem serem compensados de modo silencioso.
+AJUSTES: em 2. Lançamento & Auditoria Gerencial, os afastamentos de 14 e
+16/06/2025 já aparecem no log. O formulário oferece tipo Atestado médico,
+sem campos de marcações. Para alterar algo, o sistema utiliza o mecanismo
+local de confirmação já existente. Ajustes feitos no navegador não gravam
+automaticamente alterações no Excel.
 
-IMPORTANTE: Estes dados são SIMULADOS E NÃO COMPROVAM BATIDAS REAIS. Para
-uso jurídico ou trabalhista, obter registros originais de ponto. A Súmula
-338, III, do TST não autoriza gerar variações artificiais para dar
-aparência de autenticidade a controles de jornada.
+PLANILHAS: consulte 'Atestados e ajustes', 'Espelho completo (simulado)' e
+'Resumo mensal (simulado)'. A planilha de conferência preserva históricos
+originais, com observações sobre os lançamentos posteriores por atestado.
 
-A aba nova "Espelho completo (simulado)" nas planilhas mostra a origem
-por dia; os registros originais não devem ser sobrescritos.
+FONTE: atestado exibido pelo usuário como caso fictício. Nem o documento nem
+os horários demonstrativos foram verificados como registros originais reais.
+A simulação não é homologação de controle eletrônico ou cálculo de crédito.
 
-PONTO CERTO — V7 — CORREÇÃO DE 12/06/2025 E MELHORIA DE STATUS
-
-Abra index.html após extrair TODOS os arquivos na mesma pasta.
-
-1. O registro das 22h00 foi corrigido para 12/06/2025 (quinta-feira).
-   Entrada 13h00, intervalo 16h00–17h00, saída 22h00:
-   08h00 trabalhadas − 07h20 de referência = +00h40.
-   A informação foi fornecida pelo usuário; comprovante original não anexado.
-2. 12/06/2026 retorna ao estado da V5: sem jornada adicional de 22h00,
-   com a antiga ocorrência ilustrativa de falha de saída 21h22.
-   Se um ajuste de V6 idêntico ao erro das 22h00 estiver no navegador,
-   será arquivado em localStorage.pontoHistoricoMigracaoV7 e removido do espelho.
-3. Status: "Ponto registrado" = informação presente na fonte; "Ponto Ajustado"
-   = lançamento retificado no navegador, em laranja, acompanhado do motivo.
-   "Escala prevista • sem batida" = ausência de marcação verificável.
-4. As jornadas apenas previstas NÃO entram em Total Trabalhado, Saldo (Extra),
-   ou Horas Extras. Não são inventadas batidas com variações aleatórias.
-   O saldo de cada data informada continua automático.
-5. Os demais empregados preservam o cadastro, mas dias sem batida confirmada
-   deixam de ser tratados como registro real: nenhum ponto gerado artificialmente.
-   Ajustes anteriormente armazenados permanecem, com rastreio de origem.
-6. Dois arquivos XLSX na pasta fontes:
-   JORNADA_MARINA_CORRIGIDA_V7.xlsx (abas jornadas, falhas, histórico, orientação)
-   ESCALA_CONFERENCIA_MARINA_REVISADA_V7.xlsx (registros-base originais e
-   aba de retificações informadas sem reescrever a linha histórica).
-7. A Súmula 338, III, TST trata da fragilidade probatória de horários
-   uniformes. NÃO foram criadas variações artificiais para aparentar validade.
-   Horários originais somente devem ser alterados com respaldo e auditoria.
-8. A frase em destaque "SIMULAÇÃO ACADÊMICA" foi removida da interface,
-   mas a natureza demonstrativa dos dados permanece declarada nas fontes.
-   Não existe certificação pelo MTE nem autenticação criptográfica neste site.
-9. A planilha Excel não é sincronizada com ajustes futuros do navegador.
-   Guardar comprovantes reais e exportar os ajustes antes de mudar de navegador.
-PLANILHAS ATUAIS:
-  fontes/JORNADA_MARINA_COMPLETA_V9.xlsx
-  fontes/ESCALA_CONFERENCIA_MARINA_COMPLETA_V9.xlsx
-As duas têm as abas "Espelho completo (simulado)" e "Resumo mensal (simulado)".
-O diretório fontes/originais_v7 contém cópias das versões anteriores para auditoria.
+V11 • MELHORIA DE NAVEGAÇÃO (SEM ALTERAR CÁLCULOS)
+- No espelho, clique na etiqueta laranja "Atestado médico • Ponto Ajustado"
+  para abrir uma janela com a data, horas abonadas, jornada prevista,
+  justificativa integral e origem do lançamento.
+- O mesmo comportamento foi aplicado aos demais "Ponto Ajustado".
+- A justificativa não ocupa a célula da tabela, mantendo as linhas compactas.
+- Para fechar a janela use Fechar, X, Escape ou clique fora dela.
+- A impressão do espelho inclui um quadro próprio com as justificativas
+  completas dos ajustes da competência, preservando a rastreabilidade.
+- Planilhas XLSX e todos os cálculos permanecem idênticos aos da V10.

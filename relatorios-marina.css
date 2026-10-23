@@ -89,3 +89,12 @@
   body.print-revisado[data-print-marina="falhas"] #marina-bloco-jornada { display:none!important; }
   body.print-revisado #page-relatorios-marina .relatorio-rodape { font-size:8px; }
 }
+
+/* V10 • indicadores de cobertura e seção do atestado */
+.relatorio-resumo{grid-template-columns:repeat(3,minmax(0,1fr));}
+.marina-atestado-rodape{margin:8px 4px;font-size:.83rem;color:#475569;}
+@media(max-width:680px){.relatorio-resumo{grid-template-columns:1fr;}}
+@media print{
+ body.print-revisado[data-print-marina="falhas"] #marina-bloco-atestados{display:none!important;}
+ body.print-revisado[data-print-marina="ambos"] #marina-bloco-atestados{break-before:page;}
+}

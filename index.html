@@ -89,12 +89,15 @@
           <div class="resumo-ajuda">Soma dos saldos diários positivos • apuração provisória</div>
         </div>
       </div>
+      <div class="marina-abono-resumo">
+        <strong>Horas justificadas por atestado na competência:</strong> <span id="resumo-total-abono">00h 00m</span>
+        <small>Abono separado de trabalho efetivo e de saldo de horas extras. Atestado 14–16/06/2025: domingo 15/06 é DSR.</small>
+      </div>
       <details id="resumo-detalhes-painel" class="resumo-detalhes-marina">
         <summary>Como foram calculadas as horas extras devidas deste mês?</summary>
         <div id="resumo-detalhes-devido" class="resumo-detalhes-conteudo"></div>
       </details>
 
-    
 
       <div class="card" style="padding: 10px;">
         <div style="margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;" class="no-print">
@@ -113,6 +116,9 @@
         </div>
       </div>
 
+      <!-- As justificativas completas ficam fora das linhas e são incluídas no PDF do espelho. -->
+      <section id="ponto-motivos-impressao" class="print-only-adjustments" aria-label="Motivos dos ajustes da competência"></section>
+
       <div class="print-only-signatures">
         <p id="ponto-declaracao-impressao" style="text-align: justify; font-size: 9px; margin-bottom: 25px;">Reconheço a exatidão das marcações de ponto registradas neste espelho, nos termos do Art. 74, § 2º da CLT e Portaria MTE 671/2021.</p>
         <div class="sig-grid">
@@ -128,7 +134,8 @@
         <h2 style="font-size: 1.15rem; color: var(--primary); margin-bottom: 15px;">Painel de Lançamento / Correção de Pendência</h2>
         <form id="form-ajuste-gerencia" onsubmit="prepararConfirmacaoAjuste(event)" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 15px;">
           <div class="form-group" style="grid-column: span 2;"><label>Colaborador Alvo:</label><input type="text" id="ajuste-target-nome" readonly style="background-color: var(--gray-100); font-weight: 600;"></div>
-          <div class="form-group" style="grid-column: span 2;"><label>Data do Ponto Pendente:</label><input type="date" id="input-data-ajuste" required min="2025-03-01" max="2026-08-31"></div>
+          <div class="form-group" style="grid-column: span 2;"><label>Data do Ponto / Afastamento:</label><input type="date" id="input-data-ajuste" onchange="atualizarCamposTipoAjuste()" required min="2025-03-01" max="2026-08-31"></div>
+          <div class="form-group" style="grid-column: span 4;"><label>Tipo de lançamento:</label><select id="select-tipo-ajuste" onchange="atualizarCamposTipoAjuste()"><option value="ponto">Correção de marcação de ponto</option><option value="atestado">Atestado médico — ausência justificada</option></select><div id="ajuste-aviso-atestado" class="atestado-aviso" hidden></div></div>
           
           <div class="form-group"><label>Entrada (Real):</label><input type="time" id="input-hora-entrada" required></div>
           <div class="form-group"><label>Início do Int.:</label><input type="time" id="input-hora-int-ini" required></div>
@@ -189,15 +196,16 @@
           <div>
             <p class="relatorio-sobretitulo">Base revisada • independente do espelho de ponto</p>
             <h1 id="marina-titulo">Relatórios de jornada e falhas — Marina</h1>
-            <p class="relatorio-intro">Transcrição das duas abas da planilha revisada, com conferência automática das datas e dos dias da semana.</p>
+            <p class="relatorio-intro">Espelho completo do período, registros revisados e justificativas de ausência apresentados separadamente.</p>
           </div>
           
         </div>
         <div class="relatorio-resumo" aria-label="Resumo dos dados">
-          <div><strong id="resumo-jornadas">44</strong><span>Jornadas / saídas</span></div>
-          <div><strong id="resumo-falhas">53</strong><span>Falhas de ponto</span></div>
+          <div><strong id="resumo-expedientes">469</strong><span>Expedientes previstos (03/2025–08/2026)</span></div>
+          <div><strong id="resumo-trabalhados">467</strong><span>Expedientes com jornada na simulação</span></div>
+          <div><strong id="resumo-atestados">2</strong><span>Expedientes justificados por atestado</span></div>
         </div>
-        <p class="relatorio-origem"><strong>Fonte exclusiva:</strong> <span id="relatorio-fonte">JORNADA_MARINA_CORRIGIDA_V7.xlsx</span>. Não são incorporados os lançamentos automáticos, correções ou horários gerados no espelho anterior. Os exemplos sem documento original permanecem identificados; o site não produz batidas fictícias para completar datas.</p>
+        <p class="relatorio-origem"><strong>Origem dos indicadores:</strong> espelho completo da Marina (469 dias previstos). Os 44 lançamentos destacados em “Horas extras e saídas” e as 53 ocorrências da tabela de falhas são <strong>eventos documentais</strong>, não o número de expedientes cumpridos. Os dois dias abonados por atestado são contados como justificados, não trabalhados. <span id="relatorio-fonte">JORNADA_MARINA_COMPLETA_V10.xlsx</span>.</p>
         <p id="marina-integridade" class="relatorio-integridade" role="status" aria-live="polite">Conferindo datas e dias da semana...</p>
         <div class="relatorio-acoes no-print">
           <button type="button" class="btn btn-primary" onclick="imprimirRelatorioMarina('jornada')">🖨️ PDF • Jornadas</button>
@@ -243,8 +251,38 @@
         </div>
         <p id="vazio-falhas" class="relatorio-vazio no-print" hidden>Nenhum registro corresponde à busca.</p>
       </section>
-      <p class="relatorio-rodape">Fonte: JORNADA_MARINA_CORRIGIDA_V7.xlsx (abas “Horas extras e saídas” e “Falhas de ponto”). Material simulado para estudo; divergências dependem de documentação original para validação.</p>
+
+      <section id="marina-bloco-atestados" class="card relatorio-bloco" aria-labelledby="titulo-atestados">
+        <div class="relatorio-bloco-header"><div><h2 id="titulo-atestados">3. Atestado médico e ajustes</h2><p>Ausências justificadas; domingos abrangidos pelo documento não geram jornada ou abono adicional.</p></div><span class="relatorio-contador" id="contador-atestados-relatorio">2 dias abonados</span></div>
+        <div class="table-responsive relatorio-tabela-wrap"><table class="ponto-table relatorio-tabela" aria-label="Atestado médico e dias abonados"><thead><tr><th>Data</th><th>Dia</th><th>Classificação</th><th>Jornada de referência</th><th>Horas abonadas</th><th>Motivo e origem</th></tr></thead><tbody id="marina-tbody-atestados"></tbody></table></div>
+        <p class="marina-atestado-rodape">15/06/2025 (domingo): descanso semanal, abrangido pelo período do atestado, sem expediente e sem abono adicional.</p>
+      </section>
+      <p class="relatorio-rodape">Fontes: planilhas V10 de jornada, conferência e abonos. Os números de ocorrências das tabelas são distintos do número de jornadas previstas. Os horários completados para simulação não comprovam marcações reais. Atestado informado pelo usuário para fins deste cenário fictício.</p>
     </section>
+  </div>
+
+  <!-- Detalhes de atestados e ajustes: leitura sem sair do espelho. -->
+  <div class="modal-overlay no-print" id="modal-detalhes-ajuste" role="dialog" aria-modal="true" aria-labelledby="detalhe-ajuste-titulo" aria-describedby="detalhe-ajuste-motivo" aria-hidden="true" onclick="if(event.target===this) fecharDetalhesAjuste()">
+    <div class="modal-content detalhe-ajuste-modal" tabindex="-1">
+      <div class="modal-header">
+        <h3 id="detalhe-ajuste-titulo">Detalhes do ajuste</h3>
+        <button type="button" class="modal-close" onclick="fecharDetalhesAjuste()" aria-label="Fechar detalhes">&times;</button>
+      </div>
+      <div class="detalhe-ajuste-grid">
+        <div><span>Data</span><strong id="detalhe-ajuste-data"></strong></div>
+        <div><span>Classificação</span><strong id="detalhe-ajuste-tipo"></strong></div>
+        <div id="detalhe-ajuste-bloco-abono"><span>Horas abonadas</span><strong id="detalhe-ajuste-abono"></strong></div>
+        <div id="detalhe-ajuste-bloco-jornada"><span>Jornada de referência</span><strong id="detalhe-ajuste-jornada"></strong></div>
+      </div>
+      <div class="detalhe-ajuste-motivo-box">
+        <strong>Motivo / Justificativa</strong>
+        <p id="detalhe-ajuste-motivo"></p>
+      </div>
+      <p class="detalhe-ajuste-origem"><strong>Origem:</strong> <span id="detalhe-ajuste-origem"></span></p>
+      <div class="detalhe-ajuste-footer">
+        <button type="button" class="btn btn-secondary" onclick="fecharDetalhesAjuste()">Fechar</button>
+      </div>
+    </div>
   </div>
 
   <!-- MODAIS -->

@@ -4,6 +4,55 @@
 let ajustesAoVivo = JSON.parse(localStorage.getItem('bancoPontoRioBranco')) || {};
 let tempAjustePendente = null;
 
+// V10 • Afastamento informado pelo usuário em imagem de atestado (cenário ilustrativo).
+// Atestado abona ausência; NÃO representa marcação de trabalho nem gera horas extras.
+const MARINA_ATESTADOS = Object.freeze({
+  '0142_2025-06-14': Object.freeze({
+    chaveUnicaAjuste:'0142_2025-06-14', funcId:'0142', dataIso:'2025-06-14',
+    tipo:'atestado', entrada:'', intIni:'', intFim:'', saida:'',
+    abonoMin:240, jornadaReferencia:'13:00–17:00 (sábado)',
+    motivo:'Atestado médico apresentado para afastamento de 14 a 16/06/2025. Ausência abonada em 14/06/2025 (sábado), conforme jornada de 4h. Não houve trabalho ou batidas neste dia.',
+    gerente:'Lançamento inicial a partir da documentação fornecida (simulação)',
+    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 (cenário fictício)',
+    isPrecarregado:true, isAutoGerado:false
+  }),
+  '0142_2025-06-16': Object.freeze({
+    chaveUnicaAjuste:'0142_2025-06-16', funcId:'0142', dataIso:'2025-06-16',
+    tipo:'atestado', entrada:'', intIni:'', intFim:'', saida:'',
+    abonoMin:480, jornadaReferencia:'13:00–21:20 (segunda-feira; 8h de abono solicitado)',
+    motivo:'Atestado médico apresentado para afastamento de 14 a 16/06/2025. Ausência abonada em 16/06/2025 (segunda-feira), 8h conforme critério informado. Não houve trabalho ou batidas neste dia.',
+    gerente:'Lançamento inicial a partir da documentação fornecida (simulação)',
+    origem:'Imagem de atestado fornecida pelo usuário, datada de 14/06/2025 (cenário fictício)',
+    isPrecarregado:true, isAutoGerado:false
+  })
+});
+function obterAjustesAtivos() {
+  // Os lançamentos salvos pelo usuário prevalecem sobre os ajustes pré-carregados.
+  return Object.values({...MARINA_ATESTADOS, ...ajustesAoVivo});
+}
+function obterAjusteParaDia(chave) {
+  return ajustesAoVivo[chave] || MARINA_ATESTADOS[chave] || null;
+}
+function minutosAbonoAtestado(ajuste) {
+  if (!ajuste || ajuste.tipo !== 'atestado') return 0;
+  const day = new Date(ajuste.dataIso + 'T12:00:00').getDay();
+  if (day === 0) return 0;
+  if (Number.isFinite(ajuste.abonoMin)) return Number(ajuste.abonoMin);
+  return day === 6 ? 240 : 480; // critério definido na simulação pelo usuário
+}
+// Evita que versões antigas guardadas no navegador substituam o atestado apresentado.
+for (const chave of Object.keys(MARINA_ATESTADOS)) {
+  const velho = ajustesAoVivo[chave];
+  if (velho && velho.tipo !== 'atestado') {
+    const arquivo = JSON.parse(localStorage.getItem('pontoHistoricoAfastamentoV10') || '[]');
+    arquivo.push({...velho, justificativaMigracao:'Substituído pelo atestado informado posteriormente para 14–16/06/2025.'});
+    localStorage.setItem('pontoHistoricoAfastamentoV10', JSON.stringify(arquivo));
+    delete ajustesAoVivo[chave];
+    localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo));
+  }
+}
+
+
 if (Object.keys(ajustesAoVivo).some(chave => !chave.includes('_'))) {
   ajustesAoVivo = {};
   localStorage.removeItem('bancoPontoRioBranco');
@@ -43,12 +92,12 @@ window.addEventListener('DOMContentLoaded', () => {
   // INJETAR O HISTÓRICO DE QUEDAS DE CONEXÃO
   // Não produzir marcações sintéticas de queda de conexão. Registros antigos permanecem na auditoria, sem se misturarem à fonte Marina.
 
-  if(Object.keys(ajustesAoVivo).length > 0) {
+  if(obterAjustesAtivos().length > 0) {
     const logContainer = document.getElementById('live-session-logs');
     if(logContainer) logContainer.innerHTML = '';
     
     // Sort descending by date
-    const sorted = Object.values(ajustesAoVivo).sort((a,b) => b.dataIso.localeCompare(a.dataIso));
+    const sorted = obterAjustesAtivos().sort((a,b) => b.dataIso.localeCompare(a.dataIso));
     
     // Only show latest 30 in the live session window (prints show all)
     sorted.slice(0, 30).forEach(ajuste => {
@@ -185,7 +234,7 @@ function alterarFuncionario() {
     const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
     const setValSafely = (elId, val) => { const el = document.getElementById(elId); if(el) el.value = val; };
     
-    setTxtSafely('ponto-origem-situacao', ehFuncionarioMarina(id) ? 'Marina: jornadas preenchidas; ver origem e complementações no status' : 'Dados demonstrativos; nem toda linha tem registro de batida');
+    setTxtSafely('ponto-origem-situacao', ehFuncionarioMarina(id) ? 'Marina: pontos da simulação e ausências abonadas identificados separadamente' : 'Dados demonstrativos; nem toda linha tem registro de batida');
     setTxtSafely('strip-nome', func.nome);
     setTxtSafely('sig-nome', func.nome);
     setTxtSafely('strip-cargo', func.cargo);
@@ -195,7 +244,7 @@ function alterarFuncionario() {
       ? 'Jornada completa para simulação: saídas provenientes da fonte e entradas/intervalos ilustrativos identificados'
       : 'Dados demonstrativos; horários não são comprovantes de batida');
     setTxtSafely('ponto-declaracao-impressao', ehFuncionarioMarina(id)
-      ? 'ESPELHO ILUSTRATIVO: as 44 jornadas da planilha revisada foram preservadas. Nos outros 425 dias a saída foi mantida da conferência de caixa; entradas e intervalos foram complementados para simulação. Não é comprovante original ou controle oficial de ponto.'
+      ? 'ESPELHO ILUSTRATIVO: os registros preenchidos são dados demonstrativos; alguns horários foram completados a partir da conferência de caixa. Atestado de 14–16/06/2025: 12h de ausência abonada em 14 e 16/06; 15/06 foi DSR. Dias abonados não constituem trabalho efetivo. Não é comprovante original ou controle oficial de ponto.'
       : 'Registros de exemplo, sem comprovação de ponto original; assinaturas meramente ilustrativas.');
     setValSafely('input-jornada-base', func.turno.texto);
     setValSafely('ajuste-target-nome', `${func.nome} (Mat. ${func.id})`);
@@ -209,7 +258,25 @@ function atualizarTextoMotivo() {
   if (sel && txt) {
     txt.value = sel.options[sel.selectedIndex].value;
   }
+  atualizarCamposTipoAjuste();
 }
+function atualizarCamposTipoAjuste() {
+  const tipo = document.getElementById('select-tipo-ajuste')?.value || 'ponto';
+  const data = document.getElementById('input-data-ajuste')?.value || '';
+  const aviso = document.getElementById('ajuste-aviso-atestado');
+  const atestado = tipo === 'atestado';
+  for (const id of ['input-hora-entrada','input-hora-int-ini','input-hora-int-fim','input-hora-saida']) {
+    const el = document.getElementById(id);
+    if(el) { el.disabled = atestado; el.required = !atestado; }
+  }
+  if(aviso) {
+    const dia = data ? new Date(data + 'T12:00:00').getDay() : -1;
+    const abono = dia === 0 ? '00h (domingo/DSR)' : dia === 6 ? '04h00 (sábado)' : '08h00 (dia útil)';
+    aviso.hidden = !atestado;
+    aviso.textContent = 'Ausência justificada, sem batidas: abono previsto ' + abono + '. Não entra como hora trabalhada nem gera saldo extra ou atraso.';
+  }
+}
+
 
 // ==========================================
 // 3. MOTOR MATEMÁTICO DE HORAS
@@ -267,6 +334,15 @@ function buscarJornadaRevisadaMarina(dataIso) {
   return MARINA_REVISADA.jornadas.find(r => r.data === dataIso) || null;
 }
 
+function atualizarIndicadoresExpedientes() {
+  if(typeof MARINA_PONTOS_COMPLETOS === 'undefined') return;
+  const dias = Object.keys(MARINA_PONTOS_COMPLETOS.registros).filter(d => new Date(d + 'T12:00:00').getDay() !== 0);
+  const abonos = dias.filter(d => obterAjusteParaDia('0142_' + d)?.tipo === 'atestado');
+  const marcados = dias.filter(d => obterAjusteParaDia('0142_' + d)?.tipo !== 'atestado');
+  for (const [id,valor] of [['resumo-expedientes',dias.length],['resumo-trabalhados',marcados.length],['resumo-atestados',abonos.length]]) {
+    const el = document.getElementById(id); if(el) el.textContent = String(valor);
+  }
+}
 function calcularTrabalhoMarina(entrada, inicioIntervalo, fimIntervalo, saida) {
   const totalBruto = timeToMins(saida) - timeToMins(entrada);
   const semIntervalo = !inicioIntervalo || inicioIntervalo === '--:--' || inicioIntervalo === '—' ||
@@ -294,7 +370,7 @@ function renderizarTabela() {
   const diasSemana = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
   const baseMins = (timeToMins(func.turno.intIni) - timeToMins(func.turno.entBase)) + (timeToMins(func.turno.saiBase) - timeToMins(func.turno.intFim));
 
-  let totalTrabMes = 0, totalExtraMes = 0, totalAtrasoMes = 0;
+  let totalTrabMes = 0, totalExtraMes = 0, totalAtrasoMes = 0, totalAbonoMes = 0;
   let totalDevidoMarina = 0;
   const itensDevidos = [];
   const paresRegistrados = new Map();
@@ -319,14 +395,17 @@ function renderizarTabela() {
 
     if (diaSemanaIndex === 0) {
       tr.className = 'weekend';
-      tr.innerHTML = `<td>${dataFormatada}</td><td><strong>Dom</strong></td><td>--:--</td><td>--:--</td><td>--:--</td><td>--:--</td><td>00:00</td><td>00:00</td><td style="color:#64748b; font-style: italic;">Descanso Semanal Remunerado (DSR)</td><td class="no-print">---</td>`;
+      const textoDsr = ehFuncionarioMarina(funcId) && chaveDataIso === '2025-06-15'
+        ? 'Descanso Semanal Remunerado (DSR) • incluído no período do atestado 14–16/06; sem abono adicional'
+        : 'Descanso Semanal Remunerado (DSR)';
+      tr.innerHTML = `<td>${dataFormatada}</td><td><strong>Dom</strong></td><td>--:--</td><td>--:--</td><td>--:--</td><td>--:--</td><td>00:00</td><td>00:00</td><td style="color:#64748b; font-style: italic;">${textoDsr}</td><td class="no-print">---</td>`;
       tbody.appendChild(tr); continue;
     }
 
     // Ajustes automáticos antigos não podem alterar os horários de Marina.
     // Um ajuste gerencial efetivo (não automático) segue visível e auditável.
     const ajusteGravado = ajustesAoVivo[chaveUnicaAjuste];
-    const ajusteAoVivo = ehMarina && ajusteGravado?.isAutoGerado ? null : ajusteGravado;
+    const ajusteAoVivo = ehMarina ? (ajusteGravado?.isAutoGerado ? MARINA_ATESTADOS[chaveUnicaAjuste] || null : obterAjusteParaDia(chaveUnicaAjuste)) : ajusteGravado;
     const registroRevisado = ehMarina ? buscarJornadaRevisadaMarina(chaveDataIso) : null;
     const pontoCompleto = ehMarina ? buscarPontoCompletoMarina(chaveDataIso) : null;
     const baseDiaMins = ehMarina && diaSemanaIndex === 6 ? 240 : baseMins;
@@ -335,7 +414,15 @@ function renderizarTabela() {
     let trabMins = 0;
     let possuiMarcacao = false;
 
-    if (ajusteAoVivo) {
+    if (ajusteAoVivo?.tipo === 'atestado') {
+      // Não há marcação: as horas são abonadas em rubrica própria.
+      ent = intIni = intFim = sai = '--:--';
+      trabMins = 0;
+      possuiMarcacao = false;
+      totalAbonoMes += minutosAbonoAtestado(ajusteAoVivo);
+      rowClass = 'ajustado-row marina-atestado-row';
+      statusTag = `<button type="button" class="tag-badge tag-warning ajuste-detalhe-trigger" onclick="abrirDetalhesAjuste('${chaveUnicaAjuste}')" aria-label="Consultar atestado de ${dataFormatada} e motivo do ajuste" title="Clique para visualizar o motivo">Atestado médico • Ponto Ajustado</button>`;
+    } else if (ajusteAoVivo) {
       possuiMarcacao = !ajusteAoVivo.isAutoGerado;
       ent = ajusteAoVivo.entrada; 
       intIni = ajusteAoVivo.intIni || func.turno.intIni; 
@@ -349,8 +436,7 @@ function renderizarTabela() {
         statusTag = `<span class="tag-badge tag-warning">Ajuste antigo de sistema • sem confirmação de batida</span>`;
         possuiMarcacao = false;
       } else {
-        const motivoSeguro = escaparHTML(ajusteAoVivo.motivo || 'Motivo não informado');
-        statusTag = `<span class="tag-badge tag-warning">Ponto Ajustado</span><div class="motivo-ajuste">${motivoSeguro}</div>`;
+        statusTag = `<button type="button" class="tag-badge tag-warning ajuste-detalhe-trigger" onclick="abrirDetalhesAjuste('${chaveUnicaAjuste}')" aria-label="Consultar motivo do ajuste de ${dataFormatada}" title="Clique para visualizar o motivo">Ponto Ajustado</button>`;
       }
       trabMins = ehMarina ? calcularTrabalhoMarina(ent, intIni, intFim, sai) :
         (timeToMins(intIni) - timeToMins(ent)) + (timeToMins(sai) - timeToMins(intFim));
@@ -435,10 +521,26 @@ function renderizarTabela() {
       <td><strong>${dataFormatada}</strong></td><td>${diasSemana[diaSemanaIndex]}</td>
       <td>${ent}</td><td style="vertical-align: middle;">${intIni}</td><td style="vertical-align: middle;">${intFim}</td>
       <td><strong style="${sai === func.turno.saiBase && ehMarina && (!ajusteAoVivo || ajusteAoVivo.isAutoGerado) ? 'color:#b45309;' : ''}">${sai}</strong></td>
-      <td>${possuiMarcacao ? minsToClock(trabMins) : "—"}</td><td>${strSaldo}</td><td>${statusTag}</td>
+      <td>${ajusteAoVivo?.tipo === 'atestado' ? '—' : possuiMarcacao ? minsToClock(trabMins) : '—'}</td><td>${ajusteAoVivo?.tipo === 'atestado' ? '00:00' : strSaldo}</td><td>${statusTag}</td>
       <td class="no-print"><button class="btn btn-secondary" style="padding: 2px 7px; font-size: 0.72rem;" onclick="abrirLancadorParaData('${chaveUnicaAjuste}', '${ent}', '${intIni}', '${intFim}', '${sai}')">Ajustar</button></td>
     `;
     tbody.appendChild(tr);
+  }
+
+  // Preserva as justificativas completas no espelho impresso, sem alongar as linhas da tela.
+  const motivosImpressao = document.getElementById('ponto-motivos-impressao');
+  if (motivosImpressao) {
+    const itens = [];
+    for (let d = 1; d <= totalDias; d++) {
+      const dataIso = `${ano}-${String(mes).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const a = obterAjusteParaDia(`${funcId}_${dataIso}`);
+      if (!a || a.isAutoGerado) continue;
+      const dataBR = `${String(d).padStart(2, '0')}/${String(mes).padStart(2, '0')}/${ano}`;
+      const rotulo = a.tipo === 'atestado' ? 'Atestado médico • ausência abonada' : 'Ponto ajustado';
+      const abono = a.tipo === 'atestado' ? ` — ${minsToClock(minutosAbonoAtestado(a))} abonadas` : '';
+      itens.push(`<li><strong>${dataBR} — ${rotulo}${abono}.</strong> ${escaparHTML(a.motivo || 'Motivo não informado')}</li>`);
+    }
+    motivosImpressao.innerHTML = itens.length ? `<h3>Justificativas dos ajustes da competência</h3><ul>${itens.join('')}</ul>` : '';
   }
 
   const auditoria = document.getElementById('auditoria-uniformidade');
@@ -450,6 +552,8 @@ function renderizarTabela() {
   }
   const setTxtSafely = (elId, txt) => { const el = document.getElementById(elId); if(el) el.textContent = txt; };
   setTxtSafely('resumo-total-trab', minsToTime(totalTrabMes));
+  setTxtSafely('resumo-total-abono', minsToTime(totalAbonoMes));
+  atualizarIndicadoresExpedientes();
   setTxtSafely('resumo-total-extra', "+" + minsToTime(totalExtraMes));
   setTxtSafely('resumo-total-atraso', "-" + minsToTime(totalAtrasoMes));
   setTxtSafely('resumo-total-devido', ehFuncionarioMarina(funcId) ? minsToTime(totalDevidoMarina) : '—');
@@ -470,13 +574,65 @@ function renderizarTabela() {
     detalhamento.innerHTML = `<strong>Apuração de ${comp.split('-').reverse().join('/')}: +${minsToTime(totalDevidoMarina)}</strong>` +
       `<p>O saldo de cada dia com batida informada/retificada é calculado automaticamente: Total Trab. menos jornada prevista. Horários completados para o exercício entram na apuração ilustrativa e são identificados por origem. Valores positivos alimentam integralmente tanto “Saldo (Extra)” quanto “Horas Extras (Saldo Positivo)” e “Horas extras devidas”; valores negativos aparecem exclusivamente em “Atrasos/Faltas”.</p>` +
       (itensDevidos.length ? `<ul>${linhas}</ul>` : '<p>Nenhum excedente diário apurado nesta competência.</p>') +
-      `<p class="marina-criterio">Apuração de simulação com complementação parcial de horários, não homologação trabalhista nem comprovação de crédito. Ajustes efetivos salvos neste navegador entram no cálculo mensal; a planilha XLSX que acompanha o pacote é uma cópia estática e não é modificada automaticamente pelo navegador.</p>`;
+      `<p class="marina-criterio">Atestados justificam ausência, sem integrar trabalhado, saldo positivo ou atraso. ${totalAbonoMes ? 'Nesta competência há ' + minsToTime(totalAbonoMes) + ' de ausência abonada. ' : ''}Apuração de simulação com complementação parcial de horários, não homologação trabalhista nem comprovação de crédito. Ajustes efetivos salvos neste navegador entram no cálculo mensal; a planilha XLSX que acompanha o pacote é uma cópia estática e não é modificada automaticamente pelo navegador.</p>`;
   }
 }
 
 // ==========================================
 // 5. CONTROLE DE MODAIS E AUDITORIA
 // ==========================================
+let focoAnteriorDetalhesAjuste = null;
+
+function abrirDetalhesAjuste(chave) {
+  const ajuste = obterAjusteParaDia(chave);
+  const modal = document.getElementById('modal-detalhes-ajuste');
+  if (!ajuste || !modal) return;
+  const atestado = ajuste.tipo === 'atestado';
+  const [ano, mes, dia] = ajuste.dataIso.split('-');
+  const preencher = (id, texto) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = texto;
+  };
+  preencher('detalhe-ajuste-titulo', atestado ? 'Atestado médico • Ponto Ajustado' : 'Ponto Ajustado');
+  preencher('detalhe-ajuste-data', `${dia}/${mes}/${ano}`);
+  preencher('detalhe-ajuste-tipo', atestado ? 'Ausência justificada por atestado' : 'Retificação de marcação');
+  preencher('detalhe-ajuste-abono', atestado ? minsToClock(minutosAbonoAtestado(ajuste)) : '—');
+  preencher('detalhe-ajuste-jornada', ajuste.jornadaReferencia || 'Conforme escala do dia');
+  preencher('detalhe-ajuste-motivo', ajuste.motivo || 'Motivo não informado');
+  preencher('detalhe-ajuste-origem', ajuste.origem || (ajuste.gerente ? 'Ajuste registrado por ' + ajuste.gerente : 'Lançamento no módulo de ajustes'));
+  for (const id of ['detalhe-ajuste-bloco-abono','detalhe-ajuste-bloco-jornada']) {
+    const el = document.getElementById(id);
+    if (el) el.hidden = !atestado;
+  }
+  focoAnteriorDetalhesAjuste = document.activeElement;
+  modal.classList.add('open');
+  modal.setAttribute('aria-hidden', 'false');
+  modal.querySelector('.modal-close')?.focus();
+}
+
+function fecharDetalhesAjuste() {
+  const modal = document.getElementById('modal-detalhes-ajuste');
+  if (!modal) return;
+  modal.classList.remove('open');
+  modal.setAttribute('aria-hidden', 'true');
+  if (focoAnteriorDetalhesAjuste && focoAnteriorDetalhesAjuste.isConnected) focoAnteriorDetalhesAjuste.focus();
+  focoAnteriorDetalhesAjuste = null;
+}
+
+document.addEventListener('keydown', (e) => {
+  const modal = document.getElementById('modal-detalhes-ajuste');
+  if (!modal?.classList.contains('open')) return;
+  if (e.key === 'Escape') { e.preventDefault(); fecharDetalhesAjuste(); return; }
+  if (e.key === 'Tab') {
+    const botoes = [...modal.querySelectorAll('button:not([disabled])')];
+    if (!botoes.length) return;
+    if (e.shiftKey && document.activeElement === botoes[0]) {
+      e.preventDefault(); botoes[botoes.length - 1].focus();
+    } else if (!e.shiftKey && document.activeElement === botoes[botoes.length - 1]) {
+      e.preventDefault(); botoes[0].focus();
+    }
+  }
+});
 function abrirModalPadrao(dataOriginal, hora) {
   const elDesc = document.getElementById('audit-descricao');
   if(!elDesc) return;
@@ -498,7 +654,13 @@ function abrirLancadorParaData(chaveAjuste, ent, intIni, intFim, sai) {
   document.getElementById('input-hora-int-fim').value = intFim;
   document.getElementById('input-hora-saida').value = sai;
   
+  const salvo = obterAjusteParaDia(chaveAjuste);
+  const tipoSel = document.getElementById('select-tipo-ajuste');
+  if(tipoSel) tipoSel.value = salvo?.tipo === 'atestado' ? 'atestado' : 'ponto';
   atualizarTextoMotivo();
+  if(salvo?.tipo === 'atestado') {
+    document.getElementById('input-motivo-detalhado').value = salvo.motivo;
+  }
   switchPage('page-ajustes'); 
 }
 
@@ -508,21 +670,27 @@ function prepararConfirmacaoAjuste(e) {
   const dataIso = document.getElementById('input-data-ajuste').value;
   const chaveUnicaAjuste = `${funcId}_${dataIso}`;
   
+  const tipo = document.getElementById('select-tipo-ajuste')?.value || 'ponto';
+  if(tipo === 'atestado' && !ehFuncionarioMarina(funcId)) { alert('O abono padrão de atestado está configurado apenas para Marina nesta simulação.'); return; }
+  if(tipo === 'atestado' && new Date(dataIso + 'T12:00:00').getDay() === 0) { alert('Domingo é DSR; não há expediente a abonar.'); return; }
   tempAjustePendente = { 
     chaveUnicaAjuste,
     dataIso,
     funcId,
-    entrada: document.getElementById('input-hora-entrada').value, 
-    intIni: document.getElementById('input-hora-int-ini').value,
-    intFim: document.getElementById('input-hora-int-fim').value,
-    saida: document.getElementById('input-hora-saida').value, 
+    tipo,
+    entrada: tipo === 'atestado' ? '' : document.getElementById('input-hora-entrada').value, 
+    intIni: tipo === 'atestado' ? '' : document.getElementById('input-hora-int-ini').value,
+    intFim: tipo === 'atestado' ? '' : document.getElementById('input-hora-int-fim').value,
+    saida: tipo === 'atestado' ? '' : document.getElementById('input-hora-saida').value,
+    abonoMin: tipo === 'atestado' ? (new Date(dataIso + 'T12:00:00').getDay() === 6 ? 240 : 480) : 0,
+    jornadaReferencia: tipo === 'atestado' ? (new Date(dataIso + 'T12:00:00').getDay() === 6 ? '13:00–17:00 (sábado)' : '13:00–21:20 (dia útil; 8h de abono)') : '', 
     motivo: document.getElementById('input-motivo-detalhado').value,
     gerente: document.getElementById('input-responsavel').value,
     isAutoGerado: false // Ao editar/salvar via modal, remove a tag de AutoGerado (fica Verde)
   };
   
   document.getElementById('conf-data').textContent = dataIso.split('-').reverse().join('/');
-  document.getElementById('conf-saida').textContent = tempAjustePendente.saida;
+  document.getElementById('conf-saida').textContent = tipo === 'atestado' ? 'Sem batida • abono ' + minsToClock(tempAjustePendente.abonoMin) : tempAjustePendente.saida;
   document.getElementById('conf-motivo').textContent = tempAjustePendente.motivo;
   
   const senhaInput = document.getElementById('input-senha-gerente');
@@ -543,7 +711,7 @@ function efetivarAjusteConfirmado() {
     return;
   }
 
-  const versaoAnterior = ajustesAoVivo[tempAjustePendente.chaveUnicaAjuste];
+  const versaoAnterior = obterAjusteParaDia(tempAjustePendente.chaveUnicaAjuste);
   tempAjustePendente.registradoEm = new Date().toISOString();
   tempAjustePendente.valorAnterior = versaoAnterior ||
     (ehFuncionarioMarina(tempAjustePendente.funcId)
@@ -552,6 +720,7 @@ function efetivarAjusteConfirmado() {
   localStorage.setItem('bancoPontoRioBranco', JSON.stringify(ajustesAoVivo)); 
   
   atualizarLogAuditoriaVisual(tempAjustePendente, false); // prepend na lista
+  if (typeof window.renderizarAtestadosMarina === 'function') window.renderizarAtestadosMarina();
   fecharModal('modal-confirmacao');
   renderizarTabela();
   setTimeout(() => switchPage('page-espelho'), 300);
@@ -569,11 +738,11 @@ function atualizarLogAuditoriaVisual(ajuste, append = false) {
   entradaLog.style.borderBottom = "1px solid #e2e8f0";
   
   const badgeCor = ajuste.isAutoGerado ? "var(--warning)" : "var(--success)";
-  const badgeTexto = ajuste.isAutoGerado ? "[REGISTRO AUTOMÁTICO ANTIGO]" : "[PONTO AJUSTADO]";
+  const badgeTexto = ajuste.tipo === 'atestado' ? '[ATESTADO MÉDICO • AUSÊNCIA ABONADA]' : ajuste.isAutoGerado ? '[REGISTRO AUTOMÁTICO ANTIGO]' : '[PONTO AJUSTADO]';
   
   entradaLog.innerHTML = `
     <span style="color:${badgeCor}; font-weight:bold;">${badgeTexto}</span> 
-    <strong>${funcNome}</strong>: Dia <strong>${dia}/${mes}/${ano}</strong> retificado para Ent: ${ajuste.entrada} | Int: ${ajuste.intIni}-${ajuste.intFim} | Saída: ${ajuste.saida}. 
+    <strong>${funcNome}</strong>: Dia <strong>${dia}/${mes}/${ano}</strong> ${ajuste.tipo === 'atestado' ? 'afastamento justificado: ' + minsToClock(minutosAbonoAtestado(ajuste)) + ' abonadas; sem marcação de ponto' : 'retificado para Ent: ' + ajuste.entrada + ' | Int: ' + ajuste.intIni + '-' + ajuste.intFim + ' | Saída: ' + ajuste.saida}. 
     <br><span style="color:var(--gray-600); font-size: 0.8rem;">Responsável informado: ${escaparHTML(ajuste.gerente)}. Motivo: ${escaparHTML(ajuste.motivo)}</span>
   `;
   
@@ -605,7 +774,7 @@ function imprimirLog(tipo) {
   html += `<h3 style="color: #475569; margin-top: 0; font-weight: normal;">Filtro: ${tipo === 'geral' ? 'Todos os Funcionários' : 'Individual - ' + funcNome}</h3>`;
   html += `<hr style="margin-bottom: 20px;"><br>`;
   
-  let logs = Object.values(ajustesAoVivo);
+  let logs = obterAjustesAtivos();
   // Ordena para impressão
   logs.sort((a,b) => b.dataIso.localeCompare(a.dataIso));
   
@@ -619,13 +788,13 @@ function imprimirLog(tipo) {
     logs.forEach(ajuste => {
       let [ano, mes, dia] = ajuste.dataIso.split('-');
       let nome = FUNCIONARIOS.find(f => f.id === ajuste.funcId)?.nome || "Desconhecido";
-      let statusInfo = ajuste.isAutoGerado ? '<span style="color: #d97706; font-weight: bold;">[Registro antigo automático]</span>' : '<span style="color: #d97706; font-weight: bold;">[Ponto Ajustado]</span>';
+      let statusInfo = ajuste.tipo === 'atestado' ? '<span style="color: #d97706; font-weight: bold;">[Atestado médico • ausência abonada]</span>' : ajuste.isAutoGerado ? '<span style="color: #d97706; font-weight: bold;">[Registro antigo automático]</span>' : '<span style="color: #d97706; font-weight: bold;">[Ponto Ajustado]</span>';
       
       html += `<div style="margin-bottom:15px; padding-bottom:15px; border-bottom:1px solid #ccc; font-size: 14px; line-height: 1.6;">
         <strong>Data Referência:</strong> ${dia}/${mes}/${ano} ${statusInfo}<br>
         <strong>Colaborador:</strong> ${nome} (Mat. ${ajuste.funcId}) <br>
-        <strong>Horários Gravados:</strong> Entrada: ${ajuste.entrada} | Início Int: ${ajuste.intIni} | Fim Int: ${ajuste.intFim} | Saída: ${ajuste.saida} <br>
-        <strong>Motivo do Ajuste:</strong> ${ajuste.motivo} <br>
+        ${ajuste.tipo === 'atestado' ? '<strong>Ausência justificada:</strong> ' + minsToClock(minutosAbonoAtestado(ajuste)) + ' de abono • ' + escaparHTML(ajuste.jornadaReferencia || '') + ' • sem batidas' : '<strong>Horários Gravados:</strong> Entrada: ' + escaparHTML(ajuste.entrada) + ' | Início Int: ' + escaparHTML(ajuste.intIni) + ' | Fim Int: ' + escaparHTML(ajuste.intFim) + ' | Saída: ' + escaparHTML(ajuste.saida)} <br>
+        <strong>Motivo do Ajuste:</strong> ${escaparHTML(ajuste.motivo)} <br>
         <strong>Responsável (Assinatura):</strong> ${ajuste.gerente}
       </div>`;
     });

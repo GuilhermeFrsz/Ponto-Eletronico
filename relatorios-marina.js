@@ -143,6 +143,19 @@
     window.print(); // Navegador oferece Impressora / Salvar como PDF.
   };
   window.addEventListener('afterprint', aposImpressao);
+  function renderizarAtestadosMarina() {
+    const corpo = document.getElementById('marina-tbody-atestados');
+    if (!corpo || typeof obterAjustesAtivos !== 'function') return;
+    const ativos = obterAjustesAtivos().filter(a => a.tipo === 'atestado' && a.funcId === '0142').sort((a,b)=>a.dataIso.localeCompare(b.dataIso));
+    corpo.innerHTML = ativos.map(a => {
+      const d = new Date(a.dataIso + 'T12:00:00');
+      const minutos = typeof minutosAbonoAtestado === 'function' ? minutosAbonoAtestado(a) : Number(a.abonoMin||0);
+      return `<tr><td>${formatoData(a.dataIso)}</td><td>${dias[d.getDay()]}</td><td><span class="tag-badge tag-warning">Atestado médico • Ponto Ajustado</span></td><td>${limparHTML(a.jornadaReferencia || 'Escala do dia')}</td><td><strong>${String(Math.floor(minutos/60)).padStart(2,'0')}h${String(minutos%60).padStart(2,'0')}</strong></td><td>${limparHTML(a.motivo)}<br><small>${limparHTML(a.origem || 'Lançamento no módulo de ajustes')}</small></td></tr>`;
+    }).join('');
+    const contador = document.getElementById('contador-atestados-relatorio');
+    if(contador) contador.textContent = `${ativos.length} dia(s) abonado(s)`;
+  }
+  window.renderizarAtestadosMarina = renderizarAtestadosMarina;
   window.addEventListener('DOMContentLoaded', () => {
     const status = document.getElementById('marina-integridade');
     if (typeof MARINA_REVISADA === 'undefined') {
@@ -151,8 +164,8 @@
       return;
     }
     const inconsistencias = validarBase();
-    document.getElementById('resumo-jornadas').textContent = MARINA_REVISADA.jornadas.length;
-    document.getElementById('resumo-falhas').textContent = MARINA_REVISADA.falhas.length;
+    if(typeof atualizarIndicadoresExpedientes === 'function') atualizarIndicadoresExpedientes();
+    renderizarAtestadosMarina();
     document.getElementById('relatorio-fonte').textContent = MARINA_REVISADA.fonte;
     renderizarGrupo('jornada');
     renderizarGrupo('falhas');

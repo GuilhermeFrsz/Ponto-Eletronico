@@ -116,3 +116,54 @@ table.ponto-table tr.marina-escala-row { background:#f8fafc; }
 .marina-fonte-nota{font-size:11px;line-height:1.35;margin-top:4px;color:#45556a;max-width:360px;}
 .marina-complementado-row td{background-color:#f5f8fd;}
 @media print{.marina-fonte-nota{font-size:8px!important;color:#303b48!important;}}
+
+/* V10 • afastamento por atestado e horas justificadas */
+.marina-atestado-row td{background:#fff5dd!important;}
+.marina-atestado-row td:first-child{border-left:3px solid #d97706;}
+.marina-abono-ok{display:block;margin-top:5px;font-size:.77rem;color:#92400e;font-weight:700;}
+.marina-abono-resumo{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin:0 0 14px;border:1px solid #f2cc8e;background:#fffaf0;padding:10px 14px;border-radius:7px;font-size:.88rem;}
+.marina-abono-resumo span{font-weight:800;color:#9a3412;font-size:1.25rem;}
+.marina-abono-resumo small{display:block;flex-basis:100%;color:#64748b;}
+.atestado-aviso{padding:8px 10px;background:#fff6e6;border:1px solid #facc8c;border-radius:6px;margin-top:6px;font-size:.85rem;color:#92400e;}
+.atestado-aviso[hidden]{display:none!important;}
+@media print{.marina-atestado-row td{background:#fff5dd!important;print-color-adjust:exact;} .marina-abono-resumo{break-inside:avoid;}}
+
+/* V11: motivo completo exibido somente no modal; linhas de ponto uniformes. */
+.ajuste-detalhe-trigger {
+  font-family:inherit;
+  font-size:.75rem;
+  line-height:1.35;
+  cursor:pointer;
+  background:#fff0d3;
+  color:#a04b05;
+  border:1px solid #f7c66e;
+  max-width:100%;
+  white-space:normal;
+  text-align:center;
+}
+.ajuste-detalhe-trigger:hover { background:#ffdfaa; border-color:#d97706; }
+.ajuste-detalhe-trigger:focus-visible { outline:3px solid #1d4ed8; outline-offset:3px; }
+.detalhe-ajuste-modal { max-width:570px; max-height:min(85vh,760px); overflow-y:auto; }
+.detalhe-ajuste-modal h3 { margin:0; font-size:1.08rem; color:#9a3412; }
+.detalhe-ajuste-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+.detalhe-ajuste-grid > div { padding:10px 12px; background:#f8fafc; border:1px solid #e2e8f0; border-radius:7px; }
+.detalhe-ajuste-grid > div[hidden] { display:none; }
+.detalhe-ajuste-grid span { display:block; color:#64748b; font-size:.78rem; margin-bottom:3px; }
+.detalhe-ajuste-grid strong { display:block; color:#1e293b; font-size:.93rem; }
+.detalhe-ajuste-motivo-box { margin-top:15px; padding:13px 15px; background:#fffaf0; border-left:4px solid #d97706; border-radius:5px; }
+.detalhe-ajuste-motivo-box strong { color:#92400e; font-size:.87rem; }
+.detalhe-ajuste-motivo-box p { margin:7px 0 0; color:#334155; font-size:.92rem; line-height:1.6; overflow-wrap:anywhere; }
+.detalhe-ajuste-origem { margin:12px 0; font-size:.81rem; color:#64748b; overflow-wrap:anywhere; }
+.detalhe-ajuste-footer { display:flex; justify-content:flex-end; margin-top:18px; }
+.print-only-adjustments { display:none; }
+@media (max-width:570px) {
+  .detalhe-ajuste-modal { width:calc(100% - 24px); padding:18px; }
+  .detalhe-ajuste-grid { grid-template-columns:1fr; }
+}
+@media print {
+  .ajuste-detalhe-trigger { background:transparent!important; color:#000!important; border:1px solid #888!important; padding:2px 5px!important; }
+  .print-only-adjustments:not(:empty) { display:block!important; font-size:10px; margin-top:16px; break-inside:avoid; }
+  .print-only-adjustments h3 { font-size:12px; margin:0 0 6px; }
+  .print-only-adjustments ul { padding-left:18px; margin:4px 0; }
+  .print-only-adjustments li { margin-bottom:5px; }
+}

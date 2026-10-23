@@ -1,6 +1,6 @@
 // Transcrição de informações originais e revisões, com histórico documental.
 const MARINA_REVISADA = {
-  "fonte": "JORNADA_MARINA_CORRIGIDA_V7.xlsx",
+  "fonte": "JORNADA_MARINA_COMPLETA_V10_ATESTADO.xlsx (eventos originalmente transcritos da base V7)",
   "natureza": "SIMULAÇÃO ACADÊMICA — DADOS ILUSTRATIVOS, NÃO COMPROVAM REGISTROS REAIS",
   "jornadas": [
     {
